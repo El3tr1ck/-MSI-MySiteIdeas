@@ -9,10 +9,11 @@
     <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
     
     <style>
+        /* Variáveis de estilo para consistência visual */
         :root {
             --bg-color: #0b0c10;
             --card-bg: #1a1a1d;
-            --primary-color: #e50914; /* Vermelho DOOM */
+            --primary-color: #e50914; /* Vermelho clássico do DOOM */
             --primary-hover: #b80710;
             --text-color: #c5c6c7;
             --title-color: #ffffff;
@@ -80,7 +81,7 @@
         /* Container onde o emulador roda */
         .dosbox-container {
             width: 100%;
-            height: 480px;
+            height: 480px; /* Altura padrão para computadores */
             max-height: 70vh;
             border-radius: 8px;
             overflow: hidden;
@@ -88,6 +89,7 @@
             border: 1px solid #333;
         }
 
+        /* Responsividade para telas de celulares */
         @media (max-width: 768px) {
             .dosbox-container {
                 height: 320px;
