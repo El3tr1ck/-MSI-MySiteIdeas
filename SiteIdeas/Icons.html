@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Library - Busca, Visualização e Cópia Profissional</title>
+    
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CDNs das Bibliotecas de Ícones -->
+    <!-- 1. Font Awesome Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <!-- 2. Material Icons & Symbols -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet" />
+    <!-- 3. Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- 4. Lucide Icons (Static Font) -->
+    <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css" />
+    <!-- 5. Heroicons (Webfont) -->
+    <link rel="stylesheet" href="https://unpkg.com/@icon/heroicons-outline/heroicons-outline.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@icon/heroicons-solid/heroicons-solid.css" />
+    <!-- 6. Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <!-- 7. Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- 8. Phosphor Icons -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/thin/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/light/style.css" />
+
+    <style>
+        /* CSS Reset & Variáveis de Design (SaaS Vercel/Linear style) */
+        :root {
+            --bg-color: #fafafa;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-main: #171717;
+            --text-muted: #737373;
+            --border-color: #e5e5e5;
+            --accent-color: #000000;
+            --accent-hover: #262626;
+            --accent-light: #f5f5f5;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --sidebar-width: 280px;
+        }
+
+        body.dark {
+            --bg-color: #0a0a0a;
+            --sidebar-bg: #121212;
+            --card-bg: #121212;
+            --text-main: #f5f5f5;
+            --text-muted: #a3a3a3;
+            --border-color: #262626;
+            --accent-color: #ffffff;
+            --accent-hover: #e5e5e5;
+            --accent-light: #1c1c1c;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.2s, color 0.2s;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Layout Estrutural */
+        .app-container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Design (Esquerda) */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+                width: 300px;
+                box-shadow: var(--shadow-lg);
+                transition: left 0.3s ease;
+            }
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background-color: var(--accent-color);
+            color: var(--sidebar-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .logo-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .counter-badge {
+            background-color: var(--accent-light);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .filter-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        /* Lista de Navegação e Filtros */
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-main);
+            background-color: var(--accent-light);
+        }
+
+        .nav-item i {
+            font-size: 1rem;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* Workspace Principal (Direita) */
+        .workspace {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .workspace {
+                padding: 16px;
+            }
+        }
+
+        /* Header e Controles do Workspace */
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .header-left h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-left p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Botões Globais */
+        .btn-action {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-action:hover {
+            border-color: var(--accent-color);
+        }
+
+        .btn-filter-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .btn-filter-toggle {
+                display: flex;
+            }
+        }
+
+        /* Barra de Busca Inteligente */
+        .search-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 4px 16px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .search-area:focus-within {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+        }
+
+        .search-area i {
+            color: var(--text-muted);
+            margin-right: 12px;
+        }
+
+        .search-input {
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            padding: 12px 0;
+            width: 100%;
+            outline: none;
+        }
+
+        /* Pills/Tags de Filtro Ativos */
+        .active-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-pill {
+            background-color: var(--accent-light);
+            color: var(--text-main);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-pill i {
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        /* Grid de Cards Premium */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px;
+        }
+
+        .icon-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-fav-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .card-fav-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .card-fav-btn.active {
+            color: #ef4444;
+        }
+
+        .icon-display {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-meta {
+            text-align: center;
+            width: 100%;
+        }
+
+        .card-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+
+        .card-lib {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .card-badge-style {
+            background-color: var(--accent-light);
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        /* Details & Copy Panel (Modal) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 1000;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: modalSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(12px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-preview-box {
+            background-color: var(--accent-light);
+            border-radius: var(--radius-md);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .copy-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .copy-tab {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text-muted);
+        }
+
+        .copy-tab.active {
+            color: var(--text-main);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .code-snippet-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            margin-bottom: 16px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-copy-action {
+            background-color: var(--accent-color);
+            color: var(--sidebar-bg);
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .btn-copy-action:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Toasts (Feedbacks rápidos) */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--accent-color);
+            color: var(--sidebar-bg);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 64px;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* Infinite Scroll Sentinel */
+        #sentinel {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-column: 1 / -1;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .sidebar-close {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            align-self: flex-end;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar-close {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- SIDEBAR DE FILTROS E BIBLIOTECAS -->
+        <aside class="sidebar">
+            <button class="sidebar-close" id="sidebarClose"><i class="bi bi-x"></i></button>
+            <div class="logo-area">
+                <div class="logo-icon">I</div>
+                <div>
+                    <h1 class="logo-title">Icon Library</h1>
+                    <span class="counter-badge" id="statsCounter">10.000+ Ícones</span>
+                </div>
+            </div>
+
+            <!-- Navegação de Listas Especiais -->
+            <div class="filter-section">
+                <span class="filter-label">Navegar</span>
+                <ul class="nav-list" id="navListNav">
+                    <li class="nav-item active" data-nav="all"><i class="bi bi-grid"></i> Todos os Ícones</li>
+                    <li class="nav-item" data-nav="favorites"><i class="bi bi-heart"></i> Meus Favoritos</li>
+                    <li class="nav-item" data-nav="history"><i class="bi bi-clock-history"></i> Histórico</li>
+                </ul>
+            </div>
+
+            <!-- Filtro de Bibliotecas -->
+            <div class="filter-section">
+                <span class="filter-label">Biblioteca</span>
+                <ul class="nav-list" id="navListLibrary">
+                    <li class="nav-item active" data-lib="all"><i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Todas</li>
+                    <li class="nav-item" data-lib="Font Awesome"><i class="fa-brands fa-font-awesome"></i> Font Awesome</li>
+                    <li class="nav-item" data-lib="Material Icons"><i class="material-icons" style="font-size: 1.1rem; line-height: 1;">widgets</i> Material Icons</li>
+                    <li class="nav-item" data-lib="Bootstrap Icons"><i class="bi bi-bootstrap"></i> Bootstrap</li>
+                    <li class="nav-item" data-lib="Lucide"><i class="lucide lucide-sparkles"></i> Lucide</li>
+                    <li class="nav-item" data-lib="Heroicons"><i class="hio hio-sparkles"></i> Heroicons</li>
+                    <li class="nav-item" data-lib="Tabler"><i class="ti ti-brand-tabler"></i> Tabler</li>
+                    <li class="nav-item" data-lib="Remix"><i class="ri-remix-line"></i> Remix</li>
+                    <li class="nav-item" data-lib="Phosphor"><i class="ph ph-sparkle"></i> Phosphor</li>
+                </ul>
+            </div>
+
+            <!-- Filtro de Categorias -->
+            <div class="filter-section">
+                <span class="filter-label">Categoria</span>
+                <ul class="nav-list" id="navListCategory">
+                    <li class="nav-item active" data-cat="all"><i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Todas</li>
+                    <li class="nav-item" data-cat="Social"><i class="bi bi-share"></i> Social</li>
+                    <li class="nav-item" data-cat="Interface"><i class="bi bi-window"></i> Interface</li>
+                    <li class="nav-item" data-cat="Tecnologia"><i class="bi bi-cpu"></i> Tecnologia</li>
+                    <li class="nav-item" data-cat="Arquivo"><i class="bi bi-file-earmark"></i> Arquivos</li>
+                    <li class="nav-item" data-cat="Comunicação"><i class="bi bi-chat"></i> Comunicação</li>
+                    <li class="nav-item" data-cat="Usuário"><i class="bi bi-person"></i> Usuário</li>
+                    <li class="nav-item" data-cat="Mídia"><i class="bi bi-play-circle"></i> Mídia</li>
+                    <li class="nav-item" data-cat="Comércio"><i class="bi bi-cart"></i> Comércio</li>
+                    <li class="nav-item" data-cat="Ferramentas"><i class="bi bi-tools"></i> Ferramentas</li>
+                </ul>
+            </div>
+
+            <!-- Filtro de Estilo -->
+            <div class="filter-section">
+                <span class="filter-label">Estilo</span>
+                <ul class="nav-list" id="navListStyle">
+                    <li class="nav-item active" data-style="all"><i class="bi bi-circle-fill" style="font-size: 0.5rem;"></i> Todos</li>
+                    <li class="nav-item" data-style="Solid"><i class="bi bi-square-fill"></i> Solid / Fill</li>
+                    <li class="nav-item" data-style="Outline"><i class="bi bi-square"></i> Outline / Regular</li>
+                    <li class="nav-item" data-style="Rounded"><i class="bi bi-app"></i> Rounded</li>
+                    <li class="nav-item" data-style="Sharp"><i class="bi bi-bounding-box-circles"></i> Sharp</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ESPAÇO DE TRABALHO PRINCIPAL -->
+        <main class="workspace">
+            <header class="workspace-header">
+                <div class="header-left">
+                    <h2>Icon Library</h2>
+                    <p>Milhares de ícones profissionais e gratuitos prontos para copiar e colar.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-action btn-filter-toggle" id="filterToggle" title="Abrir Filtros">
+                        <i class="bi bi-funnel"></i>
+                    </button>
+                    <button class="btn-action" id="shareBtn" title="Compartilhar Filtro Atual">
+                        <i class="bi bi-share"></i>
+                    </button>
+                    <button class="btn-action" id="themeToggle" title="Alternar Modo Escuro/Claro">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Barra de Busca -->
+            <div class="search-area">
+                <i class="bi bi-search"></i>
+                <input type="text" class="search-input" id="searchBar" placeholder="Pesquisar por nome, categoria ou biblioteca... (Pressione '/' para focar)" />
+            </div>
+
+            <!-- Chips de Filtros Ativos -->
+            <div class="active-filters" id="activeFiltersContainer">
+                <!-- Gerados dinamicamente via JS -->
+            </div>
+
+            <!-- Grid de Ícones -->
+            <div class="grid-container" id="iconGrid">
+                <!-- Cards de ícones renderizados dinamicamente -->
+            </div>
+
+            <!-- Sentinel do Infinite Scroll -->
+            <div id="sentinel">
+                <span>Carregando mais ícones...</span>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL DETALHES E CÓPIA -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalIconName">Nome do Ícone</h3>
+                <button class="modal-close" id="modalClose"><i class="bi bi-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-preview-box" id="modalIconPreview">
+                    <!-- Ícone Grande -->
+                </div>
+                <div>
+                    <div class="copy-tabs">
+                        <div class="copy-tab active" data-tab="html">HTML</div>
+                        <div class="copy-tab" data-tab="react">React</div>
+                        <div class="copy-tab" data-tab="css">CSS</div>
+                        <div class="copy-tab" data-tab="name">Nome</div>
+                    </div>
+                    <div class="code-snippet-box" id="modalCodeSnippet">
+                        <!-- Código -->
+                    </div>
+                </div>
+                <button class="btn-copy-action" id="modalCopyBtn">Copiar Código</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE CONFIRMAÇÃO DE CÓPIA -->
+    <div class="toast" id="toastNotification">
+        <i class="bi bi-check-circle-fill"></i>
+        <span>Código copiado para a área de transferência!</span>
+    </div>
+
+    <!-- DADOS DOS ÍCONES E ENGINE PRINCIPAL (Vanilla JS) -->
+    <script>
+        // --- 1. BASE DE DADOS INTEGRADA DE PALAVRAS-CHAVE ---
+        // Contém ~300 nomes comuns de ícones em 9 categorias.
+        const categories = {
+            "Social": ["github", "twitter", "facebook", "instagram", "youtube", "linkedin", "whatsapp", "discord", "apple", "google", "android", "windows", "twitch", "slack", "gitlab", "codepen", "figma", "tiktok", "telegram", "reddit", "pinterest", "spotify", "paypal", "medium", "behance", "dribbble", "snapchat", "vimeo", "tumblr", "stack-overflow", "hackerrank", "kickstarter", "patreon", "steam", "playstation", "xbox", "google-play", "app-store", "zoom", "skype", "trello", "notion", "linear", "shopify", "salesforce", "microsoft", "amazon", "ebay", "airbnb", "uber", "soundcloud", "wechat"],
+            "Interface": ["home", "settings", "trash", "edit", "search", "menu", "grid", "list", "plus", "minus", "check", "close", "eye", "eye-slash", "lock", "unlock", "key", "link", "external-link", "share", "maximize", "minimize", "refresh", "sync", "history", "sliders", "toggle-left", "toggle-right", "chevron-left", "chevron-right", "chevron-up", "chevron-down", "arrow-left", "arrow-right", "arrow-up", "arrow-down", "crosshair", "compass", "target", "shield", "shield-alert", "shield-check", "alert-circle", "alert-triangle", "info", "help-circle", "check-circle", "x-circle", "filter", "zoom-in", "zoom-out", "crop", "layers", "drag", "expand", "collapse", "dots-horizontal", "dots-vertical", "folder", "folder-plus", "folder-minus", "folder-open", "file", "file-text", "file-plus", "file-minus", "file-check", "archive", "clipboard", "copy"],
+            "Tecnologia": ["laptop", "phone", "tablet", "watch", "cpu", "database", "terminal", "code", "wifi", "battery", "server", "hard-drive", "monitor", "smartphone", "mouse", "keyboard", "router", "plug", "bluetooth", "cast", "airplay", "radio", "signal", "sim-card", "sd-card", "printer", "scanner", "webcam", "shield-keyhole", "radar", "processor", "cable", "power-source", "hard-disk"],
+            "Arquivo": ["file", "file-text", "file-plus", "file-minus", "file-check", "file-spreadsheet", "file-pdf", "file-image", "file-video", "file-audio", "file-zip", "folder", "folder-plus", "folder-minus", "folder-open", "archive", "clipboard", "copy", "book", "bookmark", "book-open", "paperclip", "attachment", "note", "notebook"],
+            "Comunicação": ["envelope", "phone-call", "message-square", "message-circle", "send", "at-sign", "hash", "rss", "bell", "bell-slash", "voicemail", "broadcast", "mailbox", "antenna", "feedback", "megaphone"],
+            "Usuário": ["user", "user-plus", "user-minus", "user-check", "user-x", "users", "user-group", "profile", "avatar", "contact", "crown", "award", "gift", "medal", "trophy", "shield-user", "user-cog", "user-shield", "verified"],
+            "Mídia": ["play", "pause", "stop", "music", "disc", "film", "fast-forward", "rewind", "skip-back", "skip-forward", "repeat", "shuffle", "headphones", "microphone", "speaker", "volume", "mute", "tv", "camera", "video", "image", "play-circle", "pause-circle", "album", "music-note", "eq-slider", "wave-signal"],
+            "Comércio": ["cart", "bag", "wallet", "credit-card", "tag", "box", "truck", "dollar", "euro", "pound", "percent", "bank", "shop", "calculator", "receipt", "coin", "ticket", "barcode", "gift-card", "storefront", "safe-box", "piggy-bank"],
+            "Ferramentas": ["tool", "wrench", "hammer", "scissors", "brush", "flask", "glasses", "sun", "moon", "wind", "umbrella", "clock", "calendar", "heartbeat", "activity", "map", "pin", "globe", "anchor", "car", "plane", "bike", "ship", "truck", "compass", "magnet", "ruler", "scale", "thermometer", "stethoscope", "first-aid", "briefcase"]
+        };
+
+        // --- 2. ENGINE DE ROTEAMENTO E NORMALIZAÇÃO DE CLASSES DE ÍCONES ---
+        // Gera as tags HTML de preview e códigos de cópia específicos para cada biblioteca e variação.
+        function generateIconObj(lib, style, name, cat) {
+            let iconClass = "";
+            let innerText = "";
+            let previewHtml = "";
+            let codeHtml = "";
+            let cssCode = "";
+            let reactCode = "";
+            
+            if (lib === "Font Awesome") {
+                if (cat === "Social") {
+                    iconClass = `fa-brands fa-${name}`;
+                } else {
+                    const prefix = style === "Solid" ? "fa-solid" : "fa-regular";
+                    let faName = name;
+                    if (name === "trash") faName = "trash-can";
+                    if (name === "edit") faName = "pen-to-square";
+                    if (name === "search") faName = "magnifying-glass";
+                    if (name === "close") faName = "xmark";
+                    iconClass = `${prefix} fa-${faName}`;
+                }
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.fa-${name}::before { content: "\\f007"; } /* Font Awesome */`;
+                reactCode = `<FontAwesomeIcon icon="${iconClass.split(" ")[1]}" />`;
+            } 
+            else if (lib === "Material Icons") {
+                let matName = name.replace(/-/g, "_");
+                if (name === "eye-slash") matName = "visibility_off";
+                if (name === "bell-slash") matName = "notifications_off";
+                if (name === "phone-call") matName = "phone_in_talk";
+                if (name === "message-square") matName = "chat_bubble";
+                if (name === "message-circle") matName = "chat";
+                if (name === "external-link") matName = "open_in_new";
+                
+                const styleSuffix = style === "Outlined" ? "material-symbols-outlined" :
+                                     style === "Rounded" ? "material-symbols-rounded" :
+                                     style === "Sharp" ? "material-symbols-sharp" : "material-icons";
+                                     
+                iconClass = styleSuffix;
+                innerText = matName;
+                previewHtml = `<span class="${iconClass}">${innerText}</span>`;
+                codeHtml = `<span class="${iconClass}">${innerText}</span>`;
+                cssCode = `.material-icons { font-family: 'Material Icons'; } /* Use "${innerText}" como conteúdo */`;
+                reactCode = `<Icon>${innerText}</Icon>`;
+            }
+            else if (lib === "Bootstrap Icons") {
+                let bsName = name;
+                if (name === "home") bsName = "house";
+                if (name === "settings") bsName = "gear";
+                if (name === "close") bsName = "x";
+                if (name === "edit") bsName = "pencil";
+                
+                const suffix = style === "Fill" ? "-fill" : "";
+                iconClass = `bi bi-${bsName}${suffix}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.bi-${bsName}::before { content: "\\f123"; }`;
+                reactCode = `<i class="${iconClass}" />`;
+            }
+            else if (lib === "Lucide") {
+                let lucName = name;
+                if (name === "edit") lucName = "pencil";
+                if (name === "close") lucName = "x";
+                iconClass = `lucide lucide-${lucName}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.lucide-${lucName} { font-family: "lucide"; }`;
+                reactCode = `<${lucName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')} />`;
+            }
+            else if (lib === "Heroicons") {
+                let heroName = name;
+                if (name === "settings") heroName = "cog-6-tooth";
+                if (name === "edit") heroName = "pencil-square";
+                if (name === "trash") heroName = "trash";
+                if (name === "search") heroName = "magnifying-glass";
+                if (name === "close") heroName = "x-mark";
+                
+                const prefix = style === "Solid" ? "his his-" : "hio hio-";
+                iconClass = `${prefix}${heroName}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.${iconClass.replace(" ", ".")} { font-family: 'Heroicons'; }`;
+                reactCode = `<HeroIcon name="${heroName}" />`;
+            }
+            else if (lib === "Tabler") {
+                let tabName = name;
+                if (name === "edit") tabName = "pencil";
+                if (name === "close") tabName = "x";
+                if (name === "home") tabName = "home-2";
+                iconClass = `ti ti-${tabName}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.ti-${tabName} { font-family: 'tabler-icons'; }`;
+                reactCode = `<Icon${tabName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')} />`;
+            }
+            else if (lib === "Remix") {
+                let remName = name;
+                if (name === "trash") remName = "delete-bin";
+                if (name === "edit") remName = "pencil";
+                if (name === "close") remName = "close";
+                const suffix = style === "Fill" ? "-fill" : "-line";
+                iconClass = `ri-${remName}${suffix}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.ri-${remName}${suffix}::before { content: "\\f101"; }`;
+                reactCode = `<i class="${iconClass}" />`;
+            }
+            else if (lib === "Phosphor") {
+                let phName = name;
+                if (name === "trash") phName = "trash";
+                if (name === "edit") phName = "pencil";
+                if (name === "close") phName = "x";
+                
+                let phStyle = "ph";
+                if (style === "Bold") phStyle = "ph-bold";
+                else if (style === "Thin") phStyle = "ph-thin";
+                else if (style === "Fill") phStyle = "ph-fill";
+                
+                iconClass = `${phStyle} ph-${phName}`;
+                previewHtml = `<i class="${iconClass}"></i>`;
+                codeHtml = `<i class="${iconClass}"></i>`;
+                cssCode = `.${iconClass.replace(" ", ".")} { font-family: 'Phosphor'; }`;
+                reactCode = `<${phName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('')} />`;
+            }
+
+            return {
+                id: `${lib}-${style}-${name}`.replace(/\s+/g, '-').toLowerCase(),
+                name: name,
+                library: lib,
+                style: style,
+                category: cat,
+                class: iconClass,
+                innerText: innerText,
+                preview: previewHtml,
+                code: codeHtml,
+                css: cssCode,
+                react: reactCode
+            };
+        }
+
+        // --- 3. GERAÇÃO DINÂMICA DA BASE DE DADOS GLOBAL ---
+        const iconsDatabase = [];
+
+        Object.entries(categories).forEach(([categoryName, iconList]) => {
+            iconList.forEach(iconName => {
+                // Font Awesome
+                if (categoryName === "Social") {
+                    iconsDatabase.push(generateIconObj("Font Awesome", "Brands", iconName, categoryName));
+                } else {
+                    iconsDatabase.push(generateIconObj("Font Awesome", "Solid", iconName, categoryName));
+                    iconsDatabase.push(generateIconObj("Font Awesome", "Outline", iconName, categoryName));
+                }
+                
+                // Material Icons
+                iconsDatabase.push(generateIconObj("Material Icons", "Outline", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Material Icons", "Rounded", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Material Icons", "Sharp", iconName, categoryName));
+                
+                // Bootstrap Icons
+                iconsDatabase.push(generateIconObj("Bootstrap Icons", "Outline", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Bootstrap Icons", "Fill", iconName, categoryName));
+                
+                // Lucide
+                iconsDatabase.push(generateIconObj("Lucide", "Outline", iconName, categoryName));
+                
+                // Heroicons
+                iconsDatabase.push(generateIconObj("Heroicons", "Outline", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Heroicons", "Solid", iconName, categoryName));
+                
+                // Tabler
+                iconsDatabase.push(generateIconObj("Tabler", "Outline", iconName, categoryName));
+                
+                // Remix
+                iconsDatabase.push(generateIconObj("Remix", "Outline", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Remix", "Fill", iconName, categoryName));
+                
+                // Phosphor
+                iconsDatabase.push(generateIconObj("Phosphor", "Outline", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Phosphor", "Bold", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Phosphor", "Thin", iconName, categoryName));
+                iconsDatabase.push(generateIconObj("Phosphor", "Fill", iconName, categoryName));
+            });
+        });
+
+        // Configuração do Contador de Estatísticas
+        document.getElementById('statsCounter').textContent = `${iconsDatabase.length.toLocaleString('pt-BR')} Ícones Disponíveis`;
+
+        // --- 4. CONTROLE DE ESTADOS (STATE MANAGEMENT) ---
+        let state = {
+            nav: 'all',          // 'all', 'favorites', 'history'
+            library: 'all',      // 'all' ou nome da biblioteca
+            category: 'all',     // 'all' ou nome da categoria
+            style: 'all',        // 'all' ou nome do estilo
+            search: '',          // Texto digitado
+            theme: localStorage.getItem('theme') || 'light'
+        };
+
+        let favoritesList = JSON.parse(localStorage.getItem('icon_favorites')) || [];
+        let copyHistoryList = JSON.parse(localStorage.getItem('icon_history')) || [];
+
+        // Elementos do DOM
+        const grid = document.getElementById('iconGrid');
+        const searchBar = document.getElementById('searchBar');
+        const sentinel = document.getElementById('sentinel');
+        const activeFiltersContainer = document.getElementById('activeFiltersContainer');
+        const themeToggle = document.getElementById('themeToggle');
+        const shareBtn = document.getElementById('shareBtn');
+
+        // Modal
+        const detailsModal = document.getElementById('detailsModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalIconName = document.getElementById('modalIconName');
+        const modalIconPreview = document.getElementById('modalIconPreview');
+        const modalCodeSnippet = document.getElementById('modalCodeSnippet');
+        const modalCopyBtn = document.getElementById('modalCopyBtn');
+        let selectedIcon = null;
+        let selectedTab = 'html';
+
+        // --- 5. SISTEMA DE PAGINAÇÃO INFINITA (INFINITE SCROLL) ---
+        let currentPage = 1;
+        const itemsPerPage = 60;
+        let filteredIconsList = [];
+
+        function filterAndSearch(resetPage = true) {
+            if (resetPage) {
+                currentPage = 1;
+                grid.innerHTML = '';
+            }
+
+            // Aplicar Filtros ao Banco de Dados Global
+            filteredIconsList = iconsDatabase.filter(icon => {
+                // Filtro de Busca (Nome, Categoria, Tags)
+                const searchLower = state.search.toLowerCase();
+                const matchesSearch = !state.search || 
+                                      icon.name.toLowerCase().includes(searchLower) || 
+                                      icon.category.toLowerCase().includes(searchLower);
+
+                // Filtro de Biblioteca
+                const matchesLibrary = state.library === 'all' || icon.library === state.library;
+
+                // Filtro de Categoria
+                const matchesCategory = state.category === 'all' || icon.category === state.category;
+
+                // Filtro de Estilo
+                const matchesStyle = state.style === 'all' || icon.style === state.style;
+
+                // Filtro de Navegação (Favoritos, Histórico)
+                let matchesNav = true;
+                if (state.nav === 'favorites') {
+                    matchesNav = favoritesList.includes(icon.id);
+                } else if (state.nav === 'history') {
+                    matchesNav = copyHistoryList.includes(icon.id);
+                }
+
+                return matchesSearch && matchesLibrary && matchesCategory && matchesStyle && matchesNav;
+            });
+
+            renderBatch();
+            renderActiveFilterChips();
+            updateUrlParams();
+        }
+
+        function renderBatch() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const batch = filteredIconsList.slice(start, end);
+
+            if (currentPage === 1 && filteredIconsList.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-search" style="font-size: 3rem; color: var(--text-muted);"></i>
+                        <p style="margin-top: 12px; font-weight: 500;">Nenhum ícone encontrado.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Tente reajustar seus filtros ou termo de pesquisa.</p>
+                    </div>`;
+                sentinel.style.display = 'none';
+                return;
+            }
+
+            batch.forEach(icon => {
+                const card = document.createElement('div');
+                card.className = 'icon-card';
+                card.setAttribute('data-id', icon.id);
+                
+                const isFav = favoritesList.includes(icon.id);
+                
+                card.innerHTML = `
+                    <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${icon.id}')">
+                        <i class="bi ${isFav ? 'bi-heart-fill' : 'bi-heart'}"></i>
+                    </button>
+                    <div class="icon-display">
+                        ${icon.preview}
+                    </div>
+                    <div class="card-meta">
+                        <div class="card-name">${icon.name}</div>
+                        <div class="card-lib">${icon.library}</div>
+                        <div class="card-badge-style">${icon.style}</div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => openModal(icon));
+                grid.appendChild(card);
+            });
+
+            // Ocultar ou mostrar o sentinel dependendo do fim dos itens
+            if (end >= filteredIconsList.length) {
+                sentinel.style.display = 'none';
+            } else {
+                sentinel.style.display = 'flex';
+            }
+        }
+
+        // IntersectionObserver para carregar mais lotes sob demanda
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && filteredIconsList.length > currentPage * itemsPerPage) {
+                currentPage++;
+                renderBatch();
+            }
+        }, { rootMargin: '100px' });
+
+        observer.observe(sentinel);
+
+        // --- 6. INTERFACES INTERATIVAS E EVENTOS ---
+
+        // Favoritos
+        window.toggleFavorite = function(e, id) {
+            e.stopPropagation();
+            const index = favoritesList.indexOf(id);
+            if (index > -1) {
+                favoritesList.splice(index, 1);
+            } else {
+                favoritesList.push(id);
+            }
+            localStorage.setItem('icon_favorites', JSON.stringify(favoritesList));
+            
+            // Atualizar o visual do botão no card
+            const card = document.querySelector(`.icon-card[data-id="${id}"]`);
+            if (card) {
+                const btn = card.querySelector('.card-fav-btn');
+                btn.classList.toggle('active');
+                const icon = btn.querySelector('i');
+                icon.className = favoritesList.includes(id) ? 'bi bi-heart-fill' : 'bi bi-heart';
+            }
+
+            if (state.nav === 'favorites') {
+                filterAndSearch(true);
+            }
+        };
+
+        // Histórico de Cópia
+        function addToHistory(id) {
+            const index = copyHistoryList.indexOf(id);
+            if (index > -1) {
+                copyHistoryList.splice(index, 1);
+            }
+            copyHistoryList.unshift(id);
+            // Manter somente as últimas 50 cópias
+            if (copyHistoryList.length > 50) copyHistoryList.pop();
+            localStorage.setItem('icon_history', JSON.stringify(copyHistoryList));
+        }
+
+        // Feedback Toast
+        function showToast() {
+            const toast = document.getElementById('toastNotification');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Gerenciamento do Modal de Detalhes
+        function openModal(icon) {
+            selectedIcon = icon;
+            selectedTab = 'html';
+            modalIconName.textContent = icon.name;
+            modalIconPreview.innerHTML = icon.preview;
+            
+            // Ativar Tab HTML por padrão
+            document.querySelectorAll('.copy-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-tab') === 'html');
+            });
+
+            updateModalSnippet();
+            detailsModal.classList.add('open');
+        }
+
+        function closeModal() {
+            detailsModal.classList.remove('open');
+            selectedIcon = null;
+        }
+
+        function updateModalSnippet() {
+            if (!selectedIcon) return;
+            let code = "";
+            if (selectedTab === 'html') {
+                code = selectedIcon.code;
+            } else if (selectedTab === 'react') {
+                code = selectedIcon.react;
+            } else if (selectedTab === 'css') {
+                code = selectedIcon.css;
+            } else if (selectedTab === 'name') {
+                code = selectedIcon.name;
+            }
+            modalCodeSnippet.textContent = code;
+        }
+
+        // Cliques em Tabs do Modal
+        document.querySelectorAll('.copy-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.copy-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                selectedTab = this.getAttribute('data-tab');
+                updateModalSnippet();
+            });
+        });
+
+        // Copiar Código do Modal
+        modalCopyBtn.addEventListener('click', () => {
+            if (!selectedIcon) return;
+            const textToCopy = modalCodeSnippet.textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                addToHistory(selectedIcon.id);
+                showToast();
+                closeModal();
+                if (state.nav === 'history') filterAndSearch(true);
+            });
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        detailsModal.addEventListener('click', (e) => {
+            if (e.target === detailsModal) closeModal();
+        });
+
+        // --- 7. DEBOUNCE NA BUSCA ---
+        let searchTimeout;
+        searchBar.addEventListener('input', (e) => {
+            state.search = e.target.value;
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterAndSearch(true);
+            }, 250);
+        });
+
+        // --- 8. GERENCIAMENTO DE FILTROS INTERATIVOS ---
+        function setupFilterEvents(elementId, stateProperty) {
+            const list = document.getElementById(elementId);
+            list.addEventListener('click', (e) => {
+                const item = e.target.closest('.nav-item');
+                if (!item) return;
+
+                list.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                state[stateProperty] = item.getAttribute(`data-${item.dataset.nav ? 'nav' : item.dataset.lib ? 'lib' : item.dataset.cat ? 'cat' : 'style'}`);
+                
+                // Se o usuário selecionou uma biblioteca/categoria, resetar a navegação de "Favoritos/Histórico"
+                if (stateProperty !== 'nav' && state.nav !== 'all') {
+                    state.nav = 'all';
+                    document.querySelectorAll('#navListNav .nav-item').forEach(i => {
+                        i.classList.toggle('active', i.getAttribute('data-nav') === 'all');
+                    });
+                }
+
+                filterAndSearch(true);
+                
+                // Fechar sidebar mobile ao escolher um filtro
+                document.querySelector('.sidebar').classList.remove('open');
+            });
+        }
+
+        setupFilterEvents('navListNav', 'nav');
+        setupFilterEvents('navListLibrary', 'library');
+        setupFilterEvents('navListCategory', 'category');
+        setupFilterEvents('navListStyle', 'style');
+
+        // Criar Chips/Tags de Filtro Ativos
+        function renderActiveFilterChips() {
+            activeFiltersContainer.innerHTML = '';
+            
+            const createChip = (label, resetCallback) => {
+                const chip = document.createElement('div');
+                chip.className = 'filter-pill';
+                chip.innerHTML = `${label} <i class="bi bi-x-circle-fill"></i>`;
+                chip.querySelector('i').addEventListener('click', resetCallback);
+                activeFiltersContainer.appendChild(chip);
+            };
+
+            if (state.library !== 'all') {
+                createChip(`Biblioteca: ${state.library}`, () => {
+                    resetFilterItem('navListLibrary', 'library');
+                });
+            }
+            if (state.category !== 'all') {
+                createChip(`Categoria: ${state.category}`, () => {
+                    resetFilterItem('navListCategory', 'category');
+                });
+            }
+            if (state.style !== 'all') {
+                createChip(`Estilo: ${state.style}`, () => {
+                    resetFilterItem('navListStyle', 'style');
+                });
+            }
+            if (state.search) {
+                createChip(`Busca: "${state.search}"`, () => {
+                    searchBar.value = '';
+                    state.search = '';
+                    filterAndSearch(true);
+                });
+            }
+        }
+
+        function resetFilterItem(listId, stateProperty) {
+            state[stateProperty] = 'all';
+            const list = document.getElementById(listId);
+            list.querySelectorAll('.nav-item').forEach(i => {
+                i.classList.toggle('active', i.getAttribute(`data-${listId.includes('Library') ? 'lib' : listId.includes('Category') ? 'cat' : 'style'}`) === 'all');
+            });
+            filterAndSearch(true);
+        }
+
+        // --- 9. CONFIGURAÇÃO DE TEMA CLARO/ESCURO ---
+        function applyTheme() {
+            document.body.classList.toggle('dark', state.theme === 'dark');
+            const icon = themeToggle.querySelector('i');
+            icon.className = state.theme === 'dark' ? 'bi bi-sun' : 'bi bi-moon';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', state.theme);
+            applyTheme();
+        });
+
+        // --- 10. URL COMPARTILHÁVEL DA PESQUISA ---
+        function updateUrlParams() {
+            const url = new URL(window.location.href);
+            const params = {
+                q: state.search,
+                lib: state.library,
+                cat: state.category,
+                style: state.style,
+                nav: state.nav
+            };
+            
+            Object.entries(params).forEach(([key, value]) => {
+                if (value && value !== 'all') {
+                    url.searchParams.set(key, value);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            });
+            window.history.replaceState({}, '', url);
+        }
+
+        function loadParamsFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            state.search = urlParams.get('q') || '';
+            state.library = urlParams.get('lib') || 'all';
+            state.category = urlParams.get('cat') || 'all';
+            state.style = urlParams.get('style') || 'all';
+            state.nav = urlParams.get('nav') || 'all';
+
+            searchBar.value = state.search;
+
+            // Sincronizar classes ativas na Sidebar
+            const syncSidebarUI = (listId, attr, val) => {
+                const list = document.getElementById(listId);
+                if (list) {
+                    list.querySelectorAll('.nav-item').forEach(i => {
+                        i.classList.toggle('active', i.getAttribute(attr) === val);
+                    });
+                }
+            };
+
+            syncSidebarUI('navListNav', 'data-nav', state.nav);
+            syncSidebarUI('navListLibrary', 'data-lib', state.library);
+            syncSidebarUI('navListCategory', 'data-cat', state.category);
+            syncSidebarUI('navListStyle', 'data-style', state.style);
+        }
+
+        shareBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const icon = shareBtn.querySelector('i');
+                icon.className = 'bi bi-check';
+                setTimeout(() => { icon.className = 'bi bi-share'; }, 2000);
+                showToast();
+            });
+        });
+
+        // --- 11. ATALHOS DE TECLADO ---
+        window.addEventListener('keydown', (e) => {
+            // Atalho '/' foca no campo de busca
+            if (e.key === '/' && document.activeElement !== searchBar) {
+                e.preventDefault();
+                searchBar.focus();
+            }
+            // Atalho 'ESC' fecha o Modal ativo
+            if (e.key === 'Escape' && detailsModal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+
+        // Mobile Sidebar Toggles
+        const filterToggle = document.getElementById('filterToggle');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebar = document.querySelector('.sidebar');
+
+        filterToggle.addEventListener('click', () => sidebar.classList.add('open'));
+        sidebarClose.addEventListener('click', () => sidebar.classList.remove('open'));
+
+        // --- 12. INICIALIZAÇÃO DA APLICAÇÃO ---
+        window.addEventListener('load', () => {
+            applyTheme();
+            loadParamsFromUrl();
+            filterAndSearch(true);
+        });
+    </script>
+</body>
+</html>
