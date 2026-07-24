@@ -4,7 +4,6 @@
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --accent-color: #4f46e5; /* Tom azul-indigo moderno */
-    --accent-hover: #4338ca;
     --border-color: #e2e8f0;
     --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
@@ -50,22 +49,26 @@ main {
 
 #container-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
 }
 
-/* O card estilizado como um bloco clicável unificado */
+/* Card centralizado verticalmente e horizontalmente */
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 28px;
+    padding: 24px;
     text-decoration: none;
     color: inherit;
+    
+    /* Configurações de alinhamento ao centro */
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 160px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    min-height: 140px; /* Reduzido levemente por ter menos elementos internos */
     box-shadow: var(--shadow-sm);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
                 box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
@@ -88,34 +91,9 @@ main {
     transition: color 0.15s ease;
 }
 
-/* Transição de cor do título quando passar o mouse no card */
+/* Transição de cor suave do título ao passar o mouse */
 .card:hover h3 {
     color: var(--accent-color);
-}
-
-/* Rodapé interno do card indicando ação */
-.card-action {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-top: 24px;
-    transition: color 0.15s ease;
-}
-
-.card:hover .card-action {
-    color: var(--accent-color);
-}
-
-/* Efeito de deslocamento sutil na seta do ícone */
-.arrow-icon {
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:hover .arrow-icon {
-    transform: translateX(4px);
 }
 
 .status-msg {
