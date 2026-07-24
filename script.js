@@ -23,23 +23,14 @@ async function carregarIdeias() {
                 .replace(/[-_]/g, ' ')
                 .replace(/\b\w/g, letra => letra.toUpperCase());
 
-            // Cria o próprio card como um elemento <a> (o card inteiro vira o link clicável)
+            // Cria o card como um link direto
             const card = document.createElement('a');
             card.className = 'card';
             card.href = `./SiteIdeas/${arquivo}`;
             card.target = '_blank';
 
-            card.innerHTML = `
-                <div class="card-content">
-                    <h3>${nomeFormatado}</h3>
-                </div>
-                <div class="card-action">
-                    <span>Explorar projeto</span>
-                    <svg class="arrow-icon" viewBox="0 0 24 24" width="16" height="16">
-                        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </div>
-            `;
+            // Deixa apenas o título dentro do card
+            card.innerHTML = `<h3>${nomeFormatado}</h3>`;
 
             container.appendChild(card);
         });
