@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento de Código Morse Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #2c3e50;
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --error-color: #e74c3c;
+            --surface-color: #ffffff;
+            --border-color: #dcdcdc;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #2980b9;
+            --secondary-color: #27ae60;
+            --error-color: #c0392b;
+            --surface-color: #1e1e1e;
+            --border-color: #333333;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--surface-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-buttons button {
+            background: none;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .header-buttons button:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Views */
+        .view { display: none; width: 100%; max-width: 800px; text-align: center; }
+        .view.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Menu View */
+        .title { font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .subtitle { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.8; }
+        .btn-large {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            transition: var(--transition);
+        }
+        .btn-large:hover { transform: scale(1.05); }
+
+        /* Training View */
+        .phase-info { display: flex; justify-content: space-between; margin-bottom: 2rem; font-size: 1.2rem; font-weight: bold; }
+        .word-display { font-size: 4rem; letter-spacing: 5px; margin-bottom: 1rem; text-transform: uppercase; }
+        .typed-display { font-size: 2rem; color: var(--secondary-color); min-height: 3rem; margin-bottom: 1rem; letter-spacing: 5px;}
+        .morse-buffer { font-size: 3rem; font-weight: bold; color: var(--primary-color); min-height: 4rem; letter-spacing: 10px; }
+        .indicator-bar { width: 100%; height: 10px; background: var(--border-color); border-radius: 5px; overflow: hidden; margin: 2rem 0; position: relative; }
+        .indicator-fill { height: 100%; width: 0%; background: var(--primary-color); transition: width 0.1s linear; }
+        
+        .flash-error { animation: flashRed 0.5s; }
+        @keyframes flashRed { 0% { background-color: var(--error-color); } 100% { background-color: var(--bg-color); } }
+
+        /* Results View */
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+        .stat-box { background: var(--surface-color); padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .chart-container { background: var(--surface-color); padding: 1rem; border-radius: 10px; margin-top: 2rem; position: relative; height: 300px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
+        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+
+        /* Modals */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-content {
+            background: var(--surface-color); padding: 2rem; border-radius: 10px;
+            width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .close-btn { float: right; cursor: pointer; font-size: 1.5rem; font-weight: bold; }
+        
+        /* Settings */
+        .form-group { margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+        .form-group label { flex: 1; }
+        .form-group input, .form-group select { flex: 1; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 5px; background: var(--bg-color); color: var(--text-color); }
+        
+        /* Morse Table */
+        .morse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 1rem; }
+        .morse-item { background: var(--bg-color); padding: 0.5rem; border-radius: 5px; text-align: center; border: 1px solid var(--border-color); font-weight: bold; }
+        .morse-item span { color: var(--primary-color); display: block; font-size: 1.2rem; }
+
+        /* Helpers */
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>MorsePro</h2>
+        <div class="header-buttons">
+            <button onclick="openModal('tableModal')">Tabela Morse</button>
+            <button onclick="openModal('settingsModal')">Configurações</button>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- View: Menu Principal -->
+        <div id="menuView" class="view active">
+            <h1 class="title">Treinamento de Código Morse</h1>
+            <p class="subtitle">Aprenda e treine sua velocidade e precisão no manipulador.</p>
+            <button class="btn-large" onclick="startPhase()">Iniciar Fase</button>
+            
+            <div class="stat-box mt-2" style="max-width: 400px; margin: 2rem auto;">
+                <h3>Estatísticas Globais</h3>
+                <p>Recorde de Pontuação: <span id="globalHighScore">0</span></p>
+                <p>Maior Sequência: <span id="globalMaxStreak">0</span></p>
+                <p>Palavras Concluídas: <span id="globalWordsDone">0</span></p>
+            </div>
+        </div>
+
+        <!-- View: Treinamento -->
+        <div id="trainingView" class="view">
+            <div class="phase-info">
+                <span id="phaseScoreDisplay">Pontos: 0</span>
+                <span id="phaseProgressDisplay">Palavra: 1 / 5</span>
+                <span id="streakDisplay">Sequência: 0</span>
+            </div>
+            
+            <div class="word-display" id="targetWord">...</div>
+            <div class="typed-display" id="typedWord"></div>
+            <div class="morse-buffer" id="morseBuffer"></div>
+            
+            <div class="indicator-bar">
+                <div class="indicator-fill" id="pressIndicator"></div>
+            </div>
+            <p style="opacity: 0.7;" id="instructionText">Pressione a tecla configurada (Padrão: Enter)</p>
+        </div>
+
+        <!-- View: Resultados -->
+        <div id="resultsView" class="view">
+            <h2 class="title">Fase Concluída!</h2>
+            
+            <div class="results-grid">
+                <div class="stat-box">
+                    <h3>Pontuação</h3>
+                    <p class="text-center" style="font-size: 2rem; color: var(--primary-color); font-weight: bold;" id="resScore">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Estatísticas</h3>
+                    <p>Tempo da Fase: <span id="resTime">0</span>s</p>
+                    <p>Precisão: <span id="resAccuracy">0</span>%</p>
+                    <p>Velocidade Média: <span id="resWpm">0</span> PPM</p>
+                    <p>Erros na fase: <span id="resErrors">0</span></p>
+                </div>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container"><canvas id="barChart"></canvas></div>
+                <div class="chart-container"><canvas id="lineChart"></canvas></div>
+                <div class="chart-container"><canvas id="radarChart"></canvas></div>
+                <div class="chart-container"><canvas id="historyChart"></canvas></div>
+            </div>
+
+            <button class="btn-large mt-2" onclick="returnToMenu()">Voltar ao Menu</button>
+            <button class="btn-large mt-2" onclick="startPhase()" style="background-color: var(--secondary-color);">Próxima Fase</button>
+        </div>
+    </main>
+
+    <!-- Modal: Tabela Morse -->
+    <div id="tableModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('tableModal')">&times;</span>
+            <h2>Tabela de Código Morse</h2>
+            <div id="morseGrid" class="morse-grid"></div>
+        </div>
+    </div>
+
+    <!-- Modal: Configurações -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+            <h2>Configurações</h2>
+            <br>
+            <div class="form-group">
+                <label>Idioma do Banco de Palavras:</label>
+                <select id="setLanguage" onchange="saveSettings()">
+                    <option value="pt">Português</option>
+                    <option value="en">Inglês</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tema:</label>
+                <select id="setTheme" onchange="saveSettings()">
+                    <option value="light">Claro</option>
+                    <option value="dark">Escuro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Botão de Entrada:</label>
+                <input type="text" id="setInputKey" readonly placeholder="Clique e aperte uma tecla" onkeydown="bindKey(event)" onmousedown="bindMouse(event)" oncontextmenu="event.preventDefault()">
+            </div>
+            <div class="form-group">
+                <label>Tempo Máximo para Ponto (ms):</label>
+                <input type="number" id="setDashTime" min="100" max="500" onchange="saveSettings()">
+            </div>
+            <div class="form-group">
+                <label>Tempo de Pausa - Letra (ms):</label>
+                <input type="number" id="setLetterPause" min="300" max="1500" onchange="saveSettings()">
+            </div>
+            <div class="form-group">
+                <label>Volume do Telégrafo:</label>
+                <input type="range" id="setVolume" min="0" max="1" step="0.1" onchange="saveSettings()">
+            </div>
+            <button class="btn-large" style="width: 100%; margin-top: 1rem; font-size: 1rem;" onclick="closeModal('settingsModal')">Salvar e Fechar</button>
+        </div>
+    </div>
+
+<script>
+/* =========================================
+   DICIONÁRIOS E MAPAS
+========================================= */
+const morseMap = {
+    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..',
+    'J': '.---', 'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+    'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
+    '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+    '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--'
+};
+
+const reverseMorseMap = Object.keys(morseMap).reduce((acc, key) => { acc[morseMap[key]] = key; return acc; }, {});
+
+// 300 Palavras - Português (Níveis variados)
+const ptWords = [
+    "sol","lua","dia","mar","paz","luz","ceu","cor","som","rei","lei","pai","mae","fio","rio",
+    "amor","casa","vida","fogo","agua","flor","doce","bola","faca","gato","rato","pato","lobo","urso","leao",
+    "arvore","janela","escola","amigo","livro","tempo","mundo","noite","tarde","festa","papel","pedra","vento","chuva","neve",
+    "computador","eletricidade","universo","matematica","tecnologia","inteligencia","biblioteca","natureza","sociedade","esperanca",
+    "passaro","cavalo","cachorro","elefante","borboleta","tartaruga","dinossauro","crocodilo","rinoceronte","hipopotamo",
+    "abacate","banana","laranja","morango","melancia","abacaxi","tangerina","framboesa","maracuja","carambola",
+    "telefone","televisao","geladeira","microondas","ventilador","liquidificador","aspirador","batedeira","torradeira","ferro",
+    "caminho","estrada","rodovia","avenida","travessa","viaduto","passarela","ferrovia","ciclovia","trilha",
+    "musica","poesia","pintura","escultura","arquitetura","fotografia","literatura","teatro","cinema","danca",
+    "cidade","estado","planeta","galaxia","continente","oceano","deserto","floresta","montanha","caverna",
+    "relogio","espelho","quadro","tapete","cortina","almofada","colchao","travesseiro","cobertor","lençol",
+    "caneta","lapis","caderno","borracha","tesoura","regua","estojo","mochila","lancheira","uniforme",
+    "carro","onibus","aviao","navio","trem","bicicleta","motocicleta","helicoptero","submarino","foguete",
+    "medico","professor","engenheiro","advogado","arquiteto","dentista","enfermeiro","bombeiro","policial","carteiro",
+    "alegria","tristeza","coragem","medo","raiva","surpresa","angustia","ansiedade","empatia","simpatia",
+    "branco","preto","vermelho","azul","amarelo","verde","laranja","roxo","marrom","cinza",
+    "janeiro","fevereiro","marco","abril","maio","junho","julho","agosto","setembro","outubro",
+    "segunda","terca","quarta","quinta","sexta","sabado","domingo","feriado","semana","mes",
+    "primavera","verao","outono","inverno","estacao","clima","temperatura","umidade","pressao","vento",
+    "norte","sul","leste","oeste","nordeste","noroeste","sudeste","sudoeste","centro","equador",
+    "cabeça","ombro","joelho","pe","mao","braco","perna","olho","orelha","boca",
+    "coracao","pulmao","estomago","figado","rim","cerebro","sangue","osso","musculo","pele",
+    "familia","parente","irmao","tio","avo","primo","sobrinho","cunhado","sogro","genro",
+    "casamento","aniversario","formatura","batizado","noivado","encontro","reuniao","despedida","chegada","viagem",
+    "hotel","pousada","albergue","resort","camping","motel","pensao","hospedagem","turismo","guia",
+    "dinheiro","moeda","cheque","cartao","banco","caixa","conta","poupanca","investimento","lucro",
+    "trabalho","emprego","salario","empresa","industria","comercio","loja","mercado","feirante","cliente",
+    "jogo","brinquedo","esporte","futebol","volei","basquete","natacao","corrida","salto","luta",
+    "historia","geografia","ciencias","fisica","quimica","biologia","filosofia","sociologia","gramatica","redacao",
+    "pergunta","resposta","duvida","certeza","verdade","mentira","ilusao","realidade","sonho","pesadelo"
+];
+
+// 300 Words - English (Varied levels)
+const enWords = [
+    "sun","moon","day","sea","peace","light","sky","color","sound","king","law","dad","mom","wire","river",
+    "love","house","life","fire","water","flower","sweet","ball","knife","cat","rat","duck","wolf","bear","lion",
+    "tree","window","school","friend","book","time","world","night","afternoon","party","paper","stone","wind","rain","snow",
+    "computer","electricity","universe","mathematics","technology","intelligence","library","nature","society","hope",
+    "bird","horse","dog","elephant","butterfly","turtle","dinosaur","crocodile","rhinoceros","hippopotamus",
+    "avocado","banana","orange","strawberry","watermelon","pineapple","tangerine","raspberry","passionfruit","starfruit",
+    "telephone","television","refrigerator","microwave","fan","blender","vacuum","mixer","toaster","iron",
+    "path","road","highway","avenue","lane","viaduct","footbridge","railway","bikeway","trail",
+    "music","poetry","painting","sculpture","architecture","photography","literature","theater","cinema","dance",
+    "city","state","planet","galaxy","continent","ocean","desert","forest","mountain","cave",
+    "clock","mirror","painting","rug","curtain","cushion","mattress","pillow","blanket","sheet",
+    "pen","pencil","notebook","eraser","scissors","ruler","pencilcase","backpack","lunchbox","uniform",
+    "car","bus","airplane","ship","train","bicycle","motorcycle","helicopter","submarine","rocket",
+    "doctor","teacher","engineer","lawyer","architect","dentist","nurse","firefighter","police","postman",
+    "joy","sadness","courage","fear","anger","surprise","anguish","anxiety","empathy","sympathy",
+    "white","black","red","blue","yellow","green","orange","purple","brown","gray",
+    "january","february","march","april","may","june","july","august","september","october",
+    "monday","tuesday","wednesday","thursday","friday","saturday","sunday","holiday","week","month",
+    "spring","summer","autumn","winter","season","climate","temperature","humidity","pressure","wind",
+    "north","south","east","west","northeast","northwest","southeast","southwest","center","equator",
+    "head","shoulder","knee","foot","hand","arm","leg","eye","ear","mouth",
+    "heart","lung","stomach","liver","kidney","brain","blood","bone","muscle","skin",
+    "family","relative","brother","uncle","grandfather","cousin","nephew","brotherinlaw","fatherinlaw","soninlaw",
+    "marriage","birthday","graduation","baptism","engagement","meeting","gathering","farewell","arrival","travel",
+    "hotel","inn","hostel","resort","camping","motel","pension","lodging","tourism","guide",
+    "money","coin","check","card","bank","cashier","account","savings","investment","profit",
+    "work","job","salary","company","industry","commerce","store","market","vendor","customer",
+    "game","toy","sport","soccer","volleyball","basketball","swimming","running","jump","fight",
+    "history","geography","science","physics","chemistry","biology","philosophy","sociology","grammar","essay",
+    "question","answer","doubt","certainty","truth","lie","illusion","reality","dream","nightmare"
+];
+
+const wordBank = { pt: ptWords, en: enWords };
+
+/* =========================================
+   ESTADO GLOBAL E CONFIGURAÇÕES
+========================================= */
+let config = {
+    language: 'pt',
+    theme: 'dark',
+    inputKey: 'Enter', // pode ser 'MouseLeft', 'MouseRight' ou tecla
+    dashTime: 200,     // ms para considerar traço
+    letterPause: 600,  // ms de pausa para fechar letra
+    volume: 0.5
+};
+
+let stats = {
+    highScore: 0,
+    maxStreak: 0,
+    wordsDone: 0,
+    wordUsage: {}, // Ex: {'casa': 2, 'amor': 1}
+    phaseHistory: [] // histórico de pontuações
+};
+
+let gameState = {
+    status: 'menu', // menu, playing, results
+    phaseWords: [],
+    currentWordIdx: 0,
+    targetWord: '',
+    typedWord: '',
+    currentMorse: '',
+    phaseStartTime: 0,
+    wordStartTime: 0,
+    phaseErrors: 0,
+    wordTimes: [],
+    streak: 0,
+    score: 0
+};
+
+// Referências Audio / Input
+let audioCtx, oscillator, gainNode;
+let isPressed = false;
+let pressStartTime = 0;
+let letterTimeout;
+let visualizerReq;
+
+// Gráficos Chart.js
+let charts = {};
+
+/* =========================================
+   INICIALIZAÇÃO E ARMAZENAMENTO
+========================================= */
+function init() {
+    loadSettings();
+    applyTheme();
+    renderMorseTable();
+    updateGlobalStatsUI();
+}
+
+function loadSettings() {
+    const savedConf = localStorage.getItem('morseConfig');
+    if(savedConf) config = {...config, ...JSON.parse(savedConf)};
+    
+    const savedStats = localStorage.getItem('morseStats');
+    if(savedStats) stats = {...stats, ...JSON.parse(savedStats)};
+
+    // Atualiza Modal
+    document.getElementById('setLanguage').value = config.language;
+    document.getElementById('setTheme').value = config.theme;
+    document.getElementById('setInputKey').value = config.inputKey;
+    document.getElementById('setDashTime').value = config.dashTime;
+    document.getElementById('setLetterPause').value = config.letterPause;
+    document.getElementById('setVolume').value = config.volume;
+}
+
+function saveSettings() {
+    config.language = document.getElementById('setLanguage').value;
+    config.theme = document.getElementById('setTheme').value;
+    config.dashTime = parseInt(document.getElementById('setDashTime').value);
+    config.letterPause = parseInt(document.getElementById('setLetterPause').value);
+    config.volume = parseFloat(document.getElementById('setVolume').value);
+    
+    localStorage.setItem('morseConfig', JSON.stringify(config));
+    applyTheme();
+}
+
+function saveStats() {
+    localStorage.setItem('morseStats', JSON.stringify(stats));
+    updateGlobalStatsUI();
+}
+
+function applyTheme() {
+    document.body.setAttribute('data-theme', config.theme);
+}
+
+function updateGlobalStatsUI() {
+    document.getElementById('globalHighScore').innerText = stats.highScore;
+    document.getElementById('globalMaxStreak').innerText = stats.maxStreak;
+    document.getElementById('globalWordsDone').innerText = stats.wordsDone;
+}
+
+/* =========================================
+   AUDIO (Web Audio API)
+========================================= */
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        gainNode = audioCtx.createGain();
+        gainNode.connect(audioCtx.destination);
+    }
+}
+
+function playBeep() {
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    initAudio();
+    oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); // Tom clássico
+    gainNode.gain.setValueAtTime(config.volume, audioCtx.currentTime);
+    oscillator.connect(gainNode);
+    oscillator.start();
+}
+
+function stopBeep() {
+    if (oscillator) {
+        oscillator.stop();
+        oscillator.disconnect();
+        oscillator = null;
+    }
+}
+
+function playSound(type) {
+    initAudio();
+    const osc = audioCtx.createOscillator();
+    const gn = audioCtx.createGain();
+    osc.connect(gn);
+    gn.connect(audioCtx.destination);
+    
+    if (type === 'success') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+        gn.gain.setValueAtTime(config.volume, audioCtx.currentTime);
+        gn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+    } else if (type === 'error') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        gn.gain.setValueAtTime(config.volume, audioCtx.currentTime);
+        gn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+    }
+}
+
+/* =========================================
+   SISTEMA DE ENTRADA (INPUT)
+========================================= */
+function bindKey(e) {
+    e.preventDefault();
+    config.inputKey = e.code;
+    document.getElementById('setInputKey').value = e.code;
+    saveSettings();
+}
+
+function bindMouse(e) {
+    e.preventDefault();
+    let btn = e.button === 0 ? 'MouseLeft' : e.button === 2 ? 'MouseRight' : 'MouseMiddle';
+    config.inputKey = btn;
+    document.getElementById('setInputKey').value = btn;
+    saveSettings();
+}
+
+// Global Listeners
+window.addEventListener('keydown', (e) => {
+    if (e.repeat || gameState.status !== 'playing') return;
+    if (e.code === config.inputKey) handlePressDown();
+});
+window.addEventListener('keyup', (e) => {
+    if (gameState.status !== 'playing') return;
+    if (e.code === config.inputKey) handlePressUp();
+});
+window.addEventListener('mousedown', (e) => {
+    if (gameState.status !== 'playing' || e.target.tagName === 'BUTTON') return;
+    let btn = e.button === 0 ? 'MouseLeft' : e.button === 2 ? 'MouseRight' : 'MouseMiddle';
+    if (btn === config.inputKey) { e.preventDefault(); handlePressDown(); }
+});
+window.addEventListener('mouseup', (e) => {
+    if (gameState.status !== 'playing') return;
+    let btn = e.button === 0 ? 'MouseLeft' : e.button === 2 ? 'MouseRight' : 'MouseMiddle';
+    if (btn === config.inputKey) { e.preventDefault(); handlePressUp(); }
+});
+window.addEventListener('contextmenu', (e) => {
+    if(config.inputKey === 'MouseRight' && gameState.status === 'playing') e.preventDefault();
+});
+
+function handlePressDown() {
+    isPressed = true;
+    pressStartTime = Date.now();
+    clearTimeout(letterTimeout);
+    playBeep();
+    requestAnimationFrame(updateVisualizer);
+    
+    // Inicia cronômetro da palavra se for primeira interação
+    if(gameState.currentMorse === '' && gameState.typedWord === '') {
+        gameState.wordStartTime = Date.now();
+    }
+}
+
+function handlePressUp() {
+    if (!isPressed) return;
+    isPressed = false;
+    let duration = Date.now() - pressStartTime;
+    stopBeep();
+
+    if (duration < config.dashTime) {
+        gameState.currentMorse += '.';
+    } else {
+        gameState.currentMorse += '-';
+    }
+    
+    updateDisplay();
+    
+    // Inicia timeout para fechar a letra
+    letterTimeout = setTimeout(processLetter, config.letterPause);
+}
+
+function updateVisualizer() {
+    if (!isPressed) {
+        document.getElementById('pressIndicator').style.width = '0%';
+        return;
+    }
+    let duration = Date.now() - pressStartTime;
+    let percent = Math.min((duration / config.dashTime) * 100, 100);
+    let color = duration < config.dashTime ? 'var(--secondary-color)' : 'var(--primary-color)';
+    
+    const indicator = document.getElementById('pressIndicator');
+    indicator.style.width = percent + '%';
+    indicator.style.background = color;
+    
+    requestAnimationFrame(updateVisualizer);
+}
+
+/* =========================================
+   LÓGICA DO JOGO
+========================================= */
+function startPhase() {
+    switchView('trainingView');
+    gameState.status = 'playing';
+    gameState.phaseWords = generatePhaseWords();
+    gameState.currentWordIdx = 0;
+    gameState.phaseStartTime = Date.now();
+    gameState.phaseErrors = 0;
+    gameState.wordTimes = [];
+    gameState.streak = 0;
+    gameState.score = 0;
+    
+    loadNextWord();
+}
+
+function generatePhaseWords() {
+    const langWords = wordBank[config.language];
+    // Ordena palavras pela contagem de uso
+    let sorted = [...langWords].sort((a,b) => (stats.wordUsage[a]||0) - (stats.wordUsage[b]||0));
+    
+    let phaseWords = [];
+    // Pega as 3 menos usadas/inéditas
+    phaseWords.push(sorted[0], sorted[1], sorted[2]);
+    
+    // Busca 2 palavras já usadas (se houver), ou mais das menos usadas
+    let usedWords = langWords.filter(w => (stats.wordUsage[w]||0) > 0 && !phaseWords.includes(w));
+    if (usedWords.length >= 2) {
+        let shuffledUsed = usedWords.sort(() => 0.5 - Math.random());
+        phaseWords.push(shuffledUsed[0], shuffledUsed[1]);
+    } else {
+        phaseWords.push(sorted[3], sorted[4]);
+    }
+    
+    // Embaralha as 5
+    return phaseWords.sort(() => 0.5 - Math.random());
+}
+
+function loadNextWord() {
+    gameState.targetWord = gameState.phaseWords[gameState.currentWordIdx].toUpperCase();
+    gameState.typedWord = '';
+    gameState.currentMorse = '';
+    
+    updateDisplay();
+    document.getElementById('phaseProgressDisplay').innerText = `Palavra: ${gameState.currentWordIdx + 1} / 5`;
+    document.getElementById('streakDisplay').innerText = `Sequência: ${gameState.streak}`;
+    document.getElementById('phaseScoreDisplay').innerText = `Pontos: ${Math.floor(gameState.score)}`;
+}
+
+function updateDisplay() {
+    document.getElementById('targetWord').innerText = gameState.targetWord;
+    document.getElementById('typedWord').innerText = gameState.typedWord;
+    document.getElementById('morseBuffer').innerText = gameState.currentMorse;
+}
+
+function processLetter() {
+    if (gameState.currentMorse === '') return;
+    
+    let translated = reverseMorseMap[gameState.currentMorse];
+    gameState.currentMorse = '';
+    
+    if (!translated) {
+        triggerError();
+        return;
+    }
+    
+    let expectedLetter = gameState.targetWord[gameState.typedWord.length];
+    
+    if (translated === expectedLetter) {
+        // Acertou a letra
+        gameState.typedWord += translated;
+        updateDisplay();
+        
+        // Verificou se a palavra terminou
+        if (gameState.typedWord === gameState.targetWord) {
+            wordComplete();
+        }
+    } else {
+        // Errou a letra
+        triggerError();
+    }
+}
+
+function wordComplete() {
+    playSound('success');
+    let timeTaken = (Date.now() - gameState.wordStartTime) / 1000;
+    gameState.wordTimes.push({ word: gameState.targetWord, time: timeTaken });
+    
+    // Pontuação: Base + Bonus por velocidade
+    let expectedTime = gameState.targetWord.length * 1.5; // aprox 1.5s por letra
+    let speedBonus = Math.max(0, expectedTime - timeTaken) * 10;
+    gameState.score += 50 + speedBonus + (gameState.streak * 5);
+    
+    gameState.streak++;
+    stats.maxStreak = Math.max(stats.maxStreak, gameState.streak);
+    stats.wordsDone++;
+    
+    // Registra uso da palavra
+    let w = gameState.targetWord.toLowerCase();
+    stats.wordUsage[w] = (stats.wordUsage[w] || 0) + 1;
+    saveStats();
+    
+    gameState.currentWordIdx++;
+    
+    if (gameState.currentWordIdx >= 5) {
+        endPhase();
+    } else {
+        setTimeout(loadNextWord, 500);
+    }
+}
+
+function triggerError() {
+    playSound('error');
+    gameState.phaseErrors++;
+    gameState.streak = 0;
+    
+    // Flash vermelho
+    const main = document.getElementById('main');
+    main.classList.add('flash-error');
+    setTimeout(() => main.classList.remove('flash-error'), 500);
+    
+    // Reinicia a fase do zero
+    gameState.currentWordIdx = 0;
+    gameState.score = 0;
+    gameState.wordTimes = [];
+    setTimeout(loadNextWord, 600);
+}
+
+function endPhase() {
+    gameState.status = 'results';
+    let totalTime = (Date.now() - gameState.phaseStartTime) / 1000;
+    
+    stats.highScore = Math.max(stats.highScore, Math.floor(gameState.score));
+    
+    stats.phaseHistory.push(Math.floor(gameState.score));
+    if (stats.phaseHistory.length > 10) stats.phaseHistory.shift(); // Mantem ultimos 10
+    
+    saveStats();
+    showResults(totalTime);
+}
+
+/* =========================================
+   RESULTADOS E GRÁFICOS (Chart.js)
+========================================= */
+function showResults(totalTime) {
+    switchView('resultsView');
+    
+    let accuracy = 100 - (gameState.phaseErrors * 20); // Simples calc
+    if(accuracy < 0) accuracy = 0;
+    
+    // Calculo de PPM (Palavras por minuto) -> 5 palavras em X segundos
+    let wpm = (5 / totalTime) * 60;
+    
+    document.getElementById('resScore').innerText = Math.floor(gameState.score);
+    document.getElementById('resTime').innerText = totalTime.toFixed(1);
+    document.getElementById('resAccuracy').innerText = accuracy;
+    document.getElementById('resWpm').innerText = wpm.toFixed(1);
+    document.getElementById('resErrors').innerText = gameState.phaseErrors;
+    
+    renderCharts(wpm, accuracy);
+}
+
+function renderCharts(wpm, accuracy) {
+    // Destroi antigos se existirem
+    Object.values(charts).forEach(c => c.destroy());
+    
+    Chart.defaults.color = config.theme === 'dark' ? '#e0e0e0' : '#2c3e50';
+    let pColor = config.theme === 'dark' ? '#2980b9' : '#3498db';
+    let sColor = config.theme === 'dark' ? '#27ae60' : '#2ecc71';
+    
+    // 1. Gráfico de Barras: Tempo gasto em cada palavra
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    charts.bar = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: gameState.wordTimes.map(w => w.word),
+            datasets: [{
+                label: 'Tempo (segundos)',
+                data: gameState.wordTimes.map(w => w.time),
+                backgroundColor: pColor
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Tempo por Palavra' } } }
+    });
+
+    // 2. Gráfico de Linha: Evolução de Velocidade (Letras por seg) na fase
+    const ctxLine = document.getElementById('lineChart').getContext('2d');
+    let lps = gameState.wordTimes.map(w => w.word.length / w.time);
+    charts.line = new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: gameState.wordTimes.map(w => w.word),
+            datasets: [{
+                label: 'Velocidade (Letras/seg)',
+                data: lps,
+                borderColor: sColor,
+                tension: 0.3,
+                fill: true,
+                backgroundColor: sColor + '33'
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Evolução de Velocidade' } } }
+    });
+
+    // 3. Gráfico de Radar: Perfomance
+    const ctxRadar = document.getElementById('radarChart').getContext('2d');
+    let consistency = 100 - (Math.max(...lps) - Math.min(...lps)) * 10; // Ficticio para demo
+    charts.radar = new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+            labels: ['Precisão', 'Velocidade', 'Consistência', 'Tempo de Reação'],
+            datasets: [{
+                label: 'Performance Atual',
+                data: [accuracy, Math.min(wpm * 2, 100), Math.max(consistency, 10), 80],
+                backgroundColor: 'rgba(52, 152, 219, 0.4)',
+                borderColor: pColor
+            }]
+        },
+        options: { 
+            responsive: true, maintainAspectRatio: false, 
+            scales: { r: { min: 0, max: 100, ticks: { display: false } } },
+            plugins: { title: { display: true, text: 'Métricas de Performance' } }
+        }
+    });
+
+    // 4. Gráfico de Histórico: Pontuação ultimas fases
+    const ctxHist = document.getElementById('historyChart').getContext('2d');
+    charts.hist = new Chart(ctxHist, {
+        type: 'line',
+        data: {
+            labels: stats.phaseHistory.map((_, i) => 'F' + (i+1)),
+            datasets: [{
+                label: 'Pontuação Histórica',
+                data: stats.phaseHistory,
+                borderColor: '#e67e22',
+                backgroundColor: '#e67e2233',
+                fill: true,
+                stepped: true
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Histórico de Pontuação' } } }
+    });
+}
+
+/* =========================================
+   UI E UTILITÁRIOS
+========================================= */
+function switchView(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+}
+
+function returnToMenu() {
+    gameState.status = 'menu';
+    switchView('menuView');
+}
+
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+function renderMorseTable() {
+    const grid = document.getElementById('morseGrid');
+    grid.innerHTML = '';
+    // A-Z, 0-9
+    for (let key in morseMap) {
+        let div = document.createElement('div');
+        div.className = 'morse-item';
+        div.innerHTML = `${key} <span>${morseMap[key]}</span>`;
+        grid.appendChild(div);
+    }
+}
+
+// Inicia aplicação
+window.onload = init;
+
+</script>
+</body>
+</html>
