@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roda a Roda - Edição do Show (600 Palavras/Língua)</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    
+    <!-- External CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-deep: #070913;
+            --bg-card: rgba(18, 24, 43, 0.85);
+            --gold-primary: #ffd700;
+            --gold-glow: #ffaa00;
+            --blue-tv: #00d2ff;
+            --blue-dark: #0a1128;
+            --red-alert: #ff3366;
+            --green-success: #00e676;
+            --text-main: #f8fafc;
+            --border-glow: rgba(255, 215, 0, 0.3);
+            --font-main: 'Outfit', sans-serif;
+            --font-display: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(0, 210, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ambient-light {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% -20%, rgba(255, 215, 0, 0.15), transparent 70%);
+            z-index: 1;
+        }
+
+        /* Overlays & Modals */
+        .screen-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 15, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        .screen-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal-card {
+            background: linear-gradient(145deg, rgba(20, 30, 55, 0.9), rgba(10, 15, 30, 0.95));
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #fff 20%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700 0%, #ff8800 100%);
+            color: #000;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 170, 0, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold-primary);
+        }
+
+        /* Selection Options */
+        .lang-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .option-card:hover, .option-card.selected {
+            border-color: var(--gold-primary);
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .option-card span {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .player-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .player-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-row input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .player-row input:focus {
+            border-color: var(--gold-primary);
+        }
+
+        /* Main Game Layout */
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 20px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #fff 0%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .category-badge {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(0, 100, 255, 0.2));
+            border: 1px solid var(--blue-tv);
+            color: var(--blue-tv);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        /* Game Arena */
+        .game-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr 340px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 1200px) {
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Column: Wheel */
+        .wheel-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            z-index: 10;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+        }
+
+        .wheel-pointer polygon {
+            fill: #ff3366;
+            stroke: #fff;
+            stroke-width: 2;
+        }
+
+        .current-prize-display {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--gold-primary);
+            border-radius: 16px;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .prize-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .prize-value {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold-primary);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Center Column: Words Board */
+        .board-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 24px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 520px;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .words-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .word-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .guess-word-btn {
+            position: absolute;
+            right: 0;
+            background: rgba(255, 215, 0, 0.15);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .guess-word-btn:hover {
+            background: var(--gold-primary);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .letter-tile {
+            width: 38px;
+            height: 48px;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid rgba(0, 210, 255, 0.4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 4px 8px rgba(0,0,0,0.4);
+            perspective: 1000px;
+            transition: all 0.3s;
+        }
+
+        .letter-tile.space {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            width: 16px;
+        }
+
+        .letter-tile.revealed {
+            background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+            border-color: var(--gold-primary);
+            color: #0b1329;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            animation: flipTile 0.5s ease forwards;
+        }
+
+        @keyframes flipTile {
+            0% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        /* Keyboard */
+        .keyboard-container {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kb-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .key-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 40px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .key-btn:hover:not(:disabled) {
+            background: var(--blue-tv);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .key-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: transparent;
+        }
+
+        .key-btn.correct {
+            background: var(--green-success) !important;
+            color: #000 !important;
+            border-color: var(--green-success);
+        }
+
+        .key-btn.wrong {
+            background: var(--red-alert) !important;
+            color: #fff !important;
+            border-color: var(--red-alert);
+        }
+
+        /* Sidebar: Players & Logs */
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .players-card, .history-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .player-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .player-item.active {
+            border-color: var(--gold-primary);
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            transform: scale(1.02);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-glow));
+            color: #000;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .player-score {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+        }
+
+        .history-log {
+            max-height: 140px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            padding-right: 5px;
+        }
+
+        .history-log::-webkit-scrollbar { width: 4px; }
+        .history-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        .log-entry {
+            padding: 6px 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border-left: 3px solid var(--blue-tv);
+        }
+        .log-entry.error { border-left-color: var(--red-alert); }
+        .log-entry.success { border-left-color: var(--green-success); }
+
+        .stats-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-table th { color: #94a3b8; font-size: 0.85rem; text-transform: uppercase; }
+        .stats-table td { font-weight: 600; }
+
+        .winner-crown {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+
+    <!-- MODAL 1: Seleção de Idioma -->
+    <div id="modal-lang" class="screen-overlay">
+        <div class="modal-card">
+            <h1 class="modal-title">Roda a Roda</h1>
+            <p class="modal-subtitle">Escolha o banco de palavras (600 palavras por idioma)</p>
+            
+            <div class="lang-options">
+                <div class="option-card selected" onclick="selectLang('pt')">
+                    <span>🇧🇷 Português (Brasil)</span>
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <div class="option-card" onclick="selectLang('en')">
+                    <span>🇺🇸 Inglês</span>
+                    <i data-lucide="circle"></i>
+                </div>
+                <div class="option-card" onclick="selectLang('multi')">
+                    <span>🌐 Multilíngue (Mistura 1.200 Palavras)</span>
+                    <i data-lucide="circle"></i>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="confirmLang()">
+                <span>Continuar</span>
+                <i data-lucide="arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Cadastro de Participantes -->
+    <div id="modal-players" class="screen-overlay hidden">
+        <div class="modal-card">
+            <h1 class="modal-title">Participantes</h1>
+            <p class="modal-subtitle">Cadastre de 2 a 4 jogadores</p>
+            
+            <div class="player-input-group" id="playerInputs">
+                <div class="player-row">
+                    <input type="text" placeholder="Nome do Jogador 1" value="Jogador 1">
+                </div>
+                <div class="player-row">
+                    <input type="text" placeholder="Nome do Jogador 2" value="Jogador 2">
+                </div>
+                <div class="player-row">
+                    <input type="text" placeholder="Nome do Jogador 3 (Opcional)" value="Jogador 3">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="btn-secondary" style="flex: 1" onclick="addPlayerInput()">+ Jogador</button>
+                <button class="btn-secondary" style="flex: 1" onclick="removePlayerInput()">- Remover</button>
+            </div>
+
+            <button class="btn-primary" onclick="startGame()">
+                <span>Iniciar Jogo</span>
+                <i data-lucide="play"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Adivinhar Palavra -->
+    <div id="modal-guess" class="screen-overlay hidden">
+        <div class="modal-card">
+            <h1 class="modal-title" style="font-size: 1.8rem;">Adivinhar Palavra</h1>
+            <p class="modal-subtitle">Digite a palavra exata para tentar pontuar</p>
+            
+            <input type="text" id="guessInput" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid var(--gold-primary); background: #000; color: #fff; font-size: 1.2rem; text-transform: uppercase; text-align: center; margin-bottom: 20px;" placeholder="SUA RESPOSTA">
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-secondary" style="flex: 1;" onclick="closeGuessModal()">Cancelar</button>
+                <button class="btn-primary" style="flex: 1; margin-top:0;" onclick="submitWordGuess()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: Vitória / Fim de Jogo -->
+    <div id="modal-victory" class="screen-overlay hidden">
+        <div class="modal-card" style="max-width: 650px;">
+            <div class="winner-crown">👑</div>
+            <h1 class="modal-title" id="winnerTitle">CAMPEÃO!</h1>
+            <p class="modal-subtitle" id="winnerSubtitle">Resultado final da rodada</p>
+
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Prêmio Total</th>
+                        <th>Acertos</th>
+                        <th>Erros</th>
+                    </tr>
+                </thead>
+                <tbody id="victoryStatsBody">
+                </tbody>
+            </table>
+
+            <button class="btn-primary" onclick="resetGameToStart()">
+                <span>Nova Partida</span>
+                <i data-lucide="rotate-ccw"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- APP PRINCIPAL -->
+    <div class="app-container">
+        <header>
+            <div class="logo-title">RODA A RODA</div>
+            <div class="category-badge" id="categoryDisplay">CATEGORIA: ---</div>
+        </header>
+
+        <div class="game-grid">
+            <!-- Esquerda: Roleta -->
+            <div class="wheel-section">
+                <div class="wheel-container">
+                    <div class="wheel-pointer">
+                        <svg viewBox="0 0 30 40">
+                            <polygon points="15,40 0,0 30,0" />
+                        </svg>
+                    </div>
+                    <canvas id="wheelCanvas" width="600" height="600"></canvas>
+                </div>
+
+                <div class="current-prize-display">
+                    <div class="prize-label">Prêmio no Giro</div>
+                    <div class="prize-value" id="currentPrizeText">R$ 0</div>
+                </div>
+
+                <button class="btn-primary" id="spinBtn" onclick="handleSpin()">
+                    <i data-lucide="disc"></i>
+                    <span>GIRAR ROLETA</span>
+                </button>
+            </div>
+
+            <!-- Centro: Painel das Palavras -->
+            <div class="board-section">
+                <div class="words-container" id="wordsContainer">
+                </div>
+
+                <div class="keyboard-container" id="keyboard">
+                </div>
+            </div>
+
+            <!-- Direita: Jogadores e Histórico -->
+            <div class="sidebar-section">
+                <div class="players-card">
+                    <div class="section-title">
+                        <i data-lucide="users"></i>
+                        <span>Participantes</span>
+                    </div>
+                    <div class="players-list" id="playersList">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <div class="section-title">
+                        <i data-lucide="history"></i>
+                        <span>Últimas Jogadas</span>
+                    </div>
+                    <div class="history-log" id="historyLog">
+                        <div class="log-entry">Bem-vindo ao Roda a Roda! Gire a roleta para começar.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. SISTEMA DE ÁUDIO SINTETIZADO (WEB AUDIO API)
+           ========================================================================== */
+        class SoundEngine {
+            constructor() {
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            playTick() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, this.ctx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.04);
+            }
+
+            playCorrect() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.1);
+                osc.frequency.setValueAtTime(783.99, now + 0.2);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.5);
+            }
+
+            playWrong() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.linearRampToValueAtTime(80, now + 0.3);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+
+            playVictory() {
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
+                notes.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.2, this.ctx.currentTime + i * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + i * 0.1 + 0.3);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + i * 0.1);
+                    osc.stop(this.ctx.currentTime + i * 0.1 + 0.3);
+                });
+            }
+        }
+
+        const audio = new SoundEngine();
+
+        /* ==========================================================================
+           2. BANCO DE PALAVRAS EXPANDIDO (600 PALAVRAS POR IDIOMA)
+           ========================================================================== */
+        const WORD_DATABASE = {
+            pt: [
+                {
+                    category: "ALIMENTOS E BEBIDAS",
+                    words: [
+                        "STROGONOFF", "MACARRÃO", "HAMBÚRGUER", "CHOCOLATE", "PIZZA", "LASANHA", "FEIJOADA", "BRIGADEIRO", 
+                        "PÃO DE QUEIJO", "COXINHA", "EMPADA", "AÇAÍ", "GUARANÁ", "BACALHAU", "PANQUECA", "TORRADA", 
+                        "LIMÃO", "MORANGO", "ABACAXI", "MELANCIA", "CENOURA", "BATATA", "ESPINAFRE", "COGUMELO", 
+                        "MOQUECA", "FAROFA", "RISOTO", "OMELETE", "IOGURTE", "SORVETE", "TORTA", "ROSCA", 
+                        "PIPOCA", "AMENDOIM", "CASTANHA", "CROISSANT", "MILANESA", "GUACAMOLE", "SUSHI", "TEMAKI", 
+                        "SASHIMI", "SOPA", "CALDO", "TORRESMO", "LINGUIÇA", "PRESUNTO", "QUEIJO", "REQUEIJÃO", 
+                        "MANTEIGA", "GELEIA", "COMPOTA", "SUCO", "VITAMINA", "REFRIGERANTE", "CAFÉ", "CAPPUCCINO", 
+                        "MILKSHAKE", "CERVEJA", "VINHO", "CHAMPAGNE"
+                    ]
+                },
+                {
+                    category: "ANIMAIS E NATUREZA",
+                    words: [
+                        "ELEFANTE", "GIRAFA", "LEOPARDO", "TARTARUGA", "PAPAGAIO", "MICO LEÃO", "HIPOPÓTAMO", "RINOCERONTE", 
+                        "CROCODILO", "FLAMINGO", "PINGUIM", "CANGURU", "ORANGOTANGO", "CAPIVARA", "TAMANDUÁ", "ONÇA PINTADA", 
+                        "TUBARÃO", "BALEIA", "GOLFINHO", "POLVO", "MEDUSA", "ÁGUIA", "GAVIÃO", "CORUJA", 
+                        "BEIJA FLOR", "JOANINHA", "BORBOLETA", "GAFANHOTO", "CAMALEÃO", "IGUANA", "SERPENTE", "LAGOSTA", 
+                        "CARANGUEJO", "CAMARÃO", "LONTRA", "CASTOR", "ESQUILO", "GATO", "CACHORRO", "CAVALO", 
+                        "OVELHA", "CABRA", "MULA", "BURRO", "GALINHA", "PAVÃO", "AVESTRUZ", "CISNE", 
+                        "PELICANO", "HARPIA", "CARCARÁ", "BOTO", "PIRARUCU", "SURUBIM", "JACARÉ", "JIBÓIA", 
+                        "SUCURI", "SALAMANDRA", "LAGARTO", "SAPO"
+                    ]
+                },
+                {
+                    category: "PROFISSÕES E OCUPAÇÕES",
+                    words: [
+                        "ENGENHEIRO", "ARQUITETO", "DENTISTA", "MECÂNICO", "PROFESSOR", "ADVOGADO", "MÉDICO", "ENFERMEIRO", 
+                        "BOMBEIRO", "POLICIAL", "ASTRONAUTA", "CIENTISTA", "BIÓLOGO", "QUÍMICO", "FÍSICO", "HISTORIADOR", 
+                        "JORNALISTA", "FOTÓGRAFO", "CINEMATÓGRAFO", "ATLETA", "PADEIRO", "COZINHEIRO", "GARÇOM", "MOTORISTA", 
+                        "PILOTO", "COMISSÁRIO", "MARINHEIRO", "SOLDADO", "CARPINTEIRO", "PEDREIRO", "ENCANADOR", "ELETRICISTA", 
+                        "PROGRAMADOR", "DESIGNER", "CONTADOR", "ECONOMISTA", "PSICÓLOGO", "VETERINÁRIO", "FARMACÊUTICO", "FISIOTERAPEUTA", 
+                        "NUTRICIONISTA", "BIBLIOTECÁRIO", "TRADUTOR", "ESCULTOR", "PINTOR", "ATOR", "DUBLADOR", "DANÇARINO", 
+                        "MÚSICO", "MAESTRO", "DIRETOR", "PRODUTOR", "JUIZ", "DELEGADO", "AGENTE", "POLÍTICO", 
+                        "DIPLOMATA", "CARDIOLOGISTA", "CIRURGIÃO", "PODÓLOGO"
+                    ]
+                },
+                {
+                    category: "CIDADES E PAÍSES",
+                    words: [
+                        "CURITIBA", "SALVADOR", "FORTALEZA", "FLORIANÓPOLIS", "MANAUS", "SÃO PAULO", "RIO DE JANEIRO", "BELO HORIZONTE", 
+                        "BRASÍLIA", "PORTO ALEGRE", "RECIFE", "GOIÂNIA", "BELÉM", "SÃO LUÍS", "MACEIÓ", "NATAL", 
+                        "CAMPO GRANDE", "JOÃO PESSOA", "ARACAJU", "CUIABÁ", "PORTO VELHO", "MACAPÁ", "PALMAS", "RIO BRANCO", 
+                        "VITÓRIA", "PORTUGAL", "ESPANHA", "FRANÇA", "ITÁLIA", "ALEMANHA", "INGLATERRA", "JAPÃO", 
+                        "CHINA", "CANADÁ", "MÉXICO", "ARGENTINA", "CHILE", "COLÔMBIA", "PERU", "URUGUAI", 
+                        "PARAGUAI", "AUSTRÁLIA", "NOVA ZELÂNDIA", "EGITO", "MARROCOS", "ÁFRICA DO SUL", "ÍNDIA", "RÚSSIA", 
+                        "GRÉCIA", "TURQUIA", "SUÍÇA", "SUÉCIA", "NORUEGA", "FINLÂNDIA", "DINAMARCA", "HOLANDA", 
+                        "BÉLGICA", "ÁUSTRIA", "CROÁCIA", "POLÔNIA"
+                    ]
+                },
+                {
+                    category: "OBJETOS E TECNOLOGIA",
+                    words: [
+                        "COMPUTADOR", "TELEVISÃO", "GELADEIRA", "MICROONDAS", "VENTILADOR", "SMARTPHONE", "NOTEBOOK", "TABLET", 
+                        "TECLADO", "MONITOR", "IMPRESSORA", "ROUTER", "FONE DE OUVIDO", "MOLDURA", "RELÓGIO", "CÂMERA", 
+                        "PROJETOR", "SISTEMA", "SOFTWARE", "CARREGADOR", "BATERIA", "LANTERNA", "AR CONDICIONADO", "LAVADORA", 
+                        "ASPIRADOR", "LIQUIDIFICADOR", "BATEDEIRA", "CAFETEIRA", "TORRADEIRA", "FERRO DE PASSAR", "CHUVEIRO", "ESPELHO", 
+                        "ALMOFADA", "COLCHÃO", "TRAVESSEIRO", "CADEIRA", "POLTRONA", "SOFÁ", "ESTANTE", "ARMÁRIO", 
+                        "GAVETA", "TESOURA", "GRAMPEADOR", "CADERNO", "CANETA", "LÁPIS", "BORRACHA", "MOCHILA", 
+                        "MALETA", "GUARDA CHUVA", "MARTELO", "ALICATE", "CHAVE DE FENDA", "FURADEIRA", "SERROTE", "PARAFUSO", 
+                        "PREGO", "CADEADO", "FECHADURA", "LÂMPADA"
+                    ]
+                },
+                {
+                    category: "ESPORTES E LAZER",
+                    words: [
+                        "BASQUETEBOL", "ATLETISMO", "NATAÇÃO", "GINÁSTICA", "VOLEIBOL", "FUTEBOL", "HANDEBOL", "TÊNIS DE MESA", 
+                        "AUTOMOBILISMO", "CICLISMO", "PATINAÇÃO", "SURFE", "SKATE", "ESGRIMA", "JUDÔ", "KARATÊ", 
+                        "BOXE", "TAEKWONDO", "CAPOEIRA", "HIPISMO", "TIRO COM ARCO", "REMO", "CANOAGEM", "VELA", 
+                        "TRIATLO", "BADMINTON", "SQUASH", "GOLFE", "BEISEBOL", "FUTEBOL AMERICANO", "RUGBY", "CRÍQUETE", 
+                        "POLO AQUÁTICO", "BOCHA", "SINUCA", "XADREZ", "DAMA", "DOMINÓ", "BARALHO", "VIDEOGAME", 
+                        "ACAMPAMENTO", "TRILHA", "ESCALADA", "RAPEL", "PARAQUEDISMO", "ASA DELTA", "MERGULHO", "PESCA", 
+                        "CORRIDA", "CAMINHADA", "PILATES", "YOGA", "MUSCULAÇÃO", "CROSSFIT", "DANÇA", "BALLET", 
+                        "ZUMBA", "ACROBACIA", "PARKOUR", "PAINTBALL"
+                    ]
+                },
+                {
+                    category: "MEIOS DE TRANSPORTE",
+                    words: [
+                        "AUTOMÓVEL", "MOTOCICLETA", "BICICLETA", "CAMINHÃO", "ÔNIBUS", "TREM", "METRÔ", "AVIÃO", 
+                        "HELICÓPTERO", "SUBMARINO", "NAVIO", "LANCHA", "JET SKI", "IATE", "BARCO", "CARAVELA", 
+                        "BALÃO", "DIRIGÍVEL", "FOGUETE", "NAVE ESPACIAL", "TELEFÉRICO", "BONDE", "MONOTILHO", "TRATOR", 
+                        "GUINCHO", "ESCAVADEIRA", "AMBULÂNCIA", "VIATURA", "TRICICLO", "QUADRICICLO", "PATINETE", "SKATE ELÉTRICO", 
+                        "TRANSPORTADOR", "CHARRETE", "CARRINHO", "VEÍCULO", "FERRY BOAT", "JANGADA", "CAIAQUE", "CANOA", 
+                        "CARGA", "REBOQUE", "CONTAINER", "GUINDASTE", "RODOVIÁRIA", "ESTAÇÃO", "AEROPORTO", "PORTO", 
+                        "PIER", "HELIPONTO", "CICLOVIA", "SINALIZADOR", "SEMÁFORO", "GARAGEM", "ESTACIONAMENTO", "PEDÁGIO", 
+                        "RODOVIA", "FERROVIA", "PISTA", "CABINE"
+                    ]
+                },
+                {
+                    category: "CORPO HUMANO E SAÚDE",
+                    words: [
+                        "CORAÇÃO", "PULMÃO", "ESTÔMAGO", "CÉREBRO", "FÍGADO", "RINS", "INTESTINO", "PÂNCREAS", 
+                        "ESQUELETO", "CRÂNIO", "COLUNA", "COSTELA", "FÊMUR", "MÚSCULO", "ARTÉRIA", "VEIA", 
+                        "SANGUE", "PELE", "CABELO", "SOBRANCELHA", "CÍLIOS", "OLHOS", "OUVIDO", "NARIZ", 
+                        "BOCA", "DENTES", "GENGIVA", "LÍNGUA", "GARGANTA", "PESCOÇO", "OMBRO", "BRAÇO", 
+                        "COTOVELO", "PULSO", "MÃO", "DEDOS", "UNHA", "TÓRAX", "ABDÔMEN", "CINTURA", 
+                        "QUADRIL", "PERNA", "JOELHO", "TORNOZELO", "PÉ", "CALCANHAR", "VACINA", "MEDICAMENTO", 
+                        "VITAMINA", "CONSULTA", "EXAME", "DIAGNÓSTICO", "TRATAMENTO", "CIRURGIA", "IMUNIDADE", "NUTRIÇÃO", 
+                        "HIDRATAÇÃO", "SAÚDE", "BEM ESTAR", "TERAPIA"
+                    ]
+                },
+                {
+                    category: "FILMES E ENTRETENIMENTO",
+                    words: [
+                        "CINEMA", "HOLLYWOOD", "PIXAR", "DISNEY", "MARVEL", "BATMAN", "SUPERMAN", "HOMEM ARANHA", 
+                        "VINGADORES", "STAR WARS", "HARRY POTTER", "SENHOR DOS ANÉIS", "AVATAR", "TITANIC", "JURASSIC PARK", "MATRIX", 
+                        "INCEPTION", "GLADIADOR", "CORINGA", "FROZEN", "SHREK", "TOY STORY", "REI LEÃO", "PROCURANDO NEMO", 
+                        "INCRÍVEIS", "CARROS", "MOANA", "ENCANTO", "INTERSTELAR", "O PODEROSO CHEFÃO", "PULP FICTION", "FORREST GUMP", 
+                        "DE VOLTA PARA O FUTURO", "O EXORCISTA", "TUBARÃO", "ALIEN", "TERMINATOR", "ROCKY", "RAMBO", "INDIANA JONES", 
+                        "TRANSFORMERS", "VELOZES E FURIOSOS", "PIRATAS DO CARIBE", "MISSÃO IMPOSSÍVEL", "GHOSTBUSTERS", "A VIAGEM DE CHIHIRO", "PANTERA NEGRA", "HOMEM DE FERRO", 
+                        "THOR", "CAPITÃO AMÉRICA", "DIVERTIDA MENTE", "BARBIE", "OPPENHEIMER", "DUNA", "BEETLEJUICE", "MAD MAX", 
+                        "JOGOS VORAZES", "CREPÚSCULO", "LA LA LAND", "CASABLANCA"
+                    ]
+                },
+                {
+                    category: "MÚSICA E INSTRUMENTOS",
+                    words: [
+                        "PIANO", "VIOLÃO", "GUITARRA", "BAIXO", "BATERIA", "VIOLINO", "VIOLONCELO", "FLAUTA", 
+                        "CLARINETE", "SAXOFONE", "TROMPETE", "TROMBONE", "TUBA", "GAITA", "ACORDEÃO", "PANDEIRO", 
+                        "TAMBOR", "ATABAQUE", "TRIÂNGULO", "XILOFONE", "HARPA", "UKULELE", "BANJO", "BANDOLIM", 
+                        "CAVAQUINHO", "SINFONIA", "ORQUESTRA", "CONCERTO", "PARTITURA", "MELODIA", "HARMONIA", "RITMO", 
+                        "SOPRANO", "TENOR", "BARÍTONO", "CANTO", "VOCALISTA", "COMPOSITOR", "MAESTRO", "BANDA", 
+                        "CORAL", "FESTIVAL", "SHOW", "MICROFONE", "AMPLIFICADOR", "GRAVAÇÃO", "ÁLBUM", "SINGLE", 
+                        "PLAYLIST", "ROCK", "POP", "JAZZ", "BLUES", "SAMBA", "PAGODE", "SERTANEJO", 
+                        "FORRÓ", "REGGAE", "HIP HOP", "MÚSICA ELETRÔNICA"
+                    ]
+                }
+            ],
+            en: [
+                {
+                    category: "FOOD AND DRINK",
+                    words: [
+                        "CHOCOLATE", "HAMBURGER", "SPAGHETTI", "SANDWICH", "PANCAKES", "PIZZA", "LASAGNA", "CHEESEBURGER", 
+                        "FRENCH FRIES", "ICE CREAM", "DONUT", "WAFFLE", "SALAD", "SOUP", "STEAK", "ROAST CHICKEN", 
+                        "SUSHI", "RAMEN", "TACOS", "BURRITO", "NACHOS", "OMELETTE", "BACON", "SAUSAGE", 
+                        "POPCORN", "PEANUT BUTTER", "CHEESE", "YOGURT", "TOAST", "BAGEL", "CROISSANT", "MUFFIN", 
+                        "CUPCAKE", "APPLE PIE", "BROWNIE", "COOKIE", "MILKSHAKE", "SMOOTHIE", "LEMONADE", "ORANGE JUICE", 
+                        "COFFEE", "CAPPUCCINO", "ESPRESSO", "GREEN TEA", "HOT CHOCOLATE", "APPLE", "BANANA", "STRAWBERRY", 
+                        "WATERMELON", "PINEAPPLE", "BLUEBERRY", "AVOCADO", "TOMATO", "POTATO", "CARROT", "BROCCOLI", 
+                        "SPINACH", "MUSHROOM", "ONION", "GARLIC"
+                    ]
+                },
+                {
+                    category: "ANIMALS AND NATURE",
+                    words: [
+                        "ALLIGATOR", "CHIMPANZEE", "FLAMINGO", "KANGAROO", "RHINOCEROS", "ELEPHANT", "GIRAFFE", "LEOPARD", 
+                        "TURTLE", "PARROT", "HIPPOPOTAMUS", "CROCODILE", "PENGUIN", "ORANGUTAN", "SHARK", "WHALE", 
+                        "DOLPHIN", "OCTOPUS", "JELLYFISH", "EAGLE", "HAWK", "OWL", "HUMMINGBIRD", "LADYBUG", 
+                        "BUTTERFLY", "GRASSHOPPER", "CHAMELEON", "IGUANA", "SNAKE", "LOBSTER", "CRAB", "SHRIMP", 
+                        "OTTER", "BEAVER", "SQUIRREL", "CAT", "DOG", "HORSE", "SHEEP", "GOAT", 
+                        "DONKEY", "CHICKEN", "PEACOCK", "OSTRICH", "SWAN", "PELICAN", "LION", "TIGER", 
+                        "BEAR", "WOLF", "FOX", "DEER", "MOOSE", "RABBIT", "HAMSTER", "PANDA", 
+                        "KOALA", "WALRUS", "SEAL", "PANTHER"
+                    ]
+                },
+                {
+                    category: "PROFESSIONS AND JOBS",
+                    words: [
+                        "ASTRONAUT", "ARCHITECT", "DETECTIVE", "FIREFIGHTER", "SCIENTIST", "ENGINEER", "DENTIST", "MECHANIC", 
+                        "TEACHER", "LAWYER", "DOCTOR", "NURSE", "POLICE OFFICER", "BIOLOGIST", "CHEMIST", "PHYSICIST", 
+                        "HISTORIAN", "JOURNALIST", "PHOTOGRAPHER", "CINEMATOGRAPHER", "ATHLETE", "BAKER", "CHEF", "WAITER", 
+                        "DRIVER", "PILOT", "FLIGHT ATTENDANT", "SAILOR", "SOLDIER", "CARPENTER", "PLUMBER", "ELECTRICIAN", 
+                        "PROGRAMMER", "DESIGNER", "ACCOUNTANT", "ECONOMIST", "PSYCHOLOGIST", "VETERINARIAN", "PHARMACIST", "THERAPIST", 
+                        "NUTRITIONIST", "LIBRARIAN", "TRANSLATOR", "SCULPTOR", "PAINTER", "ACTOR", "DANCER", "MUSICIAN", 
+                        "CONDUCTOR", "DIRECTOR", "PRODUCER", "JUDGE", "POLITICIAN", "DIPLOMAT", "SURGEON", "BARBER", 
+                        "FLORIST", "GARDENER", "ASTRONOMER", "GEOLOGIST"
+                    ]
+                },
+                {
+                    category: "CITIES AND COUNTRIES",
+                    words: [
+                        "AMSTERDAM", "SINGAPORE", "BARCELONA", "MELBOURNE", "VANCOUVER", "LONDON", "NEW YORK", "PARIS", 
+                        "TOKYO", "ROME", "BERLIN", "SYDNEY", "LOS ANGELES", "CHICAGO", "TORONTO", "MADRID", 
+                        "VIENNA", "PRAGUE", "DUBLIN", "EDINBURGH", "STOCKHOLM", "COPENHAGEN", "OSLO", "HELSINKI", 
+                        "BRUSSELS", "BUDAPEST", "WARSAW", "LISBON", "ATHENS", "ISTANBUL", "DUBAI", "BANGKOK", 
+                        "SEOUL", "BEIJING", "SHANGHAI", "CAIRO", "CAPE TOWN", "RIO DE JANEIRO", "BUENOS AIRES", "SANTIAGO", 
+                        "MEXICO CITY", "PORTUGAL", "SPAIN", "FRANCE", "ITALY", "GERMANY", "ENGLAND", "JAPAN", 
+                        "CHINA", "CANADA", "MEXICO", "ARGENTINA", "CHILE", "AUSTRALIA", "NEW ZEALAND", "EGYPT", 
+                        "MOROCCO", "SOUTH AFRICA", "INDIA", "GREECE"
+                    ]
+                },
+                {
+                    category: "OBJECTS AND TECHNOLOGY",
+                    words: [
+                        "SMARTPHONE", "TELEVISION", "MICROWAVE", "HEADPHONES", "REFRIGERATOR", "COMPUTER", "LAPTOP", "TABLET", 
+                        "KEYBOARD", "MONITOR", "PRINTER", "ROUTER", "CAMERA", "PROJECTOR", "SOFTWARE", "CHARGER", 
+                        "BATTERY", "FLASHLIGHT", "AIR CONDITIONER", "WASHING MACHINE", "VACUUM CLEANER", "BLENDER", "COFFEE MAKER", "TOASTER", 
+                        "IRON", "MIRROR", "PILLOW", "MATTRESS", "CHAIR", "ARMCHAIR", "SOFA", "BOOKCASE", 
+                        "CABINET", "DRAWER", "SCISSORS", "STAPLER", "NOTEBOOK", "PEN", "PENCIL", "ERASER", 
+                        "BACKPACK", "SUITCASE", "UMBRELLA", "HAMMER", "PLIERS", "SCREWDRIVER", "DRILL", "SAW", 
+                        "SCREW", "NAIL", "PADLOCK", "LOCK", "LIGHTBULB", "CLOCK", "WATCH", "SPEAKER", 
+                        "MICROPHONE", "WEBCAM", "FLASHDRIVE", "CALCULATOR"
+                    ]
+                },
+                {
+                    category: "SPORTS AND HOBBIES",
+                    words: [
+                        "BASKETBALL", "ATHLETICS", "SWIMMING", "GYMNASTICS", "VOLLEYBALL", "FOOTBALL", "SOCCER", "HANDBALL", 
+                        "TABLE TENNIS", "CYCLING", "SKATING", "SURFING", "SKATEBOARDING", "FENCING", "JUDO", "KARATE", 
+                        "BOXING", "TAEKWONDO", "HORSEBACK RIDING", "ARCHERY", "ROWING", "CANOEING", "SAILING", "TRIATHLON", 
+                        "BADMINTON", "SQUASH", "GOLF", "BASEBALL", "AMERICAN FOOTBALL", "RUGBY", "CRICKET", "WATER POLO", 
+                        "BOWLING", "BILLIARDS", "CHESS", "CHECKERS", "DOMINOES", "CARD GAMES", "VIDEO GAMES", "CAMPING", 
+                        "HIKING", "CLIMBING", "RAPPELLING", "PARACHUTING", "HANG GLIDING", "DIVING", "FISHING", "RUNNING", 
+                        "WALKING", "PILATES", "YOGA", "WEIGHTLIFTING", "CROSSFIT", "DANCING", "BALLET", "ZUMBA", 
+                        "ACROBATICS", "PARKOUR", "PAINTBALL", "PHOTOGRAPHY"
+                    ]
+                },
+                {
+                    category: "TRANSPORTATION",
+                    words: [
+                        "AUTOMOBILE", "MOTORCYCLE", "BICYCLE", "TRUCK", "BUS", "TRAIN", "SUBWAY", "AIRPLANE", 
+                        "HELICOPTER", "SUBMARINE", "SHIP", "SPEEDBOAT", "JET SKI", "YACHT", "BOAT", "SAILBOAT", 
+                        "BALLOON", "AIRSHIP", "ROCKET", "SPACESHIP", "CABLE CAR", "TRAM", "MONORAIL", "TRACTOR", 
+                        "TOW TRUCK", "EXCAVATOR", "AMBULANCE", "POLICE CAR", "TRICYCLE", "QUAD BIKE", "SCOOTER", "ELECTRIC SKATEBOARD", 
+                        "CONVEYOR", "CARRIAGE", "CART", "VEHICLE", "FERRY BOAT", "RAFT", "KAYAK", "CANOE", 
+                        "CARGO", "TRAILER", "CONTAINER", "CRANE", "BUS STATION", "TRAIN STATION", "AIRPORT", "PORT", 
+                        "PIER", "HELIPAD", "BIKE LANE", "SIGNAL", "TRAFFIC LIGHT", "GARAGE", "PARKING LOT", "TOLL BOOTH", 
+                        "HIGHWAY", "RAILROAD", "RUNWAY", "CABIN"
+                    ]
+                },
+                {
+                    category: "HUMAN BODY AND HEALTH",
+                    words: [
+                        "HEART", "LUNG", "STOMACH", "BRAIN", "LIVER", "KIDNEY", "INTESTINE", "PANCREAS", 
+                        "SKELETON", "SKULL", "SPINE", "RIB", "FEMUR", "MUSCLE", "ARTERY", "VEIN", 
+                        "BLOOD", "SKIN", "HAIR", "EYEBROW", "EYELASHES", "EYES", "EAR", "NOSE", 
+                        "MOUTH", "TEETH", "GUMS", "TONGUE", "THROAT", "NECK", "SHOULDER", "ARM", 
+                        "ELBOW", "WRIST", "HAND", "FINGERS", "NAIL", "CHEST", "ABDOMEN", "WAIST", 
+                        "HIP", "LEG", "KNEE", "ANKLE", "FOOT", "HEEL", "VACCINE", "MEDICINE", 
+                        "VITAMIN", "APPOINTMENT", "EXAMINATION", "DIAGNOSIS", "TREATMENT", "SURGERY", "IMMUNITY", "NUTRITION", 
+                        "HYDRATION", "HEALTH", "WELLNESS", "THERAPY"
+                    ]
+                },
+                {
+                    category: "MOVIES AND ENTERTAINMENT",
+                    words: [
+                        "CINEMA", "HOLLYWOOD", "PIXAR", "DISNEY", "MARVEL", "BATMAN", "SUPERMAN", "SPIDERMAN", 
+                        "AVENGERS", "STAR WARS", "HARRY POTTER", "LORD OF THE RINGS", "AVATAR", "TITANIC", "JURASSIC PARK", "MATRIX", 
+                        "INCEPTION", "GLADIATOR", "JOKER", "FROZEN", "SHREK", "TOY STORY", "LION KING", "FINDING NEMO", 
+                        "INCREDIBLES", "CARS", "MOANA", "ENCANTO", "INTERSTELLAR", "GODFATHER", "PULP FICTION", "FORREST GUMP", 
+                        "BACK TO THE FUTURE", "EXORCIST", "JAWS", "ALIEN", "TERMINATOR", "ROCKY", "RAMBO", "INDIANA JONES", 
+                        "TRANSFORMERS", "FAST AND FURIOUS", "PIRATES OF THE CARIBBEAN", "MISSION IMPOSSIBLE", "GHOSTBUSTERS", "SPIRITED AWAY", "BLACK PANTHER", "IRON MAN", 
+                        "THOR", "CAPTAIN AMERICA", "INSIDE OUT", "BARBIE", "OPPENHEIMER", "DUNE", "BEETLEJUICE", "MAD MAX", 
+                        "HUNGER GAMES", "TWILIGHT", "LA LA LAND", "CASABLANCA"
+                    ]
+                },
+                {
+                    category: "MUSIC AND INSTRUMENTS",
+                    words: [
+                        "PIANO", "ACOUSTIC GUITAR", "ELECTRIC GUITAR", "BASS GUITAR", "DRUMS", "VIOLIN", "CELLO", "FLUTE", 
+                        "CLARINET", "SAXOPHONE", "TRUMPET", "TROMBONE", "TUBA", "HARMONICA", "ACCORDION", "TAMBOURINE", 
+                        "DRUM", "CONGA", "TRIANGLE", "XYLOPHONE", "HARP", "UKULELE", "BANJO", "MANDOLIN", 
+                        "SYMPHONY", "ORCHESTRA", "CONCERT", "SHEET MUSIC", "MELODY", "HARMONY", "RHYTHM", "SOPRANO", 
+                        "TENOR", "BARITONE", "SINGING", "VOCALIST", "COMPOSER", "CONDUCTOR", "BAND", "CHOIR", 
+                        "FESTIVAL", "SHOW", "MICROPHONE", "AMPLIFIER", "RECORDING", "ALBUM", "SINGLE", "PLAYLIST", 
+                        "ROCK", "POP", "JAZZ", "BLUES", "REGGAE", "HIP HOP", "ELECTRONIC", "OPERA", 
+                        "SONG", "TUNE", "BEAT", "TRACK"
+                    ]
+                }
+            ]
+        };
+
+        /* ==========================================================================
+           3. CONFIGURAÇÕES DA ROLETA (24 DIVISÕES)
+           ========================================================================== */
+        const WHEEL_VALUES = [
+            100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+            150, 250, 350, 450, 550, 650, 750, 850, 950, 50,
+            200, 400, 600, 800
+        ];
+
+        const WHEEL_COLORS = [
+            "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6", "#ec4899", "#ef4444",
+            "#06b6d4", "#84cc16", "#f97316", "#d97706", "#059669", "#2563eb",
+            "#7c3aed", "#db2777", "#dc2626", "#0891b2", "#65a30d", "#ea580c",
+            "#b45309", "#047857", "#1d4ed8", "#6d28d9", "#be185d", "#b91c1c"
+        ];
+
+        /* ==========================================================================
+           4. ESTADO GLOBAL DO JOGO
+           ========================================================================== */
+        let state = {
+            lang: 'pt',
+            players: [],
+            currentPlayerIndex: 0,
+            words: [],
+            category: '',
+            usedLetters: new Set(),
+            currentPrize: 0,
+            canSpin: true,
+            canChooseLetter: false,
+            wheelAngle: 0,
+            targetWordIndexForGuess: null
+        };
+
+        /* ==========================================================================
+           5. CANVAS DA ROLETA
+           ========================================================================== */
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawWheel() {
+            const numSlices = WHEEL_VALUES.length;
+            const radius = canvas.width / 2;
+            const sliceAngle = (2 * Math.PI) / numSlices;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < numSlices; i++) {
+                const angle = state.wheelAngle + i * sliceAngle;
+
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius - 10, angle, angle + sliceAngle);
+                ctx.closePath();
+                ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#ffd700";
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + sliceAngle / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 22px Montserrat";
+                ctx.shadowColor = "rgba(0,0,0,0.8)";
+                ctx.shadowBlur = 4;
+                ctx.fillText(`R$ ${WHEEL_VALUES[i]}`, radius - 30, 8);
+                ctx.restore();
+            }
+
+            ctx.beginPath();
+            ctx.arc(radius, radius, 45, 0, 2 * Math.PI);
+            ctx.fillStyle = "#0f172a";
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#ffd700";
+            ctx.stroke();
+
+            ctx.fillStyle = "#ffd700";
+            ctx.font = "bold 14px Montserrat";
+            ctx.textAlign = "center";
+            ctx.fillText("RODA", radius, radius - 5);
+            ctx.fillText("RODA", radius, radius + 15);
+        }
+
+        drawWheel();
+
+        /* ==========================================================================
+           6. LÓGICA DO JOGO & SORTEIO DE PALAVRAS
+           ========================================================================== */
+        function selectLang(lang) {
+            state.lang = lang;
+            document.querySelectorAll('.lang-options .option-card').forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('i').setAttribute('data-lucide', 'circle');
+            });
+            event.currentTarget.classList.add('selected');
+            event.currentTarget.querySelector('i').setAttribute('data-lucide', 'check-circle');
+            lucide.createIcons();
+        }
+
+        function confirmLang() {
+            document.getElementById('modal-lang').classList.add('hidden');
+            document.getElementById('modal-players').classList.remove('hidden');
+        }
+
+        function addPlayerInput() {
+            const container = document.getElementById('playerInputs');
+            if (container.children.length < 4) {
+                const num = container.children.length + 1;
+                const div = document.createElement('div');
+                div.className = 'player-row';
+                div.innerHTML = `<input type="text" placeholder="Nome do Jogador ${num}" value="Jogador ${num}">`;
+                container.appendChild(div);
+            }
+        }
+
+        function removePlayerInput() {
+            const container = document.getElementById('playerInputs');
+            if (container.children.length > 2) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        function startGame() {
+            const inputs = document.querySelectorAll('#playerInputs input');
+            state.players = [];
+            inputs.forEach((input, index) => {
+                const name = input.value.trim() || `Jogador ${index + 1}`;
+                state.players.push({
+                    name: name,
+                    score: 0,
+                    hits: 0,
+                    errors: 0,
+                    discovered: 0
+                });
+            });
+
+            document.getElementById('modal-players').classList.add('hidden');
+            setupRoundWords();
+            renderPlayers();
+            renderKeyboard();
+            updateUIState();
+            lucide.createIcons();
+        }
+
+        function setupRoundWords() {
+            let db = [];
+            if (state.lang === 'pt') db = WORD_DATABASE.pt;
+            else if (state.lang === 'en') db = WORD_DATABASE.en;
+            else db = [...WORD_DATABASE.pt, ...WORD_DATABASE.en];
+
+            // Seleciona uma categoria aleatória
+            const categorySet = db[Math.floor(Math.random() * db.length)];
+            state.category = categorySet.category;
+            
+            document.getElementById('categoryDisplay').innerText = `CATEGORIA: ${state.category}`;
+
+            // Embaralha e seleciona exatamente 5 palavras da categoria
+            const shuffledWords = [...categorySet.words].sort(() => 0.5 - Math.random());
+            const selected5Words = shuffledWords.slice(0, 5);
+
+            state.words = selected5Words.map(w => ({
+                word: normalizeStr(w),
+                original: w,
+                revealed: new Array(w.length).fill(false)
+            }));
+
+            renderWordsBoard();
+        }
+
+        function normalizeStr(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+        }
+
+        function renderWordsBoard() {
+            const container = document.getElementById('wordsContainer');
+            container.innerHTML = '';
+
+            state.words.forEach((wObj, wIndex) => {
+                const row = document.createElement('div');
+                row.className = 'word-row';
+
+                for (let i = 0; i < wObj.word.length; i++) {
+                    const char = wObj.word[i];
+                    const tile = document.createElement('div');
+                    
+                    if (char === ' ') {
+                        tile.className = 'letter-tile space';
+                    } else {
+                        tile.className = 'letter-tile' + (wObj.revealed[i] ? ' revealed' : '');
+                        tile.innerText = wObj.revealed[i] ? wObj.original[i] : '';
+                    }
+                    row.appendChild(tile);
+                }
+
+                const isFullyRevealed = wObj.revealed.every((r, idx) => r || wObj.word[idx] === ' ');
+                if (!isFullyRevealed) {
+                    const guessBtn = document.createElement('button');
+                    guessBtn.className = 'guess-word-btn';
+                    guessBtn.title = "Adivinhar esta palavra";
+                    guessBtn.innerHTML = `<i data-lucide="help-circle" style="width:18px;height:18px;"></i>`;
+                    guessBtn.onclick = () => openGuessModal(wIndex);
+                    row.appendChild(guessBtn);
+                }
+
+                container.appendChild(row);
+            });
+            lucide.createIcons();
+        }
+
+        function renderPlayers() {
+            const list = document.getElementById('playersList');
+            list.innerHTML = '';
+
+            state.players.forEach((player, idx) => {
+                const item = document.createElement('div');
+                item.className = 'player-item' + (idx === state.currentPlayerIndex ? ' active' : '');
+                item.innerHTML = `
+                    <div class="player-info">
+                        <div class="player-avatar">${player.name[0].toUpperCase()}</div>
+                        <div class="player-name">${player.name}</div>
+                    </div>
+                    <div class="player-score">R$ ${player.score}</div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function renderKeyboard() {
+            const kb = document.getElementById('keyboard');
+            kb.innerHTML = '';
+
+            const layout = [
+                ["A","B","C","D","E","F","G","H","I"],
+                ["J","K","L","M","N","O","P","Q","R"],
+                ["S","T","U","V","W","X","Y","Z"]
+            ];
+
+            layout.forEach(rowArr => {
+                const row = document.createElement('div');
+                row.className = 'kb-row';
+                rowArr.forEach(letter => {
+                    const btn = document.createElement('button');
+                    btn.className = 'key-btn';
+                    btn.innerText = letter;
+                    btn.id = `key-${letter}`;
+                    btn.disabled = !state.canChooseLetter || state.usedLetters.has(letter);
+                    btn.onclick = () => handleLetterChoice(letter);
+                    row.appendChild(btn);
+                });
+                kb.appendChild(row);
+            });
+        }
+
+        /* ==========================================================================
+           7. GIRO DA ROLETA
+           ========================================================================== */
+        function handleSpin() {
+            if (!state.canSpin) return;
+
+            state.canSpin = false;
+            document.getElementById('spinBtn').disabled = true;
+
+            const numSlices = WHEEL_VALUES.length;
+            const sliceAngle = (2 * Math.PI) / numSlices;
+
+            const winningIndex = Math.floor(Math.random() * numSlices);
+            const targetPrize = WHEEL_VALUES[winningIndex];
+
+            const extraRounds = 5 + Math.floor(Math.random() * 3);
+            const targetAngle = (2 * Math.PI * extraRounds) + ((numSlices - winningIndex - 0.5) * sliceAngle);
+
+            let lastTickAngle = state.wheelAngle;
+
+            gsap.to(state, {
+                wheelAngle: targetAngle,
+                duration: 4.5,
+                ease: "power4.out",
+                onUpdate: () => {
+                    drawWheel();
+                    if (Math.abs(state.wheelAngle - lastTickAngle) >= sliceAngle) {
+                        audio.playTick();
+                        lastTickAngle = state.wheelAngle;
+                    }
+                },
+                onComplete: () => {
+                    state.wheelAngle = state.wheelAngle % (2 * Math.PI);
+                    drawWheel();
+
+                    state.currentPrize = targetPrize;
+                    document.getElementById('currentPrizeText').innerText = `R$ ${targetPrize}`;
+                    addLog(`Roleta parou em <strong>R$ ${targetPrize}</strong>! Escolha uma letra.`);
+
+                    state.canChooseLetter = true;
+                    renderKeyboard();
+                }
+            });
+        }
+
+        /* ==========================================================================
+           8. ESCOLHA DE LETRAS E PENALIDADES
+           ========================================================================== */
+        function handleLetterChoice(letter) {
+            if (!state.canChooseLetter || state.usedLetters.has(letter)) return;
+
+            state.usedLetters.add(letter);
+            state.canChooseLetter = false;
+
+            let occurrences = 0;
+
+            state.words.forEach(wObj => {
+                for (let i = 0; i < wObj.word.length; i++) {
+                    if (wObj.word[i] === letter && !wObj.revealed[i]) {
+                        wObj.revealed[i] = true;
+                        occurrences++;
+                    }
+                }
+            });
+
+            const keyBtn = document.getElementById(`key-${letter}`);
+
+            if (occurrences > 0) {
+                audio.playCorrect();
+                if (keyBtn) keyBtn.classList.add('correct');
+
+                const totalGained = state.currentPrize * occurrences;
+                const activePlayer = state.players[state.currentPlayerIndex];
+                activePlayer.score += totalGained;
+                activePlayer.hits++;
+                activePlayer.discovered += occurrences;
+
+                addLog(`<strong>${activePlayer.name}</strong> acertou a letra <strong>${letter}</strong> (${occurrences}x) e ganhou R$ ${totalGained}!`, 'success');
+                renderWordsBoard();
+                renderPlayers();
+
+                checkVictoryConditions();
+
+                if (!isRoundComplete()) {
+                    state.canSpin = true;
+                    document.getElementById('spinBtn').disabled = false;
+                    renderKeyboard();
+                }
+            } else {
+                audio.playWrong();
+                if (keyBtn) keyBtn.classList.add('wrong');
+
+                const activePlayer = state.players[state.currentPlayerIndex];
+                activePlayer.errors++;
+
+                let totalLetters = 0;
+                let hiddenLetters = 0;
+
+                state.words.forEach(w => {
+                    for (let i = 0; i < w.word.length; i++) {
+                        if (w.word[i] !== ' ') {
+                            totalLetters++;
+                            if (!w.revealed[i]) hiddenLetters++;
+                        }
+                    }
+                });
+
+                const ratio = hiddenLetters / totalLetters;
+                const penaltyPercentage = 0.05 + (0.15 * ratio); // 5% a 20%
+                
+                let loss = Math.round(activePlayer.score * penaltyPercentage);
+                if (loss < 50 && activePlayer.score >= 50) loss = 50;
+                if (loss > activePlayer.score) loss = activePlayer.score;
+
+                activePlayer.score -= loss;
+
+                addLog(`A letra <strong>${letter}</strong> não existe! <strong>${activePlayer.name}</strong> perdeu R$ ${loss}.`, 'error');
+
+                renderPlayers();
+                passTurnToNextPlayer();
+            }
+        }
+
+        function passTurnToNextPlayer() {
+            state.currentPlayerIndex = (state.currentPlayerIndex + 1) % state.players.length;
+            state.canSpin = true;
+            document.getElementById('spinBtn').disabled = false;
+            renderPlayers();
+            renderKeyboard();
+            updateUIState();
+            addLog(`Vez de <strong>${state.players[state.currentPlayerIndex].name}</strong>.`);
+        }
+
+        /* ==========================================================================
+           9. PALPITE DE PALAVRA COMPLETA
+           ========================================================================== */
+        function openGuessModal(wordIndex) {
+            state.targetWordIndexForGuess = wordIndex;
+            document.getElementById('guessInput').value = '';
+            document.getElementById('modal-guess').classList.remove('hidden');
+        }
+
+        function closeGuessModal() {
+            document.getElementById('modal-guess').classList.add('hidden');
+        }
+
+        function submitWordGuess() {
+            const inputVal = normalizeStr(document.getElementById('guessInput').value.trim());
+            closeGuessModal();
+
+            if (!inputVal || state.targetWordIndexForGuess === null) return;
+
+            const targetObj = state.words[state.targetWordIndexForGuess];
+            const activePlayer = state.players[state.currentPlayerIndex];
+
+            if (inputVal === targetObj.word) {
+                audio.playCorrect();
+                let newlyRevealed = 0;
+                for (let i = 0; i < targetObj.word.length; i++) {
+                    if (!targetObj.revealed[i] && targetObj.word[i] !== ' ') {
+                        targetObj.revealed[i] = true;
+                        newlyRevealed++;
+                    }
+                }
+
+                const bonus = (state.currentPrize || 300) * (newlyRevealed || 2);
+                activePlayer.score += bonus;
+                activePlayer.hits++;
+
+                addLog(`🎉 <strong>${activePlayer.name}</strong> acertou a palavra <strong>${targetObj.original}</strong> e ganhou R$ ${bonus}!`, 'success');
+                renderWordsBoard();
+                renderPlayers();
+
+                checkVictoryConditions();
+            } else {
+                audio.playWrong();
+                activePlayer.errors++;
+                const penalty = Math.round(activePlayer.score * 0.25);
+                activePlayer.score -= penalty;
+
+                addLog(`❌ <strong>${activePlayer.name}</strong> errou o palpite! Perdeu R$ ${penalty}.`, 'error');
+                renderPlayers();
+                passTurnToNextPlayer();
+            }
+        }
+
+        /* ==========================================================================
+           10. TELA DE VITÓRIA & RESET
+           ========================================================================== */
+        function isRoundComplete() {
+            return state.words.every(wObj => 
+                wObj.revealed.every((r, i) => r || wObj.word[i] === ' ')
+            );
+        }
+
+        function checkVictoryConditions() {
+            if (isRoundComplete()) {
+                audio.playVictory();
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+
+                const sortedPlayers = [...state.players].sort((a, b) => b.score - a.score);
+                const winner = sortedPlayers[0];
+
+                document.getElementById('winnerTitle').innerText = `🏆 ${winner.name} VENCEU!`;
+                document.getElementById('winnerSubtitle').innerText = `Saldo total de R$ ${winner.score}`;
+
+                const tbody = document.getElementById('victoryStatsBody');
+                tbody.innerHTML = '';
+
+                sortedPlayers.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${p.name}</strong></td>
+                        <td style="color:var(--gold-primary); font-weight:900;">R$ ${p.score}</td>
+                        <td style="color:var(--green-success);">${p.hits}</td>
+                        <td style="color:var(--red-alert);">${p.errors}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                setTimeout(() => {
+                    document.getElementById('modal-victory').classList.remove('hidden');
+                }, 1200);
+            }
+        }
+
+        function resetGameToStart() {
+            document.getElementById('modal-victory').classList.add('hidden');
+            document.getElementById('modal-lang').classList.remove('hidden');
+            state.usedLetters.clear();
+            state.currentPlayerIndex = 0;
+            state.canSpin = true;
+            document.getElementById('spinBtn').disabled = false;
+        }
+
+        function updateUIState() {
+            document.getElementById('currentPrizeText').innerText = `R$ ${state.currentPrize}`;
+        }
+
+        function addLog(msg, type = '') {
+            const log = document.getElementById('historyLog');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = msg;
+            log.insertBefore(entry, log.firstChild);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (!state.canChooseLetter) return;
+            const key = e.key.toUpperCase();
+            if (/^[A-Z]$/.test(key) && !state.usedLetters.has(key)) {
+                handleLetterChoice(key);
+            }
+        });
+
+    </script>
+</body>
+</html>
