@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070916" />
+  <title>Forja Procedural de Palavras</title>
+  <style>
+    :root {
+      --bg: #070916;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(10,14,32,.62);
+      --line: rgba(255,255,255,.10);
+      --line-2: rgba(255,255,255,.14);
+      --text: #eef2ff;
+      --muted: rgba(226,232,240,.72);
+      --muted-2: rgba(148,163,184,.7);
+      --accent: #fff;
+      --good: #34d399;
+      --warn: #fbbf24;
+      --shadow: 0 24px 90px rgba(0,0,0,.38);
+      --radius: 28px;
+      --radius-lg: 34px;
+      --blur: blur(18px);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(99,102,241,.20), transparent 28%),
+        radial-gradient(circle at 90% 15%, rgba(236,72,153,.16), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(34,197,94,.12), transparent 30%),
+        linear-gradient(180deg, #050713 0%, #090b18 55%, #050713 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .35;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: radial-gradient(circle at 50% 20%, black 55%, transparent 100%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 0 42%, rgba(0,0,0,.14) 100%);
+    }
+
+    .app {
+      width: min(1320px, calc(100% - 20px));
+      margin: 0 auto;
+      padding: 12px 0 16px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar, .panel, .footer {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+    }
+
+    .topbar {
+      border-radius: calc(var(--radius-lg) + 2px);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1.4fr .9fr;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height: .95;
+      letter-spacing: -.05em;
+    }
+
+    .lead {
+      max-width: 74ch;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: clamp(.95rem, 1.4vw, 1.06rem);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border-radius: 22px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kicker {
+      color: var(--muted-2);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      font-weight: 800;
+    }
+
+    .stat strong {
+      font-size: 1.08rem;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.1;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--good);
+      box-shadow: 0 0 18px rgba(52,211,153,.8);
+      display: inline-block;
+    }
+
+    .status-dot.busy {
+      background: var(--warn);
+      box-shadow: 0 0 18px rgba(251,191,36,.85);
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.32);opacity:.65} }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+      align-items: start;
+      flex: 1;
+    }
+
+    .left, .right { display: grid; gap: 14px; }
+    .panel {
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-chip {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      flex: 0 0 auto;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .panel-title p {
+      margin: 4px 0 0;
+      color: var(--muted-2);
+      font-size: .84rem;
+      line-height: 1.45;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label, .mini-label {
+      color: var(--muted-2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-weight: 800;
+    }
+
+    .input, .btn, .chip, .select {
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline: none;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .input, .select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+    }
+
+    .input::placeholder { color: rgba(148,163,184,.55); }
+    .input:focus, .select:focus, .btn:focus, .chip:focus {
+      border-color: rgba(255,255,255,.28);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.05);
+    }
+
+    .seed-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .btn {
+      cursor: pointer;
+      padding: 13px 16px;
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:hover, .chip:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); }
+    .btn.primary {
+      background: rgba(255,255,255,.95);
+      color: #08101f;
+      border-color: rgba(255,255,255,.75);
+    }
+    .btn.primary:hover { background: #fff; }
+    .btn.ghost { background: rgba(255,255,255,.06); }
+    .btn.small { padding: 10px 14px; border-radius: 16px; }
+
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 12px 12px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.1;
+      user-select: none;
+    }
+
+    .chip.active {
+      background: rgba(255,255,255,.96);
+      color: #09101f;
+      border-color: rgba(255,255,255,.86);
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info {
+      border-radius: 22px;
+      padding: 14px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid var(--line);
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .info strong {
+      font-size: 1.02rem;
+      text-transform: capitalize;
+    }
+
+    .sliders {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .slider-box {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 14px;
+    }
+
+    .slider-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .slider-top strong { display: block; font-size: 15px; margin-bottom: 3px; }
+    .slider-top span { color: var(--muted-2); font-size: 12px; line-height: 1.4; }
+    .percent {
+      min-width: 58px;
+      text-align: right;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.20);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      outline: none;
+      background: linear-gradient(90deg, rgba(255,255,255,.60), rgba(255,255,255,.10));
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      border: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+      cursor: pointer;
+    }
+
+    .word-stage {
+      overflow: hidden;
+      position: relative;
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      padding: 18px 16px 16px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.14), rgba(255,255,255,.05) 44%, rgba(0,0,0,.22) 100%);
+    }
+
+    .word-stage::before, .word-stage::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 50%;
+      filter: blur(14px);
+      opacity: .6;
+      pointer-events: none;
+    }
+    .word-stage::before { width: 190px; height: 190px; top: -35px; left: -20px; background: rgba(99,102,241,.18); }
+    .word-stage::after { width: 200px; height: 200px; bottom: -55px; right: -20px; background: rgba(236,72,153,.15); }
+
+    .orb {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 0 90px rgba(255,255,255,.09);
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .orb.busy { animation: pulse2 1.4s infinite; }
+    @keyframes pulse2 { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+    .result-label {
+      position: relative;
+      z-index: 1;
+      color: var(--muted-2);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .4em;
+      font-weight: 800;
+    }
+
+    .word {
+      position: relative;
+      z-index: 1;
+      margin: 12px 0 8px;
+      font-size: clamp(3.1rem, 8vw, 5.8rem);
+      line-height: .9;
+      font-weight: 900;
+      letter-spacing: -.08em;
+      word-break: break-word;
+      min-height: 1em;
+      text-wrap: balance;
+    }
+
+    .subtext {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      max-width: 52ch;
+      line-height: 1.65;
+      font-size: .95rem;
+    }
+
+    .actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #fff, rgba(255,255,255,.55));
+      box-shadow: 0 0 20px rgba(255,255,255,.18);
+      transition: width .14s linear;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+
+    .top-list, .history-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .candidate, .history-item {
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .candidate .lefty, .history-item .lefty {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .candidate strong, .history-item strong {
+      font-size: 1rem;
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .meta {
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .score-pill {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.07);
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .footer {
+      border-radius: calc(var(--radius-lg) + 2px);
+      padding: 14px 16px;
+      text-align: center;
+      color: var(--muted-2);
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(12,16,33,.84);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,.34);
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 13px;
+      transition: .24s ease;
+      z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .mono { font-variant-numeric: tabular-nums; }
+
+
+    .meaning-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .meaning-textarea {
+      min-height: 128px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .derived-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .derived-seed {
+      padding: 14px 16px;
+      font-size: 15px;
+      letter-spacing: .06em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .meaning-note {
+      margin-top: 8px;
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .language-results {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .lang-result {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      min-height: 150px;
+      cursor: pointer;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .lang-result:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+    }
+
+    .lang-result.active {
+      border-color: rgba(255,255,255,.33);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 14px 36px rgba(0,0,0,.24);
+      background: rgba(255,255,255,.09);
+    }
+
+    .lang-result .lang-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .lang-result .lang-name {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      color: var(--muted-2);
+      font-weight: 800;
+    }
+
+    .lang-result .lang-word {
+      font-size: clamp(1.7rem, 5vw, 2.4rem);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: -.06em;
+      word-break: break-word;
+    }
+
+    .lang-result .lang-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted-2);
+      font-size: 12px;
+    }
+
+    .lang-result .lang-badge {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.07);
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .subtitle-strong {
+      color: rgba(255,255,255,.92);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1080px) {
+      .topbar, .layout { grid-template-columns: 1fr; }
+      .layout { gap: 14px; }
+      .stat-grid, .info-cards, .sliders { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .language-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .app { width: min(100%, calc(100% - 10px)); padding-top: 6px; }
+      .topbar, .panel, .footer { border-radius: 24px; }
+      .topbar { padding: 14px; }
+      .panel { padding: 14px; }
+      .grid-2, .grid-4, .stat-grid, .info-cards, .sliders { grid-template-columns: 1fr; }
+      .seed-row { grid-template-columns: 1fr; }
+      .word-stage { min-height: 360px; padding: 14px; }
+      .word { font-size: clamp(2.6rem, 16vw, 4.8rem); }
+      .actions { flex-direction: column; }
+      .actions .btn { width: 100%; }
+      .candidate, .history-item { align-items: start; flex-direction: column; }
+      .score-pill { align-self: flex-end; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="badge">motor procedural multi-idioma</div>
+        <div>
+          <h1>Forja Procedural de Palavras</h1>
+          <p class="lead">
+            A seed vira um núcleo abstrato, o motor trabalha com ruído, coesão e profundidade, e o resultado final aparece como uma palavra estável, bonita e reproduzível. A busca interna acontece escondida dentro do gerador.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="kicker">status</div>
+          <strong><span id="statusDot" class="status-dot"></span><span id="statusText">pronto</span></strong>
+        </div>
+        <div class="stat">
+          <div class="kicker">língua</div>
+          <strong id="statLanguage">Português</strong>
+        </div>
+        <div class="stat">
+          <div class="kicker">tentativas</div>
+          <strong class="mono" id="statAttempts">—</strong>
+        </div>
+        <div class="stat">
+          <div class="kicker">score</div>
+          <strong class="mono" id="statScore">—</strong>
+        </div>
+      </div>
+    </header>
+
+    
+<main class="layout">
+      <section class="left">
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="icon-chip">✦</div>
+              <div>
+                <h2>núcleo de geração</h2>
+                <p>Agora o significado é a origem e a seed vira apenas a forma técnica derivada dele.</p>
+              </div>
+            </div>
+            <div class="mini-label" id="workerLabel">worker ativo</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="seed">seed derivada</label>
+              <div class="derived-row">
+                <input id="seed" class="input derived-seed mono" type="text" value="" readonly />
+                <button class="btn ghost" id="copySeedBtn" type="button">copiar</button>
+              </div>
+              <div class="meaning-note">A seed é calculada a partir do significado manual, então o mesmo significado sempre volta para o mesmo núcleo.</div>
+            </div>
+
+            <div class="field">
+              <label>idioma base</label>
+              <div class="language-grid" id="langGrid"></div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="meaningText">significado livre</label>
+              <textarea id="meaningText" class="input meaning-textarea" placeholder="Ex.: fogo leve e escondido, com sensação de movimento calmo e brilho curto."></textarea>
+            </div>
+
+            <div class="field">
+              <label>estrutura do significado</label>
+              <div class="meaning-grid">
+                <select id="meaningTone" class="select"></select>
+                <select id="meaningMotion" class="select"></select>
+                <select id="meaningScale" class="select"></select>
+                <select id="meaningResonance" class="select"></select>
+              </div>
+
+              <div style="height:12px"></div>
+
+              <div class="slider-box" style="padding:14px;">
+                <div class="slider-top">
+                  <div>
+                    <strong>densidade semântica</strong>
+                    <span>quanto o significado pesa no formato final</span>
+                  </div>
+                  <div class="percent mono" id="vMeaningDensity">64%</div>
+                </div>
+                <input id="meaningDensity" type="range" min="0" max="1" step="0.01" value="0.64" />
+              </div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="info-cards">
+            <div class="info">
+              <div class="kicker">conceito</div>
+              <strong id="conceptTone">—</strong>
+              <div class="meta" id="conceptDirection">—</div>
+            </div>
+            <div class="info">
+              <div class="kicker">escala</div>
+              <strong id="conceptScale">—</strong>
+              <div class="meta" id="conceptIntensity">—</div>
+            </div>
+            <div class="info">
+              <div class="kicker">ressonância</div>
+              <strong id="conceptResonance">—</strong>
+              <div class="meta" id="targetLength">—</div>
+            </div>
+            <div class="info">
+              <div class="kicker">motor</div>
+              <strong>worker</strong>
+              <div class="meta">processamento isolado da interface</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sliders">
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>temperatura</strong>
+                <span>mais alto = mais exploração e variação</span>
+              </div>
+              <div class="percent mono" id="vIntensity">66%</div>
+            </div>
+            <input id="intensity" type="range" min="0" max="1" step="0.01" value="0.66" />
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>ruído</strong>
+                <span>mais alto = mais desvio do padrão base</span>
+              </div>
+              <div class="percent mono" id="vNoise">34%</div>
+            </div>
+            <input id="noise" type="range" min="0" max="1" step="0.01" value="0.34" />
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>coesão</strong>
+                <span>mais alto = mais legível e estável</span>
+              </div>
+              <div class="percent mono" id="vCoherence">78%</div>
+            </div>
+            <input id="coherence" type="range" min="0" max="1" step="0.01" value="0.78" />
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>profundidade</strong>
+                <span>mais alto = palavras maiores e mais complexas</span>
+              </div>
+              <div class="percent mono" id="vDepth">70%</div>
+            </div>
+            <input id="depth" type="range" min="0" max="1" step="0.01" value="0.70" />
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>ritmo</strong>
+                <span>mais alto = mais fluidez silábica</span>
+              </div>
+              <div class="percent mono" id="vRhythm">60%</div>
+            </div>
+            <input id="rhythm" type="range" min="0" max="1" step="0.01" value="0.60" />
+          </div>
+
+          <div class="slider-box">
+            <div class="slider-top">
+              <div>
+                <strong>viés interno</strong>
+                <span>ajusta o peso do conceito sem expor regras duras</span>
+              </div>
+              <div class="percent mono" id="vBias">52%</div>
+            </div>
+            <input id="bias" type="range" min="0" max="1" step="0.01" value="0.52" />
+          </div>
+        </section>
+      </section>
+
+      <aside class="right">
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="icon-chip">✧</div>
+              <div>
+                <h2>palavra em paralelo</h2>
+                <p>A forma final aparece ao mesmo tempo em todas as línguas.</p>
+              </div>
+            </div>
+            <div class="mini-label" id="progressLabel">0%</div>
+          </div>
+
+          <div class="word-stage">
+            <div id="orb" class="orb"><span>◌</span></div>
+            <div class="result-label">resultado <span class="subtitle-strong" id="resultLangLabel">—</span></div>
+            <div id="word" class="word">—</div>
+            <div id="subtitle" class="subtext">Escreva um significado e pressione gerar para ver o mesmo núcleo em várias línguas.</div>
+
+            <div class="actions">
+              <button class="btn primary" id="generateBtn" type="button">gerar</button>
+              <button class="btn ghost" id="toggleBtn" type="button">pausa visual</button>
+              <button class="btn ghost" id="copyBtn" type="button">copiar palavra</button>
+              <button class="btn ghost" id="randomMeaningBtn" type="button">surpreender significado</button>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+              <div class="progress-meta">
+                <span>progresso</span>
+                <span id="progressMeta">janela de busca interna</span>
+              </div>
+              <div class="grid-2">
+                <div class="info" style="min-height:auto;">
+                  <div class="kicker">configuração</div>
+                  <strong id="budgetText">180ms</strong>
+                  <div class="meta">tempo por língua na rodada</div>
+                </div>
+                <div class="info" style="min-height:auto;">
+                  <div class="kicker">fluidez</div>
+                  <strong class="mono" id="scoreText">—</strong>
+                  <div class="meta">melhor candidato do idioma selecionado</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="icon-chip">◈</div>
+              <div>
+                <h2>línguas ao mesmo tempo</h2>
+                <p>Clique em uma delas para tornar aquele idioma o foco principal.</p>
+              </div>
+            </div>
+          </div>
+          <div id="multiGrid" class="language-results"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="icon-chip">✺</div>
+              <div>
+                <h2>candidatos internos</h2>
+                <p>Os melhores testes encontrados pelo motor agora.</p>
+              </div>
+            </div>
+          </div>
+          <div id="topList" class="top-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div class="panel-title">
+              <div class="icon-chip">☍</div>
+              <div>
+                <h2>memória recente</h2>
+                <p>Últimas saídas mantidas na interface.</p>
+              </div>
+            </div>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      interface responsiva · significado manual como origem · seed derivada como ferramenta
+    </footer>
+  </div>
+
+  <div id="toast" class="toast">copiado</div>
+
+  <script>
+    const LANGUAGES = {
+      pt: {
+        name: "Português",
+        script: "latin",
+        vowels: ["a", "e", "i", "o", "u"],
+        consonants: ["b", "c", "d", "f", "g", "l", "m", "n", "p", "r", "s", "t", "v", "z", "ch", "nh", "lh", "qu", "gu"],
+        syllables: ["ba", "be", "bi", "bo", "bu", "ca", "ce", "ci", "co", "cu", "da", "de", "di", "do", "du", "la", "le", "li", "lo", "lu", "ma", "me", "mi", "mo", "mu", "na", "ne", "ni", "no", "nu", "ra", "re", "ri", "ro", "ru", "sa", "se", "si", "so", "su", "ta", "te", "ti", "to", "tu", "tra", "dra", "pra", "gra", "cla", "pla"],
+        endings: ["a", "e", "o", "ar", "or", "ir", "ão", "im", "el", "er", "os", "us"],
+        clusters: ["br", "cr", "dr", "fr", "gr", "pr", "tr", "vr", "ch", "lh", "nh", "qu", "gu"],
+      },
+      en: {
+        name: "English",
+        script: "latin",
+        vowels: ["a", "e", "i", "o", "u", "y"],
+        consonants: ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "z", "th", "sh", "ch", "wh", "st", "str", "cl", "cr", "dr", "fr", "gr", "pr", "tr", "pl"],
+        syllables: ["ba", "be", "bi", "bo", "bu", "ca", "ce", "ci", "co", "cu", "da", "de", "di", "do", "du", "la", "le", "li", "lo", "lu", "ma", "me", "mi", "mo", "mu", "na", "ne", "ni", "no", "nu", "ra", "re", "ri", "ro", "ru", "sa", "se", "si", "so", "su", "ta", "te", "ti", "to", "tu", "tra", "bra", "sha", "tha", "gra", "pla"],
+        endings: ["er", "ing", "ed", "en", "ly", "ion", "ate", "al", "ous", "ward", "ness"],
+        clusters: ["bl", "br", "cl", "cr", "dr", "fr", "gr", "pl", "pr", "sc", "sk", "sl", "sm", "sn", "sp", "st", "str", "sw", "th", "wh", "ch", "sh"],
+      },
+      jp: {
+        name: "日本語",
+        script: "kana",
+        vowels: ["a", "i", "u", "e", "o"],
+        consonants: ["k", "s", "t", "n", "h", "m", "y", "r", "w", "g", "z", "d", "b", "p", "sh", "ch", "ts", "ky", "ry", "ny", "hy", "my", "py"],
+        syllables: ["ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", "ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "n", "kyo", "sha", "ryu", "cha", "nyo", "hya", "mio"],
+        endings: ["n", "to", "ra", "ki", "mi", "shi", "ko", "ya"],
+        clusters: ["ky", "sh", "ch", "ry", "ny", "hy", "my", "py", "ts"],
+      },
+      cn: {
+        name: "中文",
+        script: "han",
+        vowels: ["a", "e", "i", "o", "u", "v"],
+        consonants: ["b", "p", "m", "f", "d", "t", "n", "l", "g", "k", "h", "j", "q", "x", "zh", "ch", "sh", "r", "z", "c", "s", "y", "w"],
+        syllables: ["ma", "mo", "mi", "mu", "na", "nu", "ni", "ne", "no", "la", "li", "lu", "le", "lo", "ba", "bo", "bi", "bu", "da", "de", "di", "du", "zhang", "cheng", "xian", "qiu", "shan", "ming", "yuan", "hui", "feng", "guo", "ling", "tian", "yun"],
+        endings: ["an", "ang", "ong", "ing", "en", "ei", "ai", "iao", "ian", "uo"],
+        clusters: ["zh", "ch", "sh", "x", "q", "ng"],
+      },
+    };
+
+    const TONE_KEYWORDS = {
+      warm: ["fogo", "chama", "brasa", "calor", "quente", "solar", "sol", "igni", "lava"],
+      cold: ["frio", "gelo", "neve", "gelado", "frost", "ice", "hielo"],
+      spark: ["faísca", "faíscas", "raio", "raios", "centelha", "spark", "relâmpago", "electric", "energia"],
+      mist: ["névoa", "nevoa", "bruma", "mist", "fog", "haze", "vapor"],
+      metal: ["metal", "ferro", "aço", "aco", "steel", "iron", "liga"],
+      root: ["raiz", "raíz", "árvore", "arvore", "floresta", "wood", "root", "terra"],
+      flow: ["fluxo", "rio", "mar", "corrente", "onda", "flow", "water", "água", "agua"],
+      stone: ["pedra", "rocha", "stone", "rock", "terra", "grão", "grao"],
+      light: ["luz", "brilho", "claro", "lum", "light", "shine", "sol", "estrela"],
+      loom: ["sombra", "noite", "dark", "shadow", "escuro", "obscuro", "void"],
+      sky: ["céu", "ceu", "ar", "vento", "cloud", "nuvem", "sky", "alto"],
+      core: ["núcleo", "nucleo", "centro", "core", "base", "essencia", "essência"],
+    };
+
+    const MOTION_KEYWORDS = {
+      ascending: ["subir", "asc", "crescer", "elevar", "up", "rising", "voar"],
+      anchored: ["parado", "fixo", "ancorar", "root", "steady", "stabil", "base"],
+      fractured: ["quebrar", "partir", "fragment", "split", "fract", "rachar"],
+      radiant: ["brilhar", "emitir", "radiante", "glow", "shine", "luz"],
+      hidden: ["oculto", "escondido", "secreto", "hidden", "shadow", "baixo"],
+    };
+
+    const MEANING_PRESETS = [
+      { text: "fogo leve e escondido, com brilho curto", tone: "warm", motion: "hidden", scale: "small", resonance: "soft", density: 0.62 },
+      { text: "movimento calmo e aberto, como água em fluxo", tone: "flow", motion: "ascending", scale: "medium", resonance: "airy", density: 0.58 },
+      { text: "pedra antiga e estável, com peso no centro", tone: "stone", motion: "anchored", scale: "ancient", resonance: "deep", density: 0.76 },
+      { text: "luz rápida e precisa, quase uma faísca", tone: "spark", motion: "radiant", scale: "small", resonance: "sharp", density: 0.55 },
+      { text: "sombra suave com sensação de segredo", tone: "loom", motion: "hidden", scale: "medium", resonance: "soft", density: 0.67 },
+      { text: "núcleo vivo e forte, como metal pulsando", tone: "core", motion: "anchored", scale: "large", resonance: "stable", density: 0.81 },
+    ];
+
+    function clamp(n, a = 0, b = 1) {
+      return Math.min(b, Math.max(a, n));
+    }
+
+    function xmur3(str) {
+      let h = 1779033703 ^ str.length;
+      for (let i = 0; i < str.length; i++) {
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+        h = (h << 13) | (h >>> 19);
+      }
+      return function () {
+        h = Math.imul(h ^ (h >>> 16), 2246822507);
+        h = Math.imul(h ^ (h >>> 13), 3266489909);
+        return (h ^= h >>> 16) >>> 0;
+      };
+    }
+
+    function sfc32(a, b, c, d) {
+      return function () {
+        a >>>= 0;
+        b >>>= 0;
+        c >>>= 0;
+        d >>>= 0;
+        let t = (a + b) | 0;
+        a = b ^ (b >>> 9);
+        b = (c + (c << 3)) | 0;
+        c = (c << 21) | (c >>> 11);
+        d = (d + 1) | 0;
+        t = (t + d) | 0;
+        c = (c + t) | 0;
+        return (t >>> 0) / 4294967296;
+      };
+    }
+
+    function createRng(seed) {
+      const seedFn = xmur3(String(seed));
+      return sfc32(seedFn(), seedFn(), seedFn(), seedFn());
+    }
+
+    function pick(rng, arr) {
+      return arr[Math.floor(rng() * arr.length) % arr.length];
+    }
+
+    function weightedPick(rng, items) {
+      const total = items.reduce((a, b) => a + b.w, 0);
+      let roll = rng() * total;
+      for (const item of items) {
+        roll -= item.w;
+        if (roll <= 0) return item.v;
+      }
+      return items[items.length - 1].v;
+    }
+
+    function detectByKeywords(text, map, fallback) {
+      const lower = String(text || "").toLowerCase();
+      for (const [key, words] of Object.entries(map)) {
+        if (words.some((word) => lower.includes(word))) return key;
+      }
+      return fallback;
+    }
+
+    function meaningToSeed(meaning) {
+      const hash = xmur3("meaning:" + JSON.stringify(meaning));
+      const parts = [hash().toString(36), hash().toString(36), hash().toString(36), hash().toString(36)];
+      return "m-" + parts.join("").slice(0, 14);
+    }
+
+    function meaningToConcept(meaning) {
+      return {
+        tone: meaning.tone,
+        direction: meaning.motion,
+        scale: meaning.scale,
+        intensity: Math.round(clamp(meaning.density) * 4),
+        resonance: meaning.resonance,
+        text: meaning.text || "",
+      };
+    }
+
+    function scoreCandidate(word, lang, concept, params) {
+      let score = 0;
+      const clean = String(word || "").toLowerCase();
+      const vowelSet = new Set(lang.vowels);
+      const isVowel = (ch) => vowelSet.has(ch);
+      let vowels = 0;
+      for (let i = 0; i < clean.length; i++) if (isVowel(clean[i])) vowels++;
+      const ratio = vowels / Math.max(1, clean.length);
+      const targetRatio = lang.script === "kana" ? 0.60 : lang.script === "han" ? 0.54 : 0.46;
+      score += 1.3 - Math.abs(ratio - targetRatio) * 2.2;
+
+      const len = clean.length;
+      const targetLen = 4 + Math.round(params.depth * 4 + (concept.intensity % 2));
+      score += 1.2 - Math.abs(len - targetLen) * 0.35;
+
+      let badRuns = 0;
+      let run = 0;
+      let prevType = null;
+      for (const ch of clean) {
+        const type = isVowel(ch) ? "v" : "c";
+        if (type === prevType) run++; else run = 1;
+        if (run >= 3) badRuns += 1;
+        prevType = type;
+      }
+      score -= badRuns * (0.3 + params.noise * 0.5);
+
+      if (lang.endings.some((end) => clean.endsWith(end))) score += 0.6;
+      if (lang.clusters.some((cl) => clean.includes(cl))) score += 0.2;
+
+      const conceptBias = {
+        warm: ["a", "o", "l", "m", "r"],
+        cold: ["i", "e", "s", "n", "h"],
+        spark: ["k", "t", "x", "z", "sh"],
+        mist: ["m", "n", "h", "w", "y"],
+        metal: ["d", "g", "t", "r", "l"],
+        root: ["r", "n", "m", "l", "u"],
+        flow: ["f", "v", "w", "l", "s"],
+        stone: ["k", "g", "t", "d", "o"],
+        light: ["l", "i", "y", "e", "sh"],
+        loom: ["s", "m", "n", "u", "o"],
+        sky: ["s", "y", "a", "e", "i"],
+        core: ["c", "k", "o", "r", "e"],
+      }[concept.tone] || [];
+      for (const bias of conceptBias) if (clean.includes(bias)) score += 0.08;
+
+      if (concept.direction === "radiant" && /[aeiou]/.test(clean[0])) score += 0.2;
+      if (concept.direction === "anchored" && /[mnrl]/.test(clean[0])) score += 0.2;
+      if (concept.direction === "fractured" && /[xzq]/.test(clean)) score += 0.15;
+      if (concept.scale === "ancient" && clean.length >= 6) score += 0.15;
+
+      if (concept.resonance === "soft") score += Math.min(0.18, vowels * 0.03);
+      if (concept.resonance === "sharp") score += /[kxz]/.test(clean) ? 0.18 : 0;
+      if (concept.resonance === "deep") score += clean.length >= 6 ? 0.2 : 0;
+      if (concept.resonance === "airy") score += ratio >= 0.5 ? 0.16 : 0;
+      if (concept.resonance === "stable") score += /[mnrl]/.test(clean[0]) ? 0.12 : 0;
+
+      const harsh = (clean.match(/[^aeiou]{4,}/g) || []).length;
+      score -= harsh * (0.2 + (1 - params.coherence) * 0.6);
+
+      if (clean[0] === clean[clean.length - 1]) score += 0.12;
+      if (clean.slice(0, 2) === clean.slice(-2)) score += 0.18;
+      const mid = Math.floor(clean.length / 2);
+      if (mid > 1 && clean[mid - 1] === clean[mid]) score += 0.08;
+
+      score += params.bias * 0.12;
+      return score;
+    }
+
+    function generateCandidate(rng, lang, params, concept) {
+      const temperature = params.intensity;
+      const noise = params.noise;
+      const coherence = params.coherence;
+      const depth = params.depth;
+      const rhythm = params.rhythm;
+
+      const targetLen = Math.max(3, Math.min(12, Math.round(3 + depth * 6 + Math.floor(rng() * 2))));
+      const style = weightedPick(rng, [
+        { v: "syllabic", w: 1.2 + coherence },
+        { v: "clustered", w: 0.9 + temperature },
+        { v: "balanced", w: 1.3 },
+        { v: "compact", w: 1 + (1 - depth) },
+      ]);
+
+      const syllables = lang.syllables;
+      const clusters = lang.clusters;
+      const vowels = lang.vowels;
+      const consonants = lang.consonants;
+      let word = "";
+
+      const buildSyllable = () => {
+        const syllableStyle = weightedPick(rng, [
+          { v: "CV", w: 2.1 + coherence },
+          { v: "CVC", w: 1.2 + temperature },
+          { v: "VC", w: 0.8 + noise },
+          { v: "CCV", w: 0.7 + depth },
+          { v: "CVV", w: 0.6 + rhythm },
+        ]);
+        let s = "";
+        for (const part of syllableStyle) {
+          if (part === "C") {
+            const useCluster = rng() < 0.2 + noise * 0.5 && clusters.length > 0;
+            s += useCluster ? pick(rng, clusters) : weightedPick(rng, consonants.map((c) => ({ v: c, w: 1 })));
+          } else if (part === "V") {
+            s += weightedPick(rng, vowels.map((v) => ({ v, w: (v === "a" || v === "e") ? 1.25 : 1 })));
+          }
+        }
+        return s;
+      };
+
+      if (style === "syllabic") {
+        const n = Math.max(1, Math.round(targetLen / (1.7 + (1 - rhythm))));
+        for (let i = 0; i < n; i++) {
+          word += weightedPick(rng, syllables.map((s) => ({ v: s, w: 1 })));
+          if (rng() < 0.2 && word.length < targetLen - 2) word += buildSyllable();
+        }
+      } else if (style === "clustered") {
+        while (word.length < targetLen) {
+          if (rng() < 0.45 + temperature * 0.3) word += pick(rng, clusters);
+          else if (rng() < 0.68) word += weightedPick(rng, consonants.map((c) => ({ v: c, w: 1 })));
+          else word += weightedPick(rng, vowels.map((v) => ({ v, w: 1 })));
+        }
+      } else if (style === "compact") {
+        const pieces = Math.max(2, Math.round(targetLen / 2));
+        for (let i = 0; i < pieces; i++) word += buildSyllable();
+      } else {
+        while (word.length < targetLen) {
+          const decision = rng();
+          if (decision < 0.47) word += weightedPick(rng, consonants.map((c) => ({ v: c, w: 1 })));
+          else if (decision < 0.86) word += weightedPick(rng, vowels.map((v) => ({ v, w: 1 })));
+          else word += pick(rng, syllables);
+        }
+      }
+
+      if (rng() < 0.38 + rhythm * 0.2) {
+        const end = weightedPick(rng, lang.endings.map((e) => ({ v: e, w: 1 })));
+        if (word.length < 14) word += end;
+      }
+
+      word = word.replace(/(.)\\1{2,}/g, "$1$1");
+      word = word.replace(/([bcdfghjklmnpqrstvwxyz])\\1{2,}/gi, "$1$1");
+      word = word.slice(0, Math.min(16, Math.max(3, word.length)));
+
+      if (lang.script === "kana") {
+        if (!/[aeiou]$/.test(word) && !word.endsWith("n")) word += weightedPick(rng, vowels.map((v) => ({ v, w: 1 })));
+      }
+      if (lang.script === "han") {
+        if (!/[aeiou]$/.test(word)) word += weightedPick(rng, vowels.map((v) => ({ v, w: 1 })));
+      }
+
+      return word;
+    }
+
+    const els = {
+      seed: document.getElementById("seed"),
+      copySeedBtn: document.getElementById("copySeedBtn"),
+      meaningText: document.getElementById("meaningText"),
+      meaningTone: document.getElementById("meaningTone"),
+      meaningMotion: document.getElementById("meaningMotion"),
+      meaningScale: document.getElementById("meaningScale"),
+      meaningResonance: document.getElementById("meaningResonance"),
+      meaningDensity: document.getElementById("meaningDensity"),
+      vMeaningDensity: document.getElementById("vMeaningDensity"),
+      randomMeaningBtn: document.getElementById("randomMeaningBtn"),
+      langGrid: document.getElementById("langGrid"),
+      generateBtn: document.getElementById("generateBtn"),
+      toggleBtn: document.getElementById("toggleBtn"),
+      copyBtn: document.getElementById("copyBtn"),
+      intensity: document.getElementById("intensity"),
+      noise: document.getElementById("noise"),
+      coherence: document.getElementById("coherence"),
+      depth: document.getElementById("depth"),
+      rhythm: document.getElementById("rhythm"),
+      bias: document.getElementById("bias"),
+      vIntensity: document.getElementById("vIntensity"),
+      vNoise: document.getElementById("vNoise"),
+      vCoherence: document.getElementById("vCoherence"),
+      vDepth: document.getElementById("vDepth"),
+      vRhythm: document.getElementById("vRhythm"),
+      vBias: document.getElementById("vBias"),
+      statLanguage: document.getElementById("statLanguage"),
+      statAttempts: document.getElementById("statAttempts"),
+      statScore: document.getElementById("statScore"),
+      statusDot: document.getElementById("statusDot"),
+      statusText: document.getElementById("statusText"),
+      conceptTone: document.getElementById("conceptTone"),
+      conceptDirection: document.getElementById("conceptDirection"),
+      conceptScale: document.getElementById("conceptScale"),
+      conceptIntensity: document.getElementById("conceptIntensity"),
+      conceptResonance: document.getElementById("conceptResonance"),
+      targetLength: document.getElementById("targetLength"),
+      word: document.getElementById("word"),
+      subtitle: document.getElementById("subtitle"),
+      resultLangLabel: document.getElementById("resultLangLabel"),
+      orb: document.getElementById("orb"),
+      scoreText: document.getElementById("scoreText"),
+      progressFill: document.getElementById("progressFill"),
+      progressLabel: document.getElementById("progressLabel"),
+      progressMeta: document.getElementById("progressMeta"),
+      budgetText: document.getElementById("budgetText"),
+      topList: document.getElementById("topList"),
+      historyList: document.getElementById("historyList"),
+      multiGrid: document.getElementById("multiGrid"),
+      workerLabel: document.getElementById("workerLabel"),
+      toast: document.getElementById("toast"),
+    };
+
+    const state = {
+      language: "pt",
+      meaning: {
+        text: "",
+        tone: "light",
+        motion: "radiant",
+        scale: "medium",
+        resonance: "stable",
+        density: 0.64,
+      },
+      intensity: parseFloat(els.intensity.value),
+      noise: parseFloat(els.noise.value),
+      coherence: parseFloat(els.coherence.value),
+      depth: parseFloat(els.depth.value),
+      rhythm: parseFloat(els.rhythm.value),
+      bias: parseFloat(els.bias.value),
+      budgetMs: 180,
+      running: false,
+      pausedVisual: false,
+      worker: null,
+      timer: null,
+      progress: 0,
+      history: [],
+      results: null,
+      lastSeed: "",
+    };
+
+    function populateMeaningSelects() {
+      const toneOptions = [
+        ["light", "luz"], ["warm", "quente"], ["cold", "frio"], ["flow", "fluxo"],
+        ["mist", "névoa"], ["spark", "faísca"], ["stone", "pedra"], ["root", "raiz"],
+        ["metal", "metal"], ["loom", "sombra"], ["sky", "céu"], ["core", "núcleo"],
+      ];
+      const motionOptions = [
+        ["radiant", "radiante"], ["ascending", "ascendente"], ["anchored", "ancorado"],
+        ["fractured", "quebrado"], ["hidden", "oculto"],
+      ];
+      const scaleOptions = [
+        ["small", "pequena"], ["medium", "média"], ["large", "grande"],
+        ["ancient", "antiga"], ["vivid", "viva"],
+      ];
+      const resonanceOptions = [
+        ["soft", "suave"], ["stable", "estável"], ["sharp", "aguda"], ["deep", "profunda"], ["airy", "arejada"],
+      ];
+
+      const fill = (el, opts, selected) => {
+        el.innerHTML = opts.map(([value, label]) => `<option value="${value}" ${value === selected ? "selected" : ""}>${label}</option>`).join("");
+      };
+      fill(els.meaningTone, toneOptions, state.meaning.tone);
+      fill(els.meaningMotion, motionOptions, state.meaning.motion);
+      fill(els.meaningScale, scaleOptions, state.meaning.scale);
+      fill(els.meaningResonance, resonanceOptions, state.meaning.resonance);
+    }
+
+    function extractMeaning() {
+      const text = els.meaningText.value.trim();
+      const tone = detectByKeywords(text, TONE_KEYWORDS, els.meaningTone.value);
+      const motion = detectByKeywords(text, MOTION_KEYWORDS, els.meaningMotion.value);
+      return {
+        text,
+        tone,
+        motion,
+        scale: els.meaningScale.value,
+        resonance: els.meaningResonance.value,
+        density: parseFloat(els.meaningDensity.value),
+      };
+    }
+
+    function updateMeaningState() {
+      state.meaning = extractMeaning();
+      state.lastSeed = meaningToSeed(state.meaning);
+      els.seed.value = state.lastSeed;
+      const concept = meaningToConcept(state.meaning);
+      els.conceptTone.textContent = concept.tone;
+      els.conceptDirection.textContent = concept.direction;
+      els.conceptScale.textContent = concept.scale;
+      els.conceptIntensity.textContent = `intensidade ${concept.intensity}`;
+      els.conceptResonance.textContent = concept.resonance;
+      els.targetLength.textContent = `${Math.round(3 + state.depth * 6)}+`;
+      els.vMeaningDensity.textContent = `${Math.round(state.meaning.density * 100)}%`;
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => els.toast.classList.remove("show"), 1250);
+    }
+
+    function setStatus(running, text) {
+      els.statusDot.classList.toggle("busy", running);
+      els.statusText.textContent = text;
+    }
+
+    function updateSliders() {
+      els.vIntensity.textContent = `${Math.round(state.intensity * 100)}%`;
+      els.vNoise.textContent = `${Math.round(state.noise * 100)}%`;
+      els.vCoherence.textContent = `${Math.round(state.coherence * 100)}%`;
+      els.vDepth.textContent = `${Math.round(state.depth * 100)}%`;
+      els.vRhythm.textContent = `${Math.round(state.rhythm * 100)}%`;
+      els.vBias.textContent = `${Math.round(state.bias * 100)}%`;
+      els.budgetText.textContent = `${state.budgetMs}ms`;
+    }
+
+    function renderLanguages() {
+      els.langGrid.innerHTML = "";
+      for (const [key, data] of Object.entries(LANGUAGES)) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chip" + (state.language === key ? " active" : "");
+        btn.textContent = data.name;
+        btn.addEventListener("click", () => {
+          state.language = key;
+          els.statLanguage.textContent = data.name;
+          renderLanguages();
+          refreshSelectedOutput();
+        });
+        els.langGrid.appendChild(btn);
+      }
+      els.statLanguage.textContent = LANGUAGES[state.language].name;
+    }
+
+    function renderMultiGrid() {
+      if (!state.results) {
+        els.multiGrid.innerHTML = '<div class="lang-result" style="grid-column: 1 / -1;"><div class="lang-head"><div><div class="lang-name">aguardando</div><div class="lang-word">—</div></div><div class="lang-badge">sem geração</div></div><div class="lang-meta"><span>crie um significado e rode o motor</span><span>sincronizado</span></div></div>';
+        return;
+      }
+
+      const order = Object.keys(LANGUAGES);
+      els.multiGrid.innerHTML = order.map((key) => {
+        const result = state.results[key];
+        const lang = LANGUAGES[key];
+        const word = result?.best?.word || "—";
+        const score = Number.isFinite(result?.best?.score) ? result.best.score.toFixed(2) : "—";
+        const attempts = result?.attempts ? result.attempts.toLocaleString() : "—";
+        const active = key === state.language ? " active" : "";
+        return `
+          <div class="lang-result${active}" data-lang="${key}">
+            <div class="lang-head">
+              <div class="lang-name">${lang.name}</div>
+              <div class="lang-badge">${key.toUpperCase()}</div>
+            </div>
+            <div class="lang-word">${escapeHtml(word)}</div>
+            <div class="lang-meta">
+              <span>score ${score}</span>
+              <span>${attempts} testes</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      els.multiGrid.querySelectorAll(".lang-result").forEach((card) => {
+        card.addEventListener("click", () => {
+          state.language = card.dataset.lang;
+          renderLanguages();
+          refreshSelectedOutput();
+        });
+      });
+    }
+
+    function renderTopList() {
+      const result = state.results?.[state.language];
+      if (!result?.liveTop?.length) {
+        els.topList.innerHTML = '<div class="candidate"><div class="lefty"><strong>nenhum candidato ainda</strong><div class="meta">pressione gerar para revelar os melhores testes internos</div></div><div class="score-pill">—</div></div>';
+        return;
+      }
+      els.topList.innerHTML = result.liveTop.slice(0, 5).map((item, idx) => `
+        <div class="candidate">
+          <div class="lefty">
+            <strong>${escapeHtml(item.word)}</strong>
+            <div class="meta">score ${item.score.toFixed(2)} · posição ${idx + 1}</div>
+          </div>
+          <div class="score-pill">top</div>
+        </div>
+      `).join("");
+    }
+
+    function renderHistory() {
+      if (!state.history.length) {
+        els.historyList.innerHTML = '<div class="history-item"><div class="lefty"><strong>sem histórico</strong><div class="meta">as últimas palavras vão aparecer aqui</div></div><div class="score-pill">—</div></div>';
+        return;
+      }
+
+      els.historyList.innerHTML = state.history.slice(0, 6).map((h) => `
+        <div class="history-item">
+          <div class="lefty">
+            <strong>${escapeHtml(h.word)}</strong>
+            <div class="meta">${escapeHtml(h.language)} · ${escapeHtml(h.time)} · ${escapeHtml(h.seed)}</div>
+            <div class="meta">${escapeHtml(h.summary)}</div>
+          </div>
+          <div class="score-pill">${h.score.toFixed(2)}</div>
+        </div>
+      `).join("");
+    }
+
+    function refreshSelectedOutput() {
+      const result = state.results?.[state.language];
+      const lang = LANGUAGES[state.language];
+      els.resultLangLabel.textContent = lang.name;
+      if (!result?.best?.word) {
+        els.word.textContent = "—";
+        els.subtitle.textContent = "Escreva um significado e pressione gerar para ver o mesmo núcleo em várias línguas.";
+        els.scoreText.textContent = "—";
+        els.statAttempts.textContent = "—";
+        els.statScore.textContent = "—";
+        renderTopList();
+        renderMultiGrid();
+        return;
+      }
+      els.word.textContent = result.best.word;
+      els.subtitle.textContent = `o idioma focado é ${lang.name}, mas o resultado paralelo também foi calculado para as demais línguas.`;
+      els.scoreText.textContent = result.best.score.toFixed(2);
+      els.statAttempts.textContent = result.attempts.toLocaleString();
+      els.statScore.textContent = result.best.score.toFixed(2);
+      renderTopList();
+      renderMultiGrid();
+    }
+
+    function updateMeaningDependentUI() {
+      updateMeaningState();
+      updateSliders();
+      renderLanguages();
+      refreshSelectedOutput();
+    }
+
+    function randomMeaning() {
+      const preset = pick(createRng(Date.now()), MEANING_PRESETS);
+      els.meaningText.value = preset.text;
+      els.meaningTone.value = preset.tone;
+      els.meaningMotion.value = preset.motion;
+      els.meaningScale.value = preset.scale;
+      els.meaningResonance.value = preset.resonance;
+      els.meaningDensity.value = String(preset.density);
+      state.meaning = extractMeaning();
+      updateMeaningDependentUI();
+      showToast("significado gerado");
+    }
+
+    function copyText(text) {
+      if (!text) return;
+      navigator.clipboard?.writeText(text).then(() => showToast("copiado")).catch(() => showToast("não foi possível copiar"));
+    }
+
+    function copyWord() {
+      const result = state.results?.[state.language]?.best?.word;
+      copyText(result);
+    }
+
+    function copySeed() {
+      copyText(els.seed.value);
+    }
+
+    function startProgress(totalDuration) {
+      clearInterval(state.timer);
+      const started = performance.now();
+      state.progress = 0;
+      els.progressFill.style.width = "0%";
+      els.progressLabel.textContent = "0%";
+      els.progressMeta.textContent = "rodada em andamento";
+      state.timer = setInterval(() => {
+        const elapsed = performance.now() - started;
+        const pct = Math.min(96, Math.round((elapsed / totalDuration) * 100));
+        state.progress = pct;
+        els.progressFill.style.width = `${pct}%`;
+        els.progressLabel.textContent = `${pct}%`;
+      }, 28);
+    }
+
+    function finalizeProgress() {
+      clearInterval(state.timer);
+      state.progress = 100;
+      els.progressFill.style.width = "100%";
+      els.progressLabel.textContent = "100%";
+      els.progressMeta.textContent = "resultado finalizado";
+      setTimeout(() => {
+        if (!state.running) {
+          els.progressFill.style.width = "0%";
+          els.progressLabel.textContent = "0%";
+        }
+      }, 550);
+    }
+
+    function generate() {
+      if (!state.worker || state.running) return;
+      updateMeaningState();
+      state.running = true;
+      setStatus(true, "processando");
+      els.orb.classList.add("busy");
+      els.word.textContent = "…";
+      els.subtitle.textContent = "o motor está explorando candidatos internamente em todas as línguas.";
+      els.scoreText.textContent = "—";
+      const perLanguage = Math.max(120, Math.min(1200, state.budgetMs));
+      const totalDuration = perLanguage * Object.keys(LANGUAGES).length;
+      startProgress(totalDuration);
+
+      state.worker.postMessage({
+        meaning: state.meaning,
+        selectedLanguage: state.language,
+        intensity: state.intensity,
+        noise: state.noise,
+        coherence: state.coherence,
+        depth: state.depth,
+        rhythm: state.rhythm,
+        bias: state.bias,
+        budgetMs: perLanguage,
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function initWorker() {
+      const workerCode = `
+        ${xmur3.toString()}
+        ${sfc32.toString()}
+        ${createRng.toString()}
+        ${pick.toString()}
+        ${weightedPick.toString()}
+        ${clamp.toString()}
+        ${meaningToSeed.toString()}
+        ${meaningToConcept.toString()}
+        ${scoreCandidate.toString()}
+        ${generateCandidate.toString()}
+        const LANGUAGES = ${JSON.stringify(LANGUAGES)};
+        self.onmessage = (e) => {
+          const { meaning, selectedLanguage, intensity, noise, coherence, depth, rhythm, bias, budgetMs = 160 } = e.data;
+          const params = { intensity, noise, coherence, depth, rhythm, bias };
+          const seed = meaningToSeed(meaning);
+          const concept = meaningToConcept(meaning);
+          const results = {};
+          const keys = Object.keys(LANGUAGES);
+          let totalAttempts = 0;
+          const started = performance.now();
+
+          for (const key of keys) {
+            const lang = LANGUAGES[key];
+            const rng = createRng(seed + '|' + key + '|' + budgetMs);
+            const start = performance.now();
+            const limit = budgetMs;
+            let best = { word: '', score: -Infinity };
+            let attempts = 0;
+            let liveTop = [];
+
+            while (performance.now() - start < limit) {
+              const candidate = generateCandidate(rng, lang, params, concept);
+              const score = scoreCandidate(candidate, lang, concept, params);
+              attempts++;
+              if (score > best.score) best = { word: candidate, score };
+              if (liveTop.length < 8) {
+                liveTop.push({ word: candidate, score });
+              } else {
+                liveTop.sort((a, b) => b.score - a.score);
+                if (score > liveTop[liveTop.length - 1].score) {
+                  liveTop[liveTop.length - 1] = { word: candidate, score };
+                }
+              }
+            }
+
+            liveTop.sort((a, b) => b.score - a.score);
+            results[key] = {
+              label: lang.name,
+              best,
+              liveTop,
+              attempts,
+            };
+            totalAttempts += attempts;
+          }
+
+          postMessage({
+            seed,
+            meaning,
+            concept,
+            selectedLanguage,
+            results,
+            attempts: totalAttempts,
+            elapsed: performance.now() - started
+          });
+        };
+      `;
+
+      const blob = new Blob([workerCode], { type: "application/javascript" });
+      const url = URL.createObjectURL(blob);
+      state.worker = new Worker(url);
+      URL.revokeObjectURL(url);
+
+      state.worker.onmessage = (e) => {
+        const data = e.data;
+        state.running = false;
+        state.results = data.results;
+        state.lastSeed = data.seed;
+        els.seed.value = data.seed;
+        setStatus(false, "concluído");
+        els.orb.classList.remove("busy");
+        finalizeProgress();
+
+        refreshSelectedOutput();
+
+        const selected = state.results?.[state.language];
+        const summary = Object.entries(state.results || {})
+          .map(([key, item]) => `${key.toUpperCase()}:${item?.best?.word || "—"}`)
+          .join(" · ");
+
+        state.history.unshift({
+          word: selected?.best?.word || "—",
+          language: LANGUAGES[state.language].name,
+          score: selected?.best?.score ?? 0,
+          seed: data.seed,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          summary,
+        });
+        state.history = state.history.slice(0, 6);
+        renderHistory();
+        els.statAttempts.textContent = selected?.attempts?.toLocaleString?.() || "—";
+        els.statScore.textContent = selected?.best?.score?.toFixed?.(2) || "—";
+        els.resultLangLabel.textContent = LANGUAGES[state.language].name;
+        els.progressMeta.textContent = "resultado finalizado";
+      };
+    }
+
+    function hookupControls() {
+      const updateMeaningFromInputs = () => {
+        state.meaning = extractMeaning();
+        updateMeaningDependentUI();
+      };
+
+      els.meaningText.addEventListener("input", updateMeaningFromInputs);
+      els.meaningTone.addEventListener("change", updateMeaningFromInputs);
+      els.meaningMotion.addEventListener("change", updateMeaningFromInputs);
+      els.meaningScale.addEventListener("change", updateMeaningFromInputs);
+      els.meaningResonance.addEventListener("change", updateMeaningFromInputs);
+      els.meaningDensity.addEventListener("input", () => {
+        state.meaning = extractMeaning();
+        updateMeaningState();
+      });
+
+      const bindSlider = (el, key, out) => {
+        el.addEventListener("input", () => {
+          state[key] = parseFloat(el.value);
+          out.textContent = `${Math.round(state[key] * 100)}%`;
+        });
+      };
+      bindSlider(els.intensity, "intensity", els.vIntensity);
+      bindSlider(els.noise, "noise", els.vNoise);
+      bindSlider(els.coherence, "coherence", els.vCoherence);
+      bindSlider(els.depth, "depth", els.vDepth);
+      bindSlider(els.rhythm, "rhythm", els.vRhythm);
+      bindSlider(els.bias, "bias", els.vBias);
+
+      els.generateBtn.addEventListener("click", generate);
+      els.toggleBtn.addEventListener("click", () => {
+        state.pausedVisual = !state.pausedVisual;
+        els.toggleBtn.textContent = state.pausedVisual ? "retomar visual" : "pausa visual";
+        els.word.style.opacity = state.pausedVisual ? ".55" : "1";
+      });
+      els.copyBtn.addEventListener("click", copyWord);
+      els.copySeedBtn.addEventListener("click", copySeed);
+      els.randomMeaningBtn.addEventListener("click", randomMeaning);
+      els.seed.addEventListener("click", copySeed);
+    }
+
+    function boot() {
+      populateMeaningSelects();
+      renderLanguages();
+      state.meaning = extractMeaning();
+      updateMeaningState();
+      updateSliders();
+      renderMultiGrid();
+      renderTopList();
+      renderHistory();
+      hookupControls();
+      initWorker();
+      setStatus(false, "pronto");
+      els.statAttempts.textContent = "—";
+      els.statScore.textContent = "—";
+      els.word.textContent = "—";
+      els.resultLangLabel.textContent = LANGUAGES[state.language].name;
+    }
+
+    boot();
+  </script>
+</body>
+</html>
