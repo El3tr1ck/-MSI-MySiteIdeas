@@ -83,40 +83,40 @@
 /* Partida: formulário rolável e botão de início sempre visível. */
 .game-overlay{overflow:hidden;min-height:0;}
 .game-overlay .startbox{
-  box-sizing:border-box;display:flex;flex-direction:column;
-  min-height:0;max-height:calc(100% - 12px);
-  padding:0;overflow:hidden;flex:0 1 510px;
+box-sizing:border-box;display:flex;flex-direction:column;
+min-height:0;max-height:calc(100% - 12px);
+padding:0;overflow:hidden;flex:0 1 510px;
 }
 .game-setup-scroll{
-  min-height:0;overflow-y:auto;overflow-x:hidden;flex:1 1 auto;
-  padding:22px 24px 14px;overscroll-behavior:contain;
-  scrollbar-gutter:stable;
+min-height:0;overflow-y:auto;overflow-x:hidden;flex:1 1 auto;
+padding:22px 24px 14px;overscroll-behavior:contain;
+scrollbar-gutter:stable;
 }
 .game-setup-footer{
-  flex:0 0 auto;background:#18283b;border-top:1px solid #435b76;
-  padding:14px 24px 16px;box-shadow:0 -8px 16px #050c1533;
+flex:0 0 auto;background:#18283b;border-top:1px solid #435b76;
+padding:14px 24px 16px;box-shadow:0 -8px 16px #050c1533;
 }
 .game-setup-footer #startGame{margin:0;min-height:48px;font-size:14px;}
 @media(max-width:620px){
-  .game-overlay{padding:6px;}
-  .game-overlay .startbox{width:min(510px,100%);max-height:calc(100% - 4px);border-radius:12px;}
-  .game-setup-scroll{padding:12px 13px 9px;scrollbar-gutter:auto;}
-  .game-setup-footer{padding:9px 13px 11px;}
-  .game-setup-footer #startGame{min-height:44px;}
+.game-overlay{padding:6px;}
+.game-overlay .startbox{width:min(510px,100%);max-height:calc(100% - 4px);border-radius:12px;}
+.game-setup-scroll{padding:12px 13px 9px;scrollbar-gutter:auto;}
+.game-setup-footer{padding:9px 13px 11px;}
+.game-setup-footer #startGame{min-height:44px;}
 }
 @media(max-height:540px){
-  .game-overlay{padding:5px;}
-  .game-overlay .startbox{max-height:100%;}
-  .game-setup-scroll{padding-top:10px;padding-bottom:8px;}
-  .game-setup-footer{padding-top:7px;padding-bottom:7px;}
+.game-overlay{padding:5px;}
+.game-overlay .startbox{max-height:100%;}
+.game-setup-scroll{padding-top:10px;padding-bottom:8px;}
+.game-setup-footer{padding-top:7px;padding-bottom:7px;}
 }
 
 @media(max-height:560px){
-  .game-shell{min-height:0;height:calc(100dvh - 66px)}
-  .game-overlay .startbox{max-height:100%}
+.game-shell{min-height:0;height:calc(100dvh - 66px)}
+.game-overlay .startbox{max-height:100%}
 }
 @media(max-width:620px) and (max-height:560px){
-  .game-shell{height:calc(100dvh - 58px)}
+.game-shell{height:calc(100dvh - 58px)}
 }
 
 /* Multiplayer e personalização de peões tridimensionais */
@@ -142,9 +142,9 @@
 
 /* Configuração do jogo como tela completa em dispositivos compactos. */
 @media(max-width:700px),(max-height:540px){
- .game-overlay:not(.hide){position:fixed;top:var(--game-header,66px);left:0;right:0;bottom:0;width:100vw;height:calc(100dvh - var(--game-header,66px));z-index:22;padding:9px;align-items:stretch;justify-content:center;background:#09121def}
- .game-overlay .startbox{flex:1 1 auto;width:100%;max-width:610px;max-height:100%;margin:0 auto;min-height:0}
- .game-setup-scroll{overscroll-behavior:contain}
+.game-overlay:not(.hide){position:fixed;top:var(--game-header,66px);left:0;right:0;bottom:0;width:100vw;height:calc(100dvh - var(--game-header,66px));z-index:22;padding:9px;align-items:stretch;justify-content:center;background:#09121def}
+.game-overlay .startbox{flex:1 1 auto;width:100%;max-width:610px;max-height:100%;margin:0 auto;min-height:0}
+.game-setup-scroll{overscroll-behavior:contain}
 }
 @media(max-width:700px){body{--game-header:58px}}
 
@@ -200,10 +200,10 @@
 
 /* Mobile block editor: palettes stay scrollable and do not sit beneath the properties panel. */
 @media(max-width:700px){
- .flow-body{display:grid;grid-template-columns:120px minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(170px,36dvh);position:relative;overflow:hidden}
- .flow-palette{grid-column:1;grid-row:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
- .flow-canvas-wrap{grid-column:2;grid-row:1;min-height:0;overflow:auto}
- .flow-side{position:relative;grid-column:1/-1;grid-row:2;top:auto;right:auto;bottom:auto;width:100%;max-height:none;min-height:0;overflow-y:auto;box-shadow:0 -6px 16px #0004;border-radius:0;border-top:1px solid #526d88}
+.flow-body{display:grid;grid-template-columns:120px minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(170px,36dvh);position:relative;overflow:hidden}
+.flow-palette{grid-column:1;grid-row:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.flow-canvas-wrap{grid-column:2;grid-row:1;min-height:0;overflow:auto}
+.flow-side{position:relative;grid-column:1/-1;grid-row:2;top:auto;right:auto;bottom:auto;width:100%;max-height:none;min-height:0;overflow-y:auto;box-shadow:0 -6px 16px #0004;border-radius:0;border-top:1px solid #526d88}
 }
 .flow-top-actions{flex-wrap:wrap}.flow-top-actions select{flex:1 1 170px;max-width:240px}.rules-options{border-top:1px solid #334861;padding-top:10px}.rules-options summary{cursor:pointer;font-weight:750;color:#b5cee9;margin-bottom:10px;font-size:11px}.rules-options label{margin-top:8px}.rules-options input,.rules-options select{min-height:32px;font-size:11px}.flow-side .fieldrow{gap:8px}.flow-side input,.flow-side select{min-width:0}
 @media(min-width:701px){.flow-top-actions{flex-wrap:nowrap;gap:6px;align-items:center}.flow-top-actions select{flex:0 1 210px;max-width:210px}.flow-top-actions .button{padding:7px 9px;font-size:11px;min-height:34px}}
@@ -211,7 +211,7 @@
 
 .host-board-picker{border:1px solid #344d6b;border-radius:12px;background:#0d1b2c;padding:14px;margin:12px 0}
 .host-board-action{display:block;position:relative;cursor:pointer;text-align:center;color:#e7f2ff;
- border:1px dashed #648cbe;background:#163252;border-radius:9px;padding:13px 12px;margin:10px 0}
+border:1px dashed #648cbe;background:#163252;border-radius:9px;padding:13px 12px;margin:10px 0}
 .host-board-action:hover{background:#1e4169}
 .host-board-action input{display:block;position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
 .host-board-status{color:#a9c9e9;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
@@ -325,11 +325,11 @@ const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const STEP=78, BASE_SIZE=78, STORAGE='tabuleiro-studio-print-beta-autosave-v1';
 const actionNames={move:'Avançar / voltar casas',skip:'Perder turnos',again:'Jogar novamente',jump:'Ir para casa específica',points:'Pontos',message:'Mensagem breve',win:'Vencer a partida',variable:'Alterar variável numérica',modal:'Modal de escolhas',sound:'Tocar som',effect:'Efeito visual',roll:'Rolar dados e mover',diceOnly:'Rolar dados sem mover',diceRange:'Se o resultado do dado...',routeColor:'Seguir caminho de uma cor',routeReset:'Retomar caminho normal',routeStep:'Andar pelas rotas',routeJump:'Ir para casa escolhida',wait:'Esperar (segundos)',end:'Encerrar sequência'};
 Object.assign(actionNames,{
- ifValue:'Se / Senão: condição',randomNumber:'Sortear número',math:'Calcular variável',
- itemGive:'Adicionar item',itemTake:'Remover item',itemTransfer:'Entregar item',
- drawCard:'Comprar carta',showCard:'Mostrar carta',shuffleDeck:'Embaralhar baralho',returnCard:'Devolver carta',
- claimTile:'Adquirir propriedade',releaseTile:'Liberar propriedade',rentTile:'Cobrar taxa',
- transferNumber:'Transferir quantidade',swapTile:'Trocar posições',callEvent:'Chamar evento',repeat:'Repetir bloco',reverseTurn:'Inverter ordem',eliminate:'Eliminar jogador',
+ifValue:'Se / Senão: condição',randomNumber:'Sortear número',math:'Calcular variável',
+itemGive:'Adicionar item',itemTake:'Remover item',itemTransfer:'Entregar item',
+drawCard:'Comprar carta',showCard:'Mostrar carta',shuffleDeck:'Embaralhar baralho',returnCard:'Devolver carta',
+claimTile:'Adquirir propriedade',releaseTile:'Liberar propriedade',rentTile:'Cobrar taxa',
+transferNumber:'Transferir quantidade',swapTile:'Trocar posições',callEvent:'Chamar evento',repeat:'Repetir bloco',reverseTurn:'Inverter ordem',eliminate:'Eliminar jogador',
 });
 const shapeNames={rounded:'Arredondado',square:'Quadrado',circle:'Circular',hex:'Hexagonal'};
 const elementTypes={text:'Texto',rect:'Forma',button:'Botão',image:'Imagem',number:'Contador'};
@@ -347,28 +347,28 @@ function getModalDesign(action){if(action.modalDesign)return action.modalDesign;
 function yesRuleFromOldChoice(c){const rule=cleanModalRule({nextYes:c.nextId||''});if(c.type&&c.value)rule.yes=[modalStep(c)];return rule;}
 function modalRuleIsTrue(rule,p,g){return checkCondition({cond:rule.condition,condValue:rule.value,condVariable:rule.variable||project.variables[0]?.id},p,g);}
 function normAction(a){return {rangeMin:clamp(Number(a?.rangeMin??1),-9999,9999),rangeMax:clamp(Number(a?.rangeMax??3),-9999,9999),routeEndColor:isColor(a?.routeEndColor)?a.routeEndColor:'#f3d24a',targetTile:String(a?.targetTile||'').slice(0,50),type:actionNames[a?.type]?a.type:'message',value:String(a?.value??'').slice(0,700),variable:String(a?.variable||'').slice(0,50),cond:['always','pointsMin','pointsMax','chance','diceMin','varMin','varMax'].includes(a?.cond)?a.cond:'always',condValue:String(a?.condValue??'0').slice(0,40),condVariable:String(a?.condVariable||'').slice(0,50),modalDesign:cleanModalDesign(a?.modalDesign),choices:Array.isArray(a?.choices)?a.choices.slice(0,16).map(c=>({label:String(c.label||'Continuar').slice(0,65),type:['move','points','variable','message','jump','skip','roll','effect'].includes(c.type)?c.type:'message',value:String(c.value??'').slice(0,150),variable:String(c.variable||'').slice(0,50),nextId:String(c.nextId||'').slice(0,50)})):[],
- compareSource:['dice','random','points','variable','round','position','players','item','card','deck','owner'].includes(a?.compareSource)?a.compareSource:'dice',
- compareOp:['>=','<=','>','<','==','!=','between','includes'].includes(a?.compareOp)?a.compareOp:'>=',
- compareValue:String(a?.compareValue??1).slice(0,120),compareHigh:String(a?.compareHigh??3).slice(0,50),
- itemName:String(a?.itemName||'Chave').trim().slice(0,70),deckName:String(a?.deckName||'').slice(0,80),
- mathOp:['add','set','sub','mul','div','min','max'].includes(a?.mathOp)?a.mathOp:'add',
- valueSource:['fixed','dice','random','variable','points','round','position'].includes(a?.valueSource)?a.valueSource:'fixed',
- sourceVariable:String(a?.sourceVariable||'').slice(0,50),
- targetPlayer:['self','next','previous','random','leader','trailer','all'].includes(a?.targetPlayer)?a.targetPlayer:'self',
- eventName:String(a?.eventName||'').slice(0,80),
- };}
+compareSource:['dice','random','points','variable','round','position','players','item','card','deck','owner'].includes(a?.compareSource)?a.compareSource:'dice',
+compareOp:['>=','<=','>','<','==','!=','between','includes'].includes(a?.compareOp)?a.compareOp:'>=',
+compareValue:String(a?.compareValue??1).slice(0,120),compareHigh:String(a?.compareHigh??3).slice(0,50),
+itemName:String(a?.itemName||'Chave').trim().slice(0,70),deckName:String(a?.deckName||'').slice(0,80),
+mathOp:['add','set','sub','mul','div','min','max'].includes(a?.mathOp)?a.mathOp:'add',
+valueSource:['fixed','dice','random','variable','points','round','position'].includes(a?.valueSource)?a.valueSource:'fixed',
+sourceVariable:String(a?.sourceVariable||'').slice(0,50),
+targetPlayer:['self','next','previous','random','leader','trailer','all'].includes(a?.targetPlayer)?a.targetPlayer:'self',
+eventName:String(a?.eventName||'').slice(0,80),
+};}
 const palettes=['#559de8','#efac61','#ad83e5','#76c9a2','#e4779a','#c7c66d'];
 const ico=(id)=>`<svg class="icon"><use href="#i-${id}"/></svg>`;
 function uid(){return 't'+Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4)}
 function sampleProject(){
- const coords=[[0,0],[78,0],[156,0],[234,0],[312,0],[312,78],[312,156],[234,156],[156,156],[78,156],[0,156],[0,234],[0,312],[78,312],[156,312],[234,312],[312,312]];
- const tiles=coords.map(([x,y],i)=>({id:uid(),x,y,title:'',color:i%4===0?'#365f8c':i%4===1?'#31567e':i%4===2?'#426981':'#375a78',border:'#b8d5ef',shape:'square',size:78,image:null,actions:[]}));
- tiles[0].title='INÍCIO';tiles[0].color='#2c917c';tiles[3].title='SORTE';tiles[3].color='#ad6c36';tiles[3].actions=[{type:'variable',value:'5',variable:'moedas',cond:'always',condValue:'0'}];
- tiles[6].title='AVANCE';tiles[6].color='#2f8175';tiles[6].actions=[{type:'move',value:'2',cond:'always',condValue:'0'}];
- tiles[10].title='PAUSA';tiles[10].color='#aa5e58';tiles[10].actions=[{type:'skip',value:'1',cond:'always',condValue:'0'}];
- tiles[13].title='VOLTE';tiles[13].color='#9f6a53';tiles[13].actions=[{type:'move',value:'-2',cond:'always',condValue:'0'}];
- tiles[16].title='CHEGADA';tiles[16].color='#9c8240';
- return {format:'TBL-STUDIO',version:2,name:'Meu primeiro tabuleiro',pathStyle:'hidden',pathColor:'#9bbddb',print:defaultPrint(),background:defaultBackground(),programs:[],deckSpecs:[],eventTriggers:{},rules:{winMode:'last',goalVar:'',goalValue:100},variables:[{id:'moedas',name:'Moedas',initial:0,scope:'player',min:null,max:null}],elements:[],tiles};
+const coords=[[0,0],[78,0],[156,0],[234,0],[312,0],[312,78],[312,156],[234,156],[156,156],[78,156],[0,156],[0,234],[0,312],[78,312],[156,312],[234,312],[312,312]];
+const tiles=coords.map(([x,y],i)=>({id:uid(),x,y,title:'',color:i%4===0?'#365f8c':i%4===1?'#31567e':i%4===2?'#426981':'#375a78',border:'#b8d5ef',shape:'square',size:78,image:null,actions:[]}));
+tiles[0].title='INÍCIO';tiles[0].color='#2c917c';tiles[3].title='SORTE';tiles[3].color='#ad6c36';tiles[3].actions=[{type:'variable',value:'5',variable:'moedas',cond:'always',condValue:'0'}];
+tiles[6].title='AVANCE';tiles[6].color='#2f8175';tiles[6].actions=[{type:'move',value:'2',cond:'always',condValue:'0'}];
+tiles[10].title='PAUSA';tiles[10].color='#aa5e58';tiles[10].actions=[{type:'skip',value:'1',cond:'always',condValue:'0'}];
+tiles[13].title='VOLTE';tiles[13].color='#9f6a53';tiles[13].actions=[{type:'move',value:'-2',cond:'always',condValue:'0'}];
+tiles[16].title='CHEGADA';tiles[16].color='#9c8240';
+return {format:'TBL-STUDIO',version:2,name:'Meu primeiro tabuleiro',pathStyle:'hidden',pathColor:'#9bbddb',print:defaultPrint(),background:defaultBackground(),programs:[],deckSpecs:[],eventTriggers:{},rules:{winMode:'last',goalVar:'',goalValue:100},variables:[{id:'moedas',name:'Moedas',initial:0,scope:'player',min:null,max:null}],elements:[],tiles};
 }
 // Biblioteca de imagens do arquivo: uma imagem gravada uma vez, reutilizada por referência.
 const TBL_FILE_LIMIT=64*1024*1024;
@@ -376,72 +376,72 @@ const AUTOSAVE_LOCAL_LIMIT=2.4*1024*1024;
 const AUTOSAVE_DATABASE='tabuleiro-studio-print-beta-projects';
 const ASSET_REF_PREFIX='@tbl-asset:';
 function packProjectImages(source){
- const images={},ids=new Map();let index=0;
- function packImage(url){
-  if(!validImage(url))return null;
-  let id=ids.get(url);
-  if(!id){id='img'+(++index);ids.set(url,id);images[id]=url}
-  return ASSET_REF_PREFIX+id;
- }
- const packed={...source,
-  tiles:(source.tiles||[]).map(t=>({...t,image:packImage(t.image)})),
-  elements:(source.elements||[]).map(e=>({...e,image:packImage(e.image)})),
-  background:{...source.background,image:packImage(source.background?.image)},
-  assets:{images}
- };
- return packed;
+const images={},ids=new Map();let index=0;
+function packImage(url){
+if(!validImage(url))return null;
+let id=ids.get(url);
+if(!id){id='img'+(++index);ids.set(url,id);images[id]=url}
+return ASSET_REF_PREFIX+id;
+}
+const packed={...source,
+tiles:(source.tiles||[]).map(t=>({...t,image:packImage(t.image)})),
+elements:(source.elements||[]).map(e=>({...e,image:packImage(e.image)})),
+background:{...source.background,image:packImage(source.background?.image)},
+assets:{images}
+};
+return packed;
 }
 function unpackProjectImages(source){
- if(!source||typeof source!=='object')throw Error('Arquivo inválido.');
- const assets=source.assets?.images;
- if(!assets)return source; // Versões antigas gravavam imagens diretamente nas casas.
- if(typeof assets!=='object'||Array.isArray(assets))throw Error('Biblioteca de imagens inválida.');
- const unpackImage=value=>{
-  if(typeof value!=='string'||!value.startsWith(ASSET_REF_PREFIX))return value;
-  const id=value.slice(ASSET_REF_PREFIX.length),image=Object.hasOwn(assets,id)?assets[id]:null;
-  if(!validImage(image))throw Error('Imagem ausente ou danificada: '+id);
-  return image;
- };
- return {...source,
-  tiles:(source.tiles||[]).map(t=>({...t,image:unpackImage(t.image)})),
-  elements:(source.elements||[]).map(e=>({...e,image:unpackImage(e.image)})),
-  background:{...source.background,image:unpackImage(source.background?.image)}
- };
+if(!source||typeof source!=='object')throw Error('Arquivo inválido.');
+const assets=source.assets?.images;
+if(!assets)return source; // Versões antigas gravavam imagens diretamente nas casas.
+if(typeof assets!=='object'||Array.isArray(assets))throw Error('Biblioteca de imagens inválida.');
+const unpackImage=value=>{
+if(typeof value!=='string'||!value.startsWith(ASSET_REF_PREFIX))return value;
+const id=value.slice(ASSET_REF_PREFIX.length),image=Object.hasOwn(assets,id)?assets[id]:null;
+if(!validImage(image))throw Error('Imagem ausente ou danificada: '+id);
+return image;
+};
+return {...source,
+tiles:(source.tiles||[]).map(t=>({...t,image:unpackImage(t.image)})),
+elements:(source.elements||[]).map(e=>({...e,image:unpackImage(e.image)})),
+background:{...source.background,image:unpackImage(source.background?.image)}
+};
 }
 function printOnlyProject(source){
- const p=structuredClone(source);
- p.format='TBL-STUDIO';p.version=5;p.printOnly=true;
- for(const key of ['logicWorkspaces','programs','deckSpecs','eventTriggers','rules'])delete p[key];
- p.variables=[];
- p.tiles=(p.tiles||[]).map(t=>{
-  delete t.actions;delete t.graph;delete t.triggers;delete t.routes;delete t.routeMode;
-  return t;
- });
- p.elements=(p.elements||[]).filter(e=>!['button','number'].includes(e.type)).map(e=>{
-  delete e.actions;delete e.graph;delete e.variable;return e;
- });
- return p;
+const p=structuredClone(source);
+p.format='TBL-STUDIO';p.version=5;p.printOnly=true;
+for(const key of ['logicWorkspaces','programs','deckSpecs','eventTriggers','rules'])delete p[key];
+p.variables=[];
+p.tiles=(p.tiles||[]).map(t=>{
+delete t.actions;delete t.graph;delete t.triggers;delete t.routes;delete t.routeMode;
+return t;
+});
+p.elements=(p.elements||[]).filter(e=>!['button','number'].includes(e.type)).map(e=>{
+delete e.actions;delete e.graph;delete e.variable;return e;
+});
+return p;
 }
 function readPortableProject(source){return printOnlyProject(cleanProject(unpackProjectImages(source)))}
 function serializePortableProject(source){return JSON.stringify(packProjectImages(printOnlyProject(source)))}
 
 function cleanProject(p){
- if(!p||!Array.isArray(p.tiles)||p.tiles.length>3000)throw Error('Arquivo inválido ou limite de 3.000 casas excedido.');
- const seen=new Set();const tiles=p.tiles.map(t=>{
-   const id=String(t.id||uid()).slice(0,50);if(seen.has(id))throw Error('IDs duplicados no arquivo.');seen.add(id);
-   const x=Number(t.x),y=Number(t.y);if(!Number.isFinite(x)||!Number.isFinite(y)||Math.abs(x)>1e6||Math.abs(y)>1e6)throw Error('Coordenadas inválidas.');
-   return {id,x,y,title:String(t.title||'').slice(0,2000),color:isColor(t.color)?t.color:'#365f8c',border:isColor(t.border)?t.border:'#b8d5ef',shape:shapeNames[t.shape]?t.shape:'square',size:clamp(Number(t.size)||78,32,320),image:validImage(t.image),imageFit:['cover','contain'].includes(t.imageFit)?t.imageFit:'cover',imageX:clamp(Number(t.imageX)||0,-100,100),imageY:clamp(Number(t.imageY)||0,-100,100),imageZoom:clamp(Number(t.imageZoom)||1,.5,5),borderWidth:clamp(Number(t.borderWidth)||2.5,0,18),radius:clamp(Number(t.radius??(t.shape==='rounded'?16:0)),0,120),textColor:isColor(t.textColor)?t.textColor:'#ffffff',fontSize:clamp(Number(t.fontSize)||14,6,240),fontFamily:['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].includes(t.fontFamily)?t.fontFamily:'Arial',fontWeight:[400,500,600,700,800,900].includes(Number(t.fontWeight))?Number(t.fontWeight):800,italic:t.italic===true,textAlign:['left','center','right'].includes(t.textAlign)?t.textAlign:'center',textPadding:clamp(Number(t.textPadding??7),0,60),lineHeight:clamp(Number(t.lineHeight??1.18),0.8,2.8),autoTextFit:t.autoTextFit!==false,showNumber:t.showNumber!==false,opacity:clamp(Number(t.opacity??1),.15,1),connection:t.connection||'default',connectionWidth:clamp(Number(t.connectionWidth??27),0,95),connectionColor:isColor(t.connectionColor)?t.connectionColor:null,actions:Array.isArray(t.actions)?t.actions.slice(0,120).map(normAction):[],graph:cleanGraph(t.graph),triggers:{pass:cleanGraph(t.triggers?.pass),leave:cleanGraph(t.triggers?.leave)},routeMode:['first','random','weighted','choose'].includes(t.routeMode)?t.routeMode:'first',routes:Array.isArray(t.routes)?t.routes.slice(0,16).map(r=>({id:String(r.id||uid()).slice(0,50),to:String(r.to||'').slice(0,50),color:isColor(r.color)?r.color:'#50bfa1',label:String(r.label||'').slice(0,45),weight:clamp(Number(r.weight)||1,1,1000)})):[]};
- });
- for(const t of tiles)t.routes=t.routes.filter(r=>r.to!==t.id&&seen.has(r.to));
- const variables=Array.isArray(p.variables)?p.variables.slice(0,100).map(v=>({id:String(v.id||uid()).slice(0,50),name:String(v.name||'Número').slice(0,60),initial:clamp(Number(v.initial)||0,-1e9,1e9),scope:v.scope==='global'?'global':'player',min:v.min==null||v.min===''?null:clamp(Number(v.min),-1e9,1e9),max:v.max==null||v.max===''?null:clamp(Number(v.max),-1e9,1e9)})):[{id:'moedas',name:'Moedas',initial:0,scope:'player',min:null,max:null}];
- const elements=Array.isArray(p.elements)?p.elements.slice(0,1500).filter(e=>elementTypes[e.type]).map(e=>({id:String(e.id||uid()).slice(0,50),type:e.type,x:clamp(Number(e.x)||0,-1e6,1e6),y:clamp(Number(e.y)||0,-1e6,1e6),w:clamp(Number(e.w)||180,e.type==='text'?8:20,3500),h:clamp(Number(e.h)||64,e.type==='text'?8:15,2500),text:String(e.text||'').slice(0,600),fill:isColor(e.fill)?e.fill:'#315d91',stroke:isColor(e.stroke)?e.stroke:'#b5d5fc',textColor:isColor(e.textColor)?e.textColor:'#ffffff',fontSize:clamp(Number(e.fontSize)||22,6,350),geometry:['rect','ellipse','circle','triangle','pentagon','hex','diamond','star','line'].includes(e.geometry)?e.geometry:'rect',strokeWidth:clamp(Number(e.strokeWidth??2.5),0,35),radius:clamp(Number(e.radius??5),0,300),opacity:clamp(Number(e.opacity??1),.1,1),angle:clamp(Number(e.angle)||0,-180,180),image:validImage(e.image),imageFit:e.imageFit==='contain'?'contain':'cover',fontFamily:['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].includes(e.fontFamily)?e.fontFamily:'Arial',fontWeight:[400,500,600,700,800,900].includes(Number(e.fontWeight))?Number(e.fontWeight):700,italic:e.italic===true,align:['left','center','right'].includes(e.align)?e.align:'center',valign:['top','middle','bottom'].includes(e.valign)?e.valign:'middle',lineHeight:clamp(Number(e.lineHeight)||1.2,0.8,2.5),textPadding:clamp(Number(e.textPadding??6),0,55),autoHeight:e.autoHeight===true,autoTextFit:e.autoTextFit!==false,variable:String(e.variable||'').slice(0,50),actions:Array.isArray(e.actions)?e.actions.slice(0,120).map(normAction):[],graph:cleanGraph(e.graph)})):[];
- const bp=p.background||{},pr=p.print||{},print={orientation:pr.orientation==='landscape'?'landscape':'portrait',mmTile:[18,24,30,38].includes(Number(pr.mmTile))?Number(pr.mmTile):24,showGuides:pr.showGuides!==false,originX:clamp(Number(pr.originX??-65),-1e6,1e6),originY:clamp(Number(pr.originY??-65),-1e6,1e6),pdfBackground:pr.pdfBackground===true,pdfTileNumbers:pr.pdfTileNumbers===true,pageOrder:Array.isArray(pr.pageOrder)?pr.pageOrder.filter(k=>/^\d+:\d+$/.test(String(k))).slice(0,1000):[]};
- const background={kind:['solid','gradient','dots','stripes','image'].includes(bp.kind)?bp.kind:'solid',color:isColor(bp.color)?bp.color:'#132033',color2:isColor(bp.color2)?bp.color2:'#253b56',image:validImage(bp.image),fit:['contain','cover','repeat'].includes(bp.fit)?bp.fit:'cover'};
- const programs=Array.isArray(p.programs)?p.programs.slice(0,60).filter(x=>x&&typeof x==='object').map(x=>({id:String(x.id||uid()).slice(0,50),name:String(x.name||'Evento').slice(0,64),graph:cleanGraph(x.graph)||{start:'',nodes:[]}})):[];
- const deckSpecs=Array.isArray(p.deckSpecs)?p.deckSpecs.slice(0,40).map(d=>({id:String(d.id||uid()).slice(0,50),name:String(d.name||'Baralho').slice(0,64),cards:Array.isArray(d.cards)?d.cards.slice(0,250).map(c=>String(c).slice(0,600)):[]})):[];
- const eventTriggers={};for(const kind of ['gameStart','turnStart','turnEnd','afterRoll'])eventTriggers[kind]=cleanGraph(p.eventTriggers?.[kind]);
- const rules={winMode:['last','manual','goal','elimination'].includes(p.rules?.winMode)?p.rules.winMode:'last',goalVar:String(p.rules?.goalVar||'').slice(0,50),goalValue:clamp(Number(p.rules?.goalValue??100),-1e9,1e9)};
- return {format:'TBL-STUDIO',version:4,logicWorkspaces:cleanLogicSpecs(p.logicWorkspaces),programs,deckSpecs,eventTriggers,rules,name:String(p.name||'Novo tabuleiro').slice(0,70),pathStyle:['rounded','square','straight','hidden','touch'].includes(p.pathStyle)?p.pathStyle:'hidden',pathColor:isColor(p.pathColor)?p.pathColor:'#9bbddb',tiles,variables,elements,print,background};
+if(!p||!Array.isArray(p.tiles)||p.tiles.length>3000)throw Error('Arquivo inválido ou limite de 3.000 casas excedido.');
+const seen=new Set();const tiles=p.tiles.map(t=>{
+ const id=String(t.id||uid()).slice(0,50);if(seen.has(id))throw Error('IDs duplicados no arquivo.');seen.add(id);
+ const x=Number(t.x),y=Number(t.y);if(!Number.isFinite(x)||!Number.isFinite(y)||Math.abs(x)>1e6||Math.abs(y)>1e6)throw Error('Coordenadas inválidas.');
+ return {id,x,y,title:String(t.title||'').slice(0,2000),color:isColor(t.color)?t.color:'#365f8c',border:isColor(t.border)?t.border:'#b8d5ef',shape:shapeNames[t.shape]?t.shape:'square',size:clamp(Number(t.size)||78,32,320),image:validImage(t.image),imageFit:['cover','contain'].includes(t.imageFit)?t.imageFit:'cover',imageX:clamp(Number(t.imageX)||0,-100,100),imageY:clamp(Number(t.imageY)||0,-100,100),imageZoom:clamp(Number(t.imageZoom)||1,.5,5),borderWidth:clamp(Number(t.borderWidth)||2.5,0,18),radius:clamp(Number(t.radius??(t.shape==='rounded'?16:0)),0,120),textColor:isColor(t.textColor)?t.textColor:'#ffffff',fontSize:clamp(Number(t.fontSize)||14,6,240),fontFamily:['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].includes(t.fontFamily)?t.fontFamily:'Arial',fontWeight:[400,500,600,700,800,900].includes(Number(t.fontWeight))?Number(t.fontWeight):800,italic:t.italic===true,textAlign:['left','center','right'].includes(t.textAlign)?t.textAlign:'center',textPadding:clamp(Number(t.textPadding??7),0,60),lineHeight:clamp(Number(t.lineHeight??1.18),0.8,2.8),autoTextFit:t.autoTextFit!==false,showNumber:t.showNumber!==false,opacity:clamp(Number(t.opacity??1),.15,1),connection:t.connection||'default',connectionWidth:clamp(Number(t.connectionWidth??27),0,95),connectionColor:isColor(t.connectionColor)?t.connectionColor:null,actions:Array.isArray(t.actions)?t.actions.slice(0,120).map(normAction):[],graph:cleanGraph(t.graph),triggers:{pass:cleanGraph(t.triggers?.pass),leave:cleanGraph(t.triggers?.leave)},routeMode:['first','random','weighted','choose'].includes(t.routeMode)?t.routeMode:'first',routes:Array.isArray(t.routes)?t.routes.slice(0,16).map(r=>({id:String(r.id||uid()).slice(0,50),to:String(r.to||'').slice(0,50),color:isColor(r.color)?r.color:'#50bfa1',label:String(r.label||'').slice(0,45),weight:clamp(Number(r.weight)||1,1,1000)})):[]};
+});
+for(const t of tiles)t.routes=t.routes.filter(r=>r.to!==t.id&&seen.has(r.to));
+const variables=Array.isArray(p.variables)?p.variables.slice(0,100).map(v=>({id:String(v.id||uid()).slice(0,50),name:String(v.name||'Número').slice(0,60),initial:clamp(Number(v.initial)||0,-1e9,1e9),scope:v.scope==='global'?'global':'player',min:v.min==null||v.min===''?null:clamp(Number(v.min),-1e9,1e9),max:v.max==null||v.max===''?null:clamp(Number(v.max),-1e9,1e9)})):[{id:'moedas',name:'Moedas',initial:0,scope:'player',min:null,max:null}];
+const elements=Array.isArray(p.elements)?p.elements.slice(0,1500).filter(e=>elementTypes[e.type]).map(e=>({id:String(e.id||uid()).slice(0,50),type:e.type,x:clamp(Number(e.x)||0,-1e6,1e6),y:clamp(Number(e.y)||0,-1e6,1e6),w:clamp(Number(e.w)||180,e.type==='text'?8:20,3500),h:clamp(Number(e.h)||64,e.type==='text'?8:15,2500),text:String(e.text||'').slice(0,600),fill:isColor(e.fill)?e.fill:'#315d91',stroke:isColor(e.stroke)?e.stroke:'#b5d5fc',textColor:isColor(e.textColor)?e.textColor:'#ffffff',fontSize:clamp(Number(e.fontSize)||22,6,350),geometry:['rect','ellipse','circle','triangle','pentagon','hex','diamond','star','line'].includes(e.geometry)?e.geometry:'rect',strokeWidth:clamp(Number(e.strokeWidth??2.5),0,35),radius:clamp(Number(e.radius??5),0,300),opacity:clamp(Number(e.opacity??1),.1,1),angle:clamp(Number(e.angle)||0,-180,180),image:validImage(e.image),imageFit:e.imageFit==='contain'?'contain':'cover',fontFamily:['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].includes(e.fontFamily)?e.fontFamily:'Arial',fontWeight:[400,500,600,700,800,900].includes(Number(e.fontWeight))?Number(e.fontWeight):700,italic:e.italic===true,align:['left','center','right'].includes(e.align)?e.align:'center',valign:['top','middle','bottom'].includes(e.valign)?e.valign:'middle',lineHeight:clamp(Number(e.lineHeight)||1.2,0.8,2.5),textPadding:clamp(Number(e.textPadding??6),0,55),autoHeight:e.autoHeight===true,autoTextFit:e.autoTextFit!==false,variable:String(e.variable||'').slice(0,50),actions:Array.isArray(e.actions)?e.actions.slice(0,120).map(normAction):[],graph:cleanGraph(e.graph)})):[];
+const bp=p.background||{},pr=p.print||{},print={orientation:pr.orientation==='landscape'?'landscape':'portrait',mmTile:[18,24,30,38].includes(Number(pr.mmTile))?Number(pr.mmTile):24,showGuides:pr.showGuides!==false,originX:clamp(Number(pr.originX??-65),-1e6,1e6),originY:clamp(Number(pr.originY??-65),-1e6,1e6),pdfBackground:pr.pdfBackground===true,pdfTileNumbers:pr.pdfTileNumbers===true,pageOrder:Array.isArray(pr.pageOrder)?pr.pageOrder.filter(k=>/^\d+:\d+$/.test(String(k))).slice(0,1000):[]};
+const background={kind:['solid','gradient','dots','stripes','image'].includes(bp.kind)?bp.kind:'solid',color:isColor(bp.color)?bp.color:'#132033',color2:isColor(bp.color2)?bp.color2:'#253b56',image:validImage(bp.image),fit:['contain','cover','repeat'].includes(bp.fit)?bp.fit:'cover'};
+const programs=Array.isArray(p.programs)?p.programs.slice(0,60).filter(x=>x&&typeof x==='object').map(x=>({id:String(x.id||uid()).slice(0,50),name:String(x.name||'Evento').slice(0,64),graph:cleanGraph(x.graph)||{start:'',nodes:[]}})):[];
+const deckSpecs=Array.isArray(p.deckSpecs)?p.deckSpecs.slice(0,40).map(d=>({id:String(d.id||uid()).slice(0,50),name:String(d.name||'Baralho').slice(0,64),cards:Array.isArray(d.cards)?d.cards.slice(0,250).map(c=>String(c).slice(0,600)):[]})):[];
+const eventTriggers={};for(const kind of ['gameStart','turnStart','turnEnd','afterRoll'])eventTriggers[kind]=cleanGraph(p.eventTriggers?.[kind]);
+const rules={winMode:['last','manual','goal','elimination'].includes(p.rules?.winMode)?p.rules.winMode:'last',goalVar:String(p.rules?.goalVar||'').slice(0,50),goalValue:clamp(Number(p.rules?.goalValue??100),-1e9,1e9)};
+return {format:'TBL-STUDIO',version:4,logicWorkspaces:cleanLogicSpecs(p.logicWorkspaces),programs,deckSpecs,eventTriggers,rules,name:String(p.name||'Novo tabuleiro').slice(0,70),pathStyle:['rounded','square','straight','hidden','touch'].includes(p.pathStyle)?p.pathStyle:'hidden',pathColor:isColor(p.pathColor)?p.pathColor:'#9bbddb',tiles,variables,elements,print,background};
 }
 function isColor(s){return typeof s==='string'&&/^#[0-9a-fA-F]{6}$/.test(s)}
 let project;
@@ -451,16 +451,16 @@ const ui={magnet:true,routeFrom:null,view:'studio',tool:'select',selected:null,s
 let studioProjectBeforeSession=null;
 let selectedHostBoard=null;
 function useSessionBoard(board){
- if(!studioProjectBeforeSession)studioProjectBeforeSession=project;
- project=cleanProject(board);
- ui.selected=null;ui.selectedElement=null;ui.multi.clear();
- requestAnimationFrame(()=>{if(ui.view==='game')fitView('game')});
+if(!studioProjectBeforeSession)studioProjectBeforeSession=project;
+project=cleanProject(board);
+ui.selected=null;ui.selectedElement=null;ui.multi.clear();
+requestAnimationFrame(()=>{if(ui.view==='game')fitView('game')});
 }
 function restoreStudioBoard(){
- if(!studioProjectBeforeSession)return;
- project=studioProjectBeforeSession;
- studioProjectBeforeSession=null;
- ui.selected=null;ui.selectedElement=null;ui.multi.clear();
+if(!studioProjectBeforeSession)return;
+project=studioProjectBeforeSession;
+studioProjectBeforeSession=null;
+ui.selected=null;ui.selectedElement=null;ui.multi.clear();
 }
 const canvasStudio=$('studioCanvas'),canvasGame=$('gameCanvas');
 const ctxStudio=canvasStudio.getContext('2d',{alpha:false}),ctxGame=canvasGame.getContext('2d',{alpha:false});
@@ -469,70 +469,70 @@ function toast(s){const wrap=$('toastWrap'),div=document.createElement('div');di
 // Salvamento automático em IndexedDB; localStorage é uma cópia opcional para projetos pequenos.
 let autosaveEpoch=0,autosaveWarned=false,autosaveDBPromise=null;
 function betaAutoStatus(msg,state='ok'){
- const el=$('autoStatus');if(!el)return;
- el.textContent=msg;el.dataset.status=state;
+const el=$('autoStatus');if(!el)return;
+el.textContent=msg;el.dataset.status=state;
 }
 
 function openAutosaveDB(){
- if(autosaveDBPromise)return autosaveDBPromise;
- autosaveDBPromise=new Promise((resolve,reject)=>{
-  if(!('indexedDB' in window))return reject(Error('IndexedDB indisponível'));
-  const request=indexedDB.open(AUTOSAVE_DATABASE,1);
-  request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains('snapshots'))request.result.createObjectStore('snapshots')};
-  request.onsuccess=()=>resolve(request.result);
-  request.onerror=()=>reject(request.error||Error('Falha ao abrir armazenamento'));
-  request.onblocked=()=>reject(Error('Banco de dados bloqueado'));
- });
- return autosaveDBPromise;
+if(autosaveDBPromise)return autosaveDBPromise;
+autosaveDBPromise=new Promise((resolve,reject)=>{
+if(!('indexedDB' in window))return reject(Error('IndexedDB indisponível'));
+const request=indexedDB.open(AUTOSAVE_DATABASE,1);
+request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains('snapshots'))request.result.createObjectStore('snapshots')};
+request.onsuccess=()=>resolve(request.result);
+request.onerror=()=>reject(request.error||Error('Falha ao abrir armazenamento'));
+request.onblocked=()=>reject(Error('Banco de dados bloqueado'));
+});
+return autosaveDBPromise;
 }
 async function autosaveDBWrite(json){
- const db=await openAutosaveDB();
- return new Promise((resolve,reject)=>{
-  const tx=db.transaction('snapshots','readwrite');
-  tx.objectStore('snapshots').put({json,savedAt:Date.now()},'main');
-  tx.oncomplete=()=>resolve(true);
-  tx.onerror=()=>reject(tx.error||Error('Falha no armazenamento automático'));
-  tx.onabort=()=>reject(tx.error||Error('Salvamento cancelado'));
- });
+const db=await openAutosaveDB();
+return new Promise((resolve,reject)=>{
+const tx=db.transaction('snapshots','readwrite');
+tx.objectStore('snapshots').put({json,savedAt:Date.now()},'main');
+tx.oncomplete=()=>resolve(true);
+tx.onerror=()=>reject(tx.error||Error('Falha no armazenamento automático'));
+tx.onabort=()=>reject(tx.error||Error('Salvamento cancelado'));
+});
 }
 async function autosaveDBRead(){
- const db=await openAutosaveDB();
- return new Promise((resolve,reject)=>{
-  const request=db.transaction('snapshots','readonly').objectStore('snapshots').get('main');
-  request.onsuccess=()=>resolve(request.result||null);
-  request.onerror=()=>reject(request.error||Error('Falha ao recuperar projeto'));
- });
+const db=await openAutosaveDB();
+return new Promise((resolve,reject)=>{
+const request=db.transaction('snapshots','readonly').objectStore('snapshots').get('main');
+request.onsuccess=()=>resolve(request.result||null);
+request.onerror=()=>reject(request.error||Error('Falha ao recuperar projeto'));
+});
 }
 async function autosaveSnapshot(source,epoch){
- let json;
- try{json=serializePortableProject(source)}catch(e){console.warn('Falha ao preparar autosave:',e);return}
- let databaseSaved=false,localSaved=false;
- try{await autosaveDBWrite(json);databaseSaved=true}catch(e){console.warn('IndexedDB:',e)}
- try{
-  if(json.length<AUTOSAVE_LOCAL_LIMIT){localStorage.setItem(STORAGE,json);localSaved=true}
-  else if(databaseSaved)localStorage.removeItem(STORAGE);
- }catch(e){console.warn('localStorage:',e)}
- if(databaseSaved||localSaved){autosaveWarned=false;if(epoch===autosaveEpoch)betaAutoStatus('Salvo automaticamente');return}
- if(epoch===autosaveEpoch)betaAutoStatus('Salvamento indisponível','fail');if(!autosaveWarned&&epoch===autosaveEpoch){autosaveWarned=true;toast('O navegador bloqueou o salvamento automático. Use Salvar projeto para criar uma cópia.')}
+let json;
+try{json=serializePortableProject(source)}catch(e){console.warn('Falha ao preparar autosave:',e);return}
+let databaseSaved=false,localSaved=false;
+try{await autosaveDBWrite(json);databaseSaved=true}catch(e){console.warn('IndexedDB:',e)}
+try{
+if(json.length<AUTOSAVE_LOCAL_LIMIT){localStorage.setItem(STORAGE,json);localSaved=true}
+else if(databaseSaved)localStorage.removeItem(STORAGE);
+}catch(e){console.warn('localStorage:',e)}
+if(databaseSaved||localSaved){autosaveWarned=false;if(epoch===autosaveEpoch)betaAutoStatus('Salvo automaticamente');return}
+if(epoch===autosaveEpoch)betaAutoStatus('Salvamento indisponível','fail');if(!autosaveWarned&&epoch===autosaveEpoch){autosaveWarned=true;toast('O navegador bloqueou o salvamento automático. Use Salvar projeto para criar uma cópia.')}
 }
 function persist(){
- autosaveEpoch++;
- clearTimeout(saveTimer);betaAutoStatus('Salvando…','saving');
- const epoch=autosaveEpoch;
- saveTimer=setTimeout(()=>{if(studioProjectBeforeSession)return;autosaveSnapshot(project,epoch)},480);
+autosaveEpoch++;
+clearTimeout(saveTimer);betaAutoStatus('Salvando…','saving');
+const epoch=autosaveEpoch;
+saveTimer=setTimeout(()=>{if(studioProjectBeforeSession)return;autosaveSnapshot(project,epoch)},480);
 }
 async function recoverAutosaveFromDB(){
- const epoch=autosaveEpoch;
- try{
-  const stored=await autosaveDBRead();
-  if(!stored?.json||startedFromLocal||epoch!==autosaveEpoch||studioProjectBeforeSession)return;
-  const loaded=readPortableProject(JSON.parse(stored.json));
-  project=loaded;betaAutoStatus('Projeto recuperado');
-  refreshControls();renderInspector();drawStudio();
-  $('tileCount').textContent=project.tiles.length;
-  refreshBoardStatus();
-  if(ui.view==='studio')fitView('studio');
- }catch(e){console.warn('Recuperação do salvamento automático:',e)}
+const epoch=autosaveEpoch;
+try{
+const stored=await autosaveDBRead();
+if(!stored?.json||startedFromLocal||epoch!==autosaveEpoch||studioProjectBeforeSession)return;
+const loaded=readPortableProject(JSON.parse(stored.json));
+project=loaded;betaAutoStatus('Projeto recuperado');
+refreshControls();renderInspector();drawStudio();
+$('tileCount').textContent=project.tiles.length;
+refreshBoardStatus();
+if(ui.view==='studio')fitView('studio');
+}catch(e){console.warn('Recuperação do salvamento automático:',e)}
 }
 function pushUndo(){ui.undo.push(JSON.stringify(project));if(ui.undo.length>35)ui.undo.shift();ui.redo.length=0;updateUndo()}
 function updateUndo(){$('btnUndo').disabled=!ui.undo.length;$('btnRedo').disabled=!ui.redo.length}
@@ -549,39 +549,39 @@ const snap=v=>Math.round(v/STEP)*STEP;const placed=v=>ui.snap?snap(v):Math.round
 function newTile(x,y){return {id:uid(),x:placed(x),y:placed(y),title:'',color:ui.defaults.color,border:'#b8d5ef',borderWidth:2.5,radius:0,textColor:'#ffffff',fontSize:14,fontFamily:'Arial',fontWeight:800,italic:false,textAlign:'center',textPadding:7,lineHeight:1.18,autoTextFit:true,showNumber:true,opacity:1,shape:ui.defaults.shape,size:BASE_SIZE,image:null,imageFit:'cover',imageX:0,imageY:0,imageZoom:1,connection:'default',connectionWidth:27,connectionColor:null,actions:[],routes:[],routeMode:'first'}}
 function putTile(x,y,forceSnap=false){const sx=forceSnap?snap(x):placed(x),sy=forceSnap?snap(y):placed(y);if(project.tiles.length>=3000)return null;const existing=project.tiles.find(t=>Math.hypot(t.x-sx,t.y-sy)<30);if(existing)return existing;const t=newTile(sx,sy);t.x=sx;t.y=sy;project.tiles.push(t);return t}
 function paintSegment(from,to){
- // Percurso independente das guias A4. Cada nova casa encosta numa face
- // da anterior, sem pular para casas existentes de outros trechos.
- let last=null,position=ui.drag?.anchor||project.tiles[project.tiles.length-1];
- if(!position)return null;
- const total=Math.hypot(to.x-from.x,to.y-from.y),steps=Math.max(1,Math.ceil(total/10));
- for(let i=0;i<=steps;i++){
-  const x=from.x+(to.x-from.x)*i/steps,y=from.y+(to.y-from.y)*i/steps;
-  let moves=0;
-  while(moves++<20){
-   const dx=x-position.x,dy=y-position.y,step=(position.size+BASE_SIZE)/2;
-   if(Math.max(Math.abs(dx),Math.abs(dy))<step*.76)break;
-   const horizontal=Math.abs(dx)>=Math.abs(dy);
-   const axes=horizontal?['x','y']:['y','x'];let added=false;
-   for(const axis of axes){
-    const delta=axis==='x'?dx:dy;
-    if(Math.abs(delta)<step*.76)continue;
-    const nx=position.x+(axis==='x'?Math.sign(delta)*step:0);
-    const ny=position.y+(axis==='y'?Math.sign(delta)*step:0);
-    // A malha continua ortogonal mesmo que o cursor atravesse outra rota.
-    // Casas ocupadas bloqueiam o avanço: não mudam o ponto de origem.
-    const occupied=project.tiles.some(t=>t!==position&&
-      Math.abs(t.x-nx)<(t.size+BASE_SIZE)/2-.5&&
-      Math.abs(t.y-ny)<(t.size+BASE_SIZE)/2-.5);
-    if(occupied)continue;
-    if(project.tiles.length>=3000)return last;
-    const tile=newTile(nx,ny);tile.x=nx;tile.y=ny;
-    tile.connection='touch';project.tiles.push(tile);
-    position=last=tile;added=true;break;
-   }
-   if(!added)break;
-  }
+// Percurso independente das guias A4. Cada nova casa encosta numa face
+// da anterior, sem pular para casas existentes de outros trechos.
+let last=null,position=ui.drag?.anchor||project.tiles[project.tiles.length-1];
+if(!position)return null;
+const total=Math.hypot(to.x-from.x,to.y-from.y),steps=Math.max(1,Math.ceil(total/10));
+for(let i=0;i<=steps;i++){
+const x=from.x+(to.x-from.x)*i/steps,y=from.y+(to.y-from.y)*i/steps;
+let moves=0;
+while(moves++<20){
+ const dx=x-position.x,dy=y-position.y,step=(position.size+BASE_SIZE)/2;
+ if(Math.max(Math.abs(dx),Math.abs(dy))<step*.76)break;
+ const horizontal=Math.abs(dx)>=Math.abs(dy);
+ const axes=horizontal?['x','y']:['y','x'];let added=false;
+ for(const axis of axes){
+  const delta=axis==='x'?dx:dy;
+  if(Math.abs(delta)<step*.76)continue;
+  const nx=position.x+(axis==='x'?Math.sign(delta)*step:0);
+  const ny=position.y+(axis==='y'?Math.sign(delta)*step:0);
+  // A malha continua ortogonal mesmo que o cursor atravesse outra rota.
+  // Casas ocupadas bloqueiam o avanço: não mudam o ponto de origem.
+  const occupied=project.tiles.some(t=>t!==position&&
+    Math.abs(t.x-nx)<(t.size+BASE_SIZE)/2-.5&&
+    Math.abs(t.y-ny)<(t.size+BASE_SIZE)/2-.5);
+  if(occupied)continue;
+  if(project.tiles.length>=3000)return last;
+  const tile=newTile(nx,ny);tile.x=nx;tile.y=ny;
+  tile.connection='touch';project.tiles.push(tile);
+  position=last=tile;added=true;break;
  }
- return last;
+ if(!added)break;
+}
+}
+return last;
 }
 function currentBounds(padding=22){const bs=project.tiles.map(t=>({x:t.x,y:t.y,w:t.size,h:t.size})).concat(project.elements.map(e=>({x:e.x,y:e.y,w:e.w,h:e.h})));if(!bs.length)return {minX:-150,minY:-150,maxX:150,maxY:150};return {minX:Math.min(...bs.map(e=>e.x-e.w/2-padding)),minY:Math.min(...bs.map(e=>e.y-e.h/2-padding)),maxX:Math.max(...bs.map(e=>e.x+e.w/2+padding)),maxY:Math.max(...bs.map(e=>e.y+e.h/2+padding))}}
 function resizeCanvas(c){const r=c.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(c.width!==w||c.height!==h){c.width=w;c.height=h}return {w:r.width,h:r.height,d}}
@@ -592,149 +592,149 @@ function polygon(ctx,shape,x,y,size,radius=16){const r=size/2;ctx.beginPath();if
 function connect(ctx,a,b,kind){ctx.beginPath();const dx=b.x-a.x,dy=b.y-a.y;if(kind==='straight'||Math.abs(dx)<1||Math.abs(dy)<1){ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y)}else if(kind==='square'){ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,a.y);ctx.lineTo(b.x,b.y)}else{const r=Math.min(Math.abs(dx),Math.abs(dy),35);ctx.moveTo(a.x,a.y);ctx.lineTo(b.x-Math.sign(dx)*r,a.y);ctx.quadraticCurveTo(b.x,a.y,b.x,a.y+Math.sign(dy)*r);ctx.lineTo(b.x,b.y)}}
 function colorHex(c,alpha){let s=c.slice(1);return `rgba(${parseInt(s.slice(0,2),16)},${parseInt(s.slice(2,4),16)},${parseInt(s.slice(4,6),16)},${alpha})`}
 function drawImageFit(ctx,img,x,y,w,h,mode='cover',zoom=1,ox=0,oy=0){
- let scale=(mode==='contain'?Math.min(w/img.width,h/img.height):Math.max(w/img.width,h/img.height))*zoom,iw=img.width*scale,ih=img.height*scale;
- ctx.drawImage(img,x+(w-iw)/2+(ox/100)*w,y+(h-ih)/2+(oy/100)*h,iw,ih);
+let scale=(mode==='contain'?Math.min(w/img.width,h/img.height):Math.max(w/img.width,h/img.height))*zoom,iw=img.width*scale,ih=img.height*scale;
+ctx.drawImage(img,x+(w-iw)/2+(ox/100)*w,y+(h-ih)/2+(oy/100)*h,iw,ih);
 }
 function pageSizeWorld(){const pr=project.print,land=pr.orientation==='landscape',pw=land?297:210,ph=land?210:297,scale=pr.mmTile/BASE_SIZE;return {w:pw/scale,h:ph/scale,scale,paperW:pw,paperH:ph};}
 function updatePageSummary(){if(!$('studioPageSummary'))return;const pg=pageSizeWorld();$('studioPageSummary').textContent=`Página inteira: ${Math.round(pg.w)} × ${Math.round(pg.h)} unidades. A4 ${project.print.orientation==='landscape'?'paisagem':'retrato'}, ${project.print.mmTile} mm/casa.`;}
 function drawPageGuides(ctx,area){
- if(!project.print.showGuides)return;
- const pg=pageSizeWorld(),pr=project.print,settings=pdfSettings();
- // A origem é fixa. Adicionar casas fora da primeira folha NÃO move as guias.
- const minCol=Math.floor((area.minX-pr.originX)/pg.w),maxCol=Math.ceil((area.maxX-pr.originX)/pg.w);
- const minRow=Math.floor((area.minY-pr.originY)/pg.h),maxRow=Math.ceil((area.maxY-pr.originY)/pg.h);
- const ordered=pdfOrderedKeys(settings),positions=new Map(ordered.map((key,i)=>[key,i+1]));
- ctx.save();ctx.lineWidth=1.4;
- for(let row=minRow;row<=Math.min(maxRow,minRow+55);row++){
-  for(let col=minCol;col<=Math.min(maxCol,minCol+55);col++){
-   const x=pr.originX+col*pg.w,y=pr.originY+row*pg.h;
-   const localRow=row-settings.startRow,localCol=col-settings.startCol;
-   const inPrint=localRow>=0&&localCol>=0&&localRow<settings.rows&&localCol<settings.cols;
-   ctx.strokeStyle=inPrint?'#e0b67c':'rgba(224,182,124,.38)';
-   ctx.setLineDash([12,7]);ctx.strokeRect(x,y,pg.w,pg.h);ctx.setLineDash([]);
-   if(inPrint){const n=positions.get(`${localRow}:${localCol}`);
-    ctx.fillStyle='#d9b17a';ctx.font='bold 12px Segoe UI, Arial';ctx.textAlign='left';
-    ctx.fillText(`PDF ${n} · folha ${localRow+1}.${localCol+1}`,x+9,y+19);
-   }
-  }
+if(!project.print.showGuides)return;
+const pg=pageSizeWorld(),pr=project.print,settings=pdfSettings();
+// A origem é fixa. Adicionar casas fora da primeira folha NÃO move as guias.
+const minCol=Math.floor((area.minX-pr.originX)/pg.w),maxCol=Math.ceil((area.maxX-pr.originX)/pg.w);
+const minRow=Math.floor((area.minY-pr.originY)/pg.h),maxRow=Math.ceil((area.maxY-pr.originY)/pg.h);
+const ordered=pdfOrderedKeys(settings),positions=new Map(ordered.map((key,i)=>[key,i+1]));
+ctx.save();ctx.lineWidth=1.4;
+for(let row=minRow;row<=Math.min(maxRow,minRow+55);row++){
+for(let col=minCol;col<=Math.min(maxCol,minCol+55);col++){
+ const x=pr.originX+col*pg.w,y=pr.originY+row*pg.h;
+ const localRow=row-settings.startRow,localCol=col-settings.startCol;
+ const inPrint=localRow>=0&&localCol>=0&&localRow<settings.rows&&localCol<settings.cols;
+ ctx.strokeStyle=inPrint?'#e0b67c':'rgba(224,182,124,.38)';
+ ctx.setLineDash([12,7]);ctx.strokeRect(x,y,pg.w,pg.h);ctx.setLineDash([]);
+ if(inPrint){const n=positions.get(`${localRow}:${localCol}`);
+  ctx.fillStyle='#d9b17a';ctx.font='bold 12px Segoe UI, Arial';ctx.textAlign='left';
+  ctx.fillText(`PDF ${n} · folha ${localRow+1}.${localCol+1}`,x+9,y+19);
  }
- ctx.restore();
+}
+}
+ctx.restore();
 }
 function drawBackground(ctx,b){const bg=project.background;ctx.save();ctx.beginPath();ctx.rect(b.minX,b.minY,b.maxX-b.minX,b.maxY-b.minY);ctx.clip();ctx.fillStyle=bg.color;ctx.fillRect(b.minX,b.minY,b.maxX-b.minX,b.maxY-b.minY);
- if(bg.kind==='gradient'){const plane=currentBounds(7);let gr=ctx.createLinearGradient(plane.minX,plane.minY,plane.maxX,plane.maxY);gr.addColorStop(0,bg.color);gr.addColorStop(1,bg.color2);ctx.fillStyle=gr;ctx.fillRect(b.minX,b.minY,b.maxX-b.minX,b.maxY-b.minY)}
- if(bg.kind==='dots'||bg.kind==='stripes'){ctx.fillStyle=bg.color2;ctx.strokeStyle=bg.color2;ctx.lineWidth=2;if(bg.kind==='dots'){for(let y=Math.floor(b.minY/30)*30;y<b.maxY;y+=30)for(let x=Math.floor(b.minX/30)*30;x<b.maxX;x+=30){ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill()}}else{const mid=(b.minX+b.minY),start=Math.floor((b.minX-b.maxY)/45)*45,end=b.maxX-b.minY;for(let d=start;d<end;d+=45){ctx.beginPath();ctx.moveTo(b.minX,d+b.minX);ctx.lineTo(b.maxX,d+b.maxX);ctx.stroke()}}}
- if(bg.kind==='image'&&bg.image){let img=getImg(bg.image);if(img){if(bg.fit==='repeat'){const w=250,h=250;for(let x=Math.floor(b.minX/w)*w;x<b.maxX;x+=w)for(let y=Math.floor(b.minY/h)*h;y<b.maxY;y+=h)ctx.drawImage(img,x,y,w,h)}else{const plane=currentBounds(7);drawImageFit(ctx,img,plane.minX,plane.minY,plane.maxX-plane.minX,plane.maxY-plane.minY,bg.fit)}}}ctx.restore();}
+if(bg.kind==='gradient'){const plane=currentBounds(7);let gr=ctx.createLinearGradient(plane.minX,plane.minY,plane.maxX,plane.maxY);gr.addColorStop(0,bg.color);gr.addColorStop(1,bg.color2);ctx.fillStyle=gr;ctx.fillRect(b.minX,b.minY,b.maxX-b.minX,b.maxY-b.minY)}
+if(bg.kind==='dots'||bg.kind==='stripes'){ctx.fillStyle=bg.color2;ctx.strokeStyle=bg.color2;ctx.lineWidth=2;if(bg.kind==='dots'){for(let y=Math.floor(b.minY/30)*30;y<b.maxY;y+=30)for(let x=Math.floor(b.minX/30)*30;x<b.maxX;x+=30){ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill()}}else{const mid=(b.minX+b.minY),start=Math.floor((b.minX-b.maxY)/45)*45,end=b.maxX-b.minY;for(let d=start;d<end;d+=45){ctx.beginPath();ctx.moveTo(b.minX,d+b.minX);ctx.lineTo(b.maxX,d+b.maxX);ctx.stroke()}}}
+if(bg.kind==='image'&&bg.image){let img=getImg(bg.image);if(img){if(bg.fit==='repeat'){const w=250,h=250;for(let x=Math.floor(b.minX/w)*w;x<b.maxX;x+=w)for(let y=Math.floor(b.minY/h)*h;y<b.maxY;y+=h)ctx.drawImage(img,x,y,w,h)}else{const plane=currentBounds(7);drawImageFit(ctx,img,plane.minX,plane.minY,plane.maxX-plane.minX,plane.maxY-plane.minY,bg.fit)}}}ctx.restore();}
 function drawResizeHandles(ctx,it,w,h){ctx.save();const x=it.type===undefined?it.x:0,y=it.type===undefined?it.y:0;ctx.setLineDash([]);const hs=[[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];for(const [sx,sy] of hs){ctx.fillStyle='#fdf8ee';ctx.strokeStyle='#1b3857';ctx.lineWidth=1.5;const px=x+sx*w/2,py=y+sy*h/2;ctx.fillRect(px-4.5,py-4.5,9,9);ctx.strokeRect(px-4.5,py-4.5,9,9)}ctx.restore()}
 function elementPath(ctx,e,x,y){const w=e.w,h=e.h,kind=e.geometry||'rect';ctx.beginPath();if(kind==='line'){ctx.moveTo(x,y+h/2);ctx.lineTo(x+w,y+h/2);return}if(kind==='rect'){if(ctx.roundRect&&e.radius>0)ctx.roundRect(x,y,w,h,e.radius);else ctx.rect(x,y,w,h);return}if(kind==='circle'||kind==='ellipse'){ctx.ellipse(x+w/2,y+h/2,kind==='circle'?Math.min(w,h)/2:w/2,kind==='circle'?Math.min(w,h)/2:h/2,0,0,Math.PI*2);return}let points=kind==='triangle'?3:kind==='pentagon'?5:kind==='hex'?6:kind==='diamond'?4:10;for(let i=0;i<points;i++){const a=-Math.PI/2+i*Math.PI*2/points,r=kind==='star'&&i%2?.49:1,px=x+w/2+Math.cos(a)*w/2*r,py=y+h/2+Math.sin(a)*h/2*r;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath()}
 function handleAt(item,p,z){const ang=(item.angle||0)*Math.PI/180,dx=p.x-item.x,dy=p.y-item.y,rx=dx*Math.cos(ang)+dy*Math.sin(ang),ry=-dx*Math.sin(ang)+dy*Math.cos(ang),w=item.w??item.size,h=item.h??item.size;let best=null,distance=12/Math.max(z,.17);for(const [sx,sy] of [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]){const d=Math.hypot(rx-sx*w/2,ry-sy*h/2);if(d<distance){distance=d;best={sx,sy}}}return best}
 function drawElement(ctx,e,selected=false,print=false){ctx.save();ctx.translate(e.x,e.y);ctx.rotate((e.angle||0)*Math.PI/180);ctx.globalAlpha=e.opacity??1;const x=-e.w/2,y=-e.h/2;let isNumber=e.type==='number';
- if(e.type==='rect'||e.type==='button'||isNumber){ctx.fillStyle=e.fill;ctx.strokeStyle=e.stroke;ctx.lineWidth=e.strokeWidth??2.5;if(e.type==='rect')elementPath(ctx,e,x,y);else{ctx.beginPath();ctx.roundRect(x,y,e.w,e.h,e.type==='button'?13:5)}if(!(e.type==='rect'&&e.geometry==='line'))ctx.fill();ctx.stroke()}
- if(e.type==='image'){const img=getImg(e.image);ctx.beginPath();ctx.roundRect(x,y,e.w,e.h,7);ctx.clip();ctx.fillStyle=e.fill;ctx.fillRect(x,y,e.w,e.h);if(img)drawImageFit(ctx,img,x,y,e.w,e.h,e.imageFit);ctx.strokeStyle=e.stroke;ctx.lineWidth=2;ctx.strokeRect(x,y,e.w,e.h)}
- if(['text','button','number'].includes(e.type)&&!(ui.view==='studio'&&inlineTextEdit?.id===e.id)){
- let content=e.text||'',v=project.variables.find(v=>v.id===e.variable);
- if(isNumber){const val=ui.view==='game'&&ui.game?getVariableValue(e.variable,ui.game.players[ui.game.turn]):(v?.initial??0);content=(e.text?e.text+': ':'')+val}
- const inner=textInnerBox(e.w,e.h,e.textPadding??6),{pad,width,height}=inner;
- ctx.save();ctx.beginPath();ctx.rect(x+pad,y+pad,width,height);ctx.clip();ctx.fillStyle=e.textColor;ctx.textAlign=e.align||'center';ctx.textBaseline='top';
- const layout=textLayout(ctx,content,width,height,e),{lines,blockHeight:span,lineStep}=layout;
- const startY=y+pad+((e.valign||'middle')==='top'?0:(e.valign==='bottom'?height-span:(height-span)/2));
- const tx=(e.align==='left'?x+pad:(e.align==='right'?x+e.w-pad:0));
- for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,startY+i*lineStep,width);
- ctx.restore();}
- ctx.globalAlpha=1;if(selected&&!print){ctx.setLineDash([6,4]);ctx.strokeStyle='#ffdc93';ctx.lineWidth=2;ctx.strokeRect(x-4,y-4,e.w+8,e.h+8);ctx.setLineDash([]);drawResizeHandles(ctx,e,e.w,e.h)}ctx.restore();}
+if(e.type==='rect'||e.type==='button'||isNumber){ctx.fillStyle=e.fill;ctx.strokeStyle=e.stroke;ctx.lineWidth=e.strokeWidth??2.5;if(e.type==='rect')elementPath(ctx,e,x,y);else{ctx.beginPath();ctx.roundRect(x,y,e.w,e.h,e.type==='button'?13:5)}if(!(e.type==='rect'&&e.geometry==='line'))ctx.fill();ctx.stroke()}
+if(e.type==='image'){const img=getImg(e.image);ctx.beginPath();ctx.roundRect(x,y,e.w,e.h,7);ctx.clip();ctx.fillStyle=e.fill;ctx.fillRect(x,y,e.w,e.h);if(img)drawImageFit(ctx,img,x,y,e.w,e.h,e.imageFit);ctx.strokeStyle=e.stroke;ctx.lineWidth=2;ctx.strokeRect(x,y,e.w,e.h)}
+if(['text','button','number'].includes(e.type)&&!(ui.view==='studio'&&inlineTextEdit?.id===e.id)){
+let content=e.text||'',v=project.variables.find(v=>v.id===e.variable);
+if(isNumber){const val=ui.view==='game'&&ui.game?getVariableValue(e.variable,ui.game.players[ui.game.turn]):(v?.initial??0);content=(e.text?e.text+': ':'')+val}
+const inner=textInnerBox(e.w,e.h,e.textPadding??6),{pad,width,height}=inner;
+ctx.save();ctx.beginPath();ctx.rect(x+pad,y+pad,width,height);ctx.clip();ctx.fillStyle=e.textColor;ctx.textAlign=e.align||'center';ctx.textBaseline='top';
+const layout=textLayout(ctx,content,width,height,e),{lines,blockHeight:span,lineStep}=layout;
+const startY=y+pad+((e.valign||'middle')==='top'?0:(e.valign==='bottom'?height-span:(height-span)/2));
+const tx=(e.align==='left'?x+pad:(e.align==='right'?x+e.w-pad:0));
+for(let i=0;i<lines.length;i++)ctx.fillText(lines[i],tx,startY+i*lineStep,width);
+ctx.restore();}
+ctx.globalAlpha=1;if(selected&&!print){ctx.setLineDash([6,4]);ctx.strokeStyle='#ffdc93';ctx.lineWidth=2;ctx.strokeRect(x-4,y-4,e.w+8,e.h+8);ctx.setLineDash([]);drawResizeHandles(ctx,e,e.w,e.h)}ctx.restore();}
 function elementAt(x,y){for(let i=project.elements.length-1;i>=0;i--){let e=project.elements[i],a=-(e.angle||0)*Math.PI/180,dx=x-e.x,dy=y-e.y,rx=dx*Math.cos(a)-dy*Math.sin(a),ry=dx*Math.sin(a)+dy*Math.cos(a);if(Math.abs(rx)<=e.w/2&&Math.abs(ry)<=e.h/2)return e}return null}
 function createElement(type,x,y){const element={id:uid(),type,x:Math.round(x),y:Math.round(y),w:type==='rect'?145:type==='text'?240:type==='number'?170:160,h:type==='rect'?95:type==='text'?75:type==='number'?65:55,text:type==='text'?'Escreva aqui':type==='button'?'Clique aqui':type==='number'?'Número':'',fill:'#315d91',stroke:'#b5d5fc',textColor:'#ffffff',fontSize:type==='text'?25:20,geometry:'rect',strokeWidth:2.5,radius:0,opacity:1,angle:0,image:null,imageFit:'cover',variable:project.variables[0]?.id||'',fontFamily:'Arial',fontWeight:type==='text'?700:600,italic:false,align:'center',valign:'middle',lineHeight:1.2,textPadding:6,autoHeight:false,autoTextFit:true,actions:[]};project.elements.push(element);return element}
 function drawPaths(ctx,print=false){const ts=project.tiles;ctx.save();ctx.lineJoin='round';ctx.lineCap='round';for(let i=1;i<ts.length;i++){let a=ts[i-1],b=ts[i],kind=!b.connection||b.connection==='default'?project.pathStyle:b.connection;if(kind==='hidden'||kind==='touch')continue;const width=b.connectionWidth??27;if(width<1)continue;connect(ctx,a,b,kind);ctx.strokeStyle=print?'#475f74':'#142338';ctx.lineWidth=width+7;ctx.stroke();connect(ctx,a,b,kind);ctx.strokeStyle=b.connectionColor||project.pathColor;ctx.lineWidth=width;ctx.stroke();connect(ctx,a,b,kind);ctx.strokeStyle=colorHex('#ffffff',print?.2:.12);ctx.lineWidth=1.5;ctx.stroke()}if(!print){for(const tile of ts){for(const r of tile.routes||[]){const b=ts.find(x=>x.id===r.to);if(!b)continue;const dx=b.x-tile.x,dy=b.y-tile.y,len=Math.hypot(dx,dy)||1,off=Math.min(tile.size*.38,len*.3),ex=b.x-dx/len*off,ey=b.y-dy/len*off;ctx.beginPath();ctx.moveTo(tile.x+dx/len*off,tile.y+dy/len*off);ctx.lineTo(ex,ey);ctx.lineWidth=5;ctx.setLineDash([9,6]);ctx.strokeStyle=r.color;ctx.stroke();ctx.setLineDash([]);const ang=Math.atan2(dy,dx);ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-11*Math.cos(ang-.4),ey-11*Math.sin(ang-.4));ctx.lineTo(ex-11*Math.cos(ang+.4),ey-11*Math.sin(ang+.4));ctx.closePath();ctx.fillStyle=r.color;ctx.fill()}}}ctx.restore()}
 function getImg(src){if(!src)return null;let item=imageCache.get(src);if(!item){let img=new Image();item={img,status:'loading'};imageCache.set(src,item);img.onload=()=>{item.status='ready';arena3D.dirty=true;drawStudio();drawGame()};img.onerror=()=>{item.status='failed'};img.src=src}return item.status==='ready'?item.img:null}
 function wrapText(ctx,txt,maxWidth,maxLines=2){
- const lines=[],width=Math.max(4,maxWidth);
- for(const paragraph of String(txt??'').replace(/\r\n?/g,'\n').split('\n')){
-  if(paragraph===''){lines.push('');continue}
-  const parts=paragraph.match(/\S+\s*|\s+/g)||[];let current='';
-  for(let word of parts){
-   const combined=current+word;if(ctx.measureText(combined).width<=width){current=combined;continue}
-   if(current){lines.push(current.trimEnd());current=''}
-   while(word&&ctx.measureText(word).width>width){let count=1;while(count<word.length&&ctx.measureText(word.slice(0,count+1)).width<=width)count++;lines.push(word.slice(0,count));word=word.slice(count)}
-   current=word;
-  }
-  lines.push(current.trimEnd());
- }
- if(lines.length>maxLines){lines.length=Math.max(1,maxLines);let last=lines[lines.length-1];while(last.length&&ctx.measureText(last+'…').width>width)last=last.slice(0,-1);lines[lines.length-1]=last+'…'}
- return lines;
+const lines=[],width=Math.max(4,maxWidth);
+for(const paragraph of String(txt??'').replace(/\r\n?/g,'\n').split('\n')){
+if(paragraph===''){lines.push('');continue}
+const parts=paragraph.match(/\S+\s*|\s+/g)||[];let current='';
+for(let word of parts){
+ const combined=current+word;if(ctx.measureText(combined).width<=width){current=combined;continue}
+ if(current){lines.push(current.trimEnd());current=''}
+ while(word&&ctx.measureText(word).width>width){let count=1;while(count<word.length&&ctx.measureText(word.slice(0,count+1)).width<=width)count++;lines.push(word.slice(0,count));word=word.slice(count)}
+ current=word;
+}
+lines.push(current.trimEnd());
+}
+if(lines.length>maxLines){lines.length=Math.max(1,maxLines);let last=lines[lines.length-1];while(last.length&&ctx.measureText(last+'…').width>width)last=last.slice(0,-1);lines[lines.length-1]=last+'…'}
+return lines;
 }
 function textLayout(ctx, content, width, height, options={}){
- const text=String(content??''),w=Math.max(.5,width),h=Math.max(.5,height);
- const maxFont=clamp(Number(options.fontSize)||20,.5,500),family=options.fontFamily||'Arial',weight=options.fontWeight||700,italic=options.italic?'italic ':'',lineHeight=options.lineHeight||1.2;
- const useFont=size=>{ctx.font=`${italic}${weight} ${size}px "${family}", Arial`;};
- const words=text.match(/\S+/g)||[];
- const measure=size=>{useFont(size);const lines=wrapText(ctx,text,w,10000);return {lines,valid:lines.length*size*lineHeight<=h-0.05&&words.every(word=>ctx.measureText(word).width<=w+0.35)&&lines.every(line=>ctx.measureText(line).width<=w+0.35)};};
- let fontSize=maxFont,lines;
- // Primeiro garantir que palavras individuais não sejam divididas (ex.: CHEGADA).
- if(options.autoTextFit!==false&&words.length){
-  useFont(maxFont);
-  const largest=Math.max(...words.map(word=>ctx.measureText(word).width));
-  if(largest>w-.4)fontSize=Math.max(.5,maxFont*(w-.75)/largest*.97);
- }
- if(options.autoTextFit!==false&&text){
-  const full=measure(fontSize);
-  if(full.valid)lines=full.lines;
-  else{
-   let low=.5,high=fontSize,best=.5;
-   for(let i=0;i<16;i++){const mid=(low+high)/2,check=measure(mid);if(check.valid){best=mid;low=mid}else high=mid;}
-   fontSize=Math.max(.5,Math.floor(best*10)/10);
-  }
- }
- useFont(fontSize);lines=lines||wrapText(ctx,text,w,10000);
- return {fontSize,lines,lineStep:fontSize*lineHeight,blockHeight:lines.length*fontSize*lineHeight};
+const text=String(content??''),w=Math.max(.5,width),h=Math.max(.5,height);
+const maxFont=clamp(Number(options.fontSize)||20,.5,500),family=options.fontFamily||'Arial',weight=options.fontWeight||700,italic=options.italic?'italic ':'',lineHeight=options.lineHeight||1.2;
+const useFont=size=>{ctx.font=`${italic}${weight} ${size}px "${family}", Arial`;};
+const words=text.match(/\S+/g)||[];
+const measure=size=>{useFont(size);const lines=wrapText(ctx,text,w,10000);return {lines,valid:lines.length*size*lineHeight<=h-0.05&&words.every(word=>ctx.measureText(word).width<=w+0.35)&&lines.every(line=>ctx.measureText(line).width<=w+0.35)};};
+let fontSize=maxFont,lines;
+// Primeiro garantir que palavras individuais não sejam divididas (ex.: CHEGADA).
+if(options.autoTextFit!==false&&words.length){
+useFont(maxFont);
+const largest=Math.max(...words.map(word=>ctx.measureText(word).width));
+if(largest>w-.4)fontSize=Math.max(.5,maxFont*(w-.75)/largest*.97);
+}
+if(options.autoTextFit!==false&&text){
+const full=measure(fontSize);
+if(full.valid)lines=full.lines;
+else{
+ let low=.5,high=fontSize,best=.5;
+ for(let i=0;i<16;i++){const mid=(low+high)/2,check=measure(mid);if(check.valid){best=mid;low=mid}else high=mid;}
+ fontSize=Math.max(.5,Math.floor(best*10)/10);
+}
+}
+useFont(fontSize);lines=lines||wrapText(ctx,text,w,10000);
+return {fontSize,lines,lineStep:fontSize*lineHeight,blockHeight:lines.length*fontSize*lineHeight};
 }
 function textInnerBox(width,height,padding){
- const pad=clamp(Number(padding)||0,0,Math.max(0,Math.min(width,height)/5));
- return {pad,width:Math.max(.5,width-2*pad),height:Math.max(.5,height-2*pad)};
+const pad=clamp(Number(padding)||0,0,Math.max(0,Math.min(width,height)/5));
+return {pad,width:Math.max(.5,width-2*pad),height:Math.max(.5,height-2*pad)};
 }
 function fitTextBox(e){if(!e||e.type!=='text'||e.autoHeight===false)return;
- ctxStudio.save();ctxStudio.font=`${e.italic?'italic ':''}${e.fontWeight||700} ${e.fontSize||20}px "${e.fontFamily||'Arial'}", Arial`;
- const lines=wrapText(ctxStudio,e.text||'',Math.max(4,e.w-2*(e.textPadding??6)),1000);
- ctxStudio.restore();const wanted=Math.ceil((e.textPadding??6)*2+lines.length*(e.fontSize||20)*(e.lineHeight||1.2)+4);e.h=clamp(Math.max(28,wanted),28,2500);
+ctxStudio.save();ctxStudio.font=`${e.italic?'italic ':''}${e.fontWeight||700} ${e.fontSize||20}px "${e.fontFamily||'Arial'}", Arial`;
+const lines=wrapText(ctxStudio,e.text||'',Math.max(4,e.w-2*(e.textPadding??6)),1000);
+ctxStudio.restore();const wanted=Math.ceil((e.textPadding??6)*2+lines.length*(e.fontSize||20)*(e.lineHeight||1.2)+4);e.h=clamp(Math.max(28,wanted),28,2500);
 }
 function drawTile(ctx,t,i,print=false,selected=false){const size=t.size;ctx.save();ctx.globalAlpha=t.opacity??1;ctx.shadowColor=print?'#00000025':'#03070a9a';ctx.shadowBlur=print?5:11;ctx.shadowOffsetY=print?1:4;polygon(ctx,t.shape,t.x,t.y,size,t.radius);ctx.fillStyle=t.color;ctx.fill();ctx.shadowColor='transparent';ctx.save();polygon(ctx,t.shape,t.x,t.y,size,t.radius);ctx.clip();const img=getImg(t.image);if(img){drawImageFit(ctx,img,t.x-size/2,t.y-size/2,size,size,t.imageFit,t.imageZoom,t.imageX,t.imageY);if(t.title){ctx.fillStyle='#00000060';ctx.fillRect(t.x-size/2,t.y-size/2,size,size)}}else{const glare=ctx.createLinearGradient(t.x-size/2,t.y-size/2,t.x+size/2,t.y+size/2);glare.addColorStop(0,'#ffffff13');glare.addColorStop(1,'#0000001f');ctx.fillStyle=glare;ctx.fillRect(t.x-size/2,t.y-size/2,size,size)}ctx.restore();polygon(ctx,t.shape,t.x,t.y,size,t.radius);ctx.strokeStyle=selected?'#f9ce84':t.border;ctx.lineWidth=selected?4:(t.borderWidth??2.5);ctx.stroke();ctx.globalAlpha=1;if(selected&&!print){polygon(ctx,t.shape,t.x,t.y,size+9,t.radius);ctx.setLineDash([5,5]);ctx.strokeStyle='#ffcf89';ctx.lineWidth=2;ctx.stroke();ctx.setLineDash([]);drawResizeHandles(ctx,t,size,size)}
- ctx.fillStyle=t.textColor||'#ffffff';ctx.strokeStyle='#00000070';ctx.lineWidth=2.8;ctx.lineJoin='round';if(t.showNumber!==false&&(!print||project.print.pdfTileNumbers)){ctx.font='bold 10px Segoe UI, Arial';const n=String(i+1);ctx.textAlign='left';ctx.strokeText(n,t.x-size/2+8,t.y-size/2+14);ctx.fillText(n,t.x-size/2+8,t.y-size/2+14)}
- if(t.actions&&t.actions.length){ctx.beginPath();ctx.arc(t.x+size/2-10,t.y-size/2+10,4.3,0,Math.PI*2);ctx.fillStyle='#f9c978';ctx.fill()}
- if(t.title){ctx.save();const inner=textInnerBox(size,size,t.textPadding??7),{pad,width:avail,height}=inner;ctx.textBaseline='top';ctx.textAlign=t.textAlign||'center';ctx.fillStyle=t.textColor||'#fff';ctx.beginPath();ctx.rect(t.x-size/2+pad,t.y-size/2+pad,avail,height);ctx.clip();const layout=textLayout(ctx,t.title,avail,height,{...t,autoTextFit:t.autoTextFit!==false}),{lines,lineStep,blockHeight:span}=layout;const ty=t.y-span/2,tx=t.textAlign==='left'?t.x-size/2+pad:t.textAlign==='right'?t.x+size/2-pad:t.x;for(let j=0;j<lines.length;j++){const yy=ty+j*lineStep;ctx.strokeText(lines[j],tx,yy,avail);ctx.fillText(lines[j],tx,yy,avail)}ctx.restore()}ctx.restore()}
+ctx.fillStyle=t.textColor||'#ffffff';ctx.strokeStyle='#00000070';ctx.lineWidth=2.8;ctx.lineJoin='round';if(t.showNumber!==false&&(!print||project.print.pdfTileNumbers)){ctx.font='bold 10px Segoe UI, Arial';const n=String(i+1);ctx.textAlign='left';ctx.strokeText(n,t.x-size/2+8,t.y-size/2+14);ctx.fillText(n,t.x-size/2+8,t.y-size/2+14)}
+if(t.actions&&t.actions.length){ctx.beginPath();ctx.arc(t.x+size/2-10,t.y-size/2+10,4.3,0,Math.PI*2);ctx.fillStyle='#f9c978';ctx.fill()}
+if(t.title){ctx.save();const inner=textInnerBox(size,size,t.textPadding??7),{pad,width:avail,height}=inner;ctx.textBaseline='top';ctx.textAlign=t.textAlign||'center';ctx.fillStyle=t.textColor||'#fff';ctx.beginPath();ctx.rect(t.x-size/2+pad,t.y-size/2+pad,avail,height);ctx.clip();const layout=textLayout(ctx,t.title,avail,height,{...t,autoTextFit:t.autoTextFit!==false}),{lines,lineStep,blockHeight:span}=layout;const ty=t.y-span/2,tx=t.textAlign==='left'?t.x-size/2+pad:t.textAlign==='right'?t.x+size/2-pad:t.x;for(let j=0;j<lines.length;j++){const yy=ty+j*lineStep;ctx.strokeText(lines[j],tx,yy,avail);ctx.fillText(lines[j],tx,yy,avail)}ctx.restore()}ctx.restore()}
 function drawBoard(ctx,opts={}){if(opts.backgroundBounds&&!opts.omitBackground)drawBackground(ctx,opts.backgroundBounds);drawPaths(ctx,!!opts.print);project.tiles.forEach((t,i)=>drawTile(ctx,t,i,!!opts.print,!opts.game&&!opts.print&&(opts.selected===t.id||ui.multi.has(t.id))));project.elements.forEach(e=>drawElement(ctx,e,!opts.game&&!opts.print&&(opts.selectedElement===e.id||ui.multi.has(e.id)),!!opts.print));if(opts.game&&ui.game)drawTokens(ctx)}
 function drawGrid(ctx,canvasW,canvasH,v){const worldLeft=-v.x/v.z,worldTop=-v.y/v.z,worldRight=(canvasW-v.x)/v.z,worldBottom=(canvasH-v.y)/v.z;const grid=(step,color)=>{if(step*v.z<12)return;ctx.strokeStyle=color;ctx.lineWidth=1/v.z;ctx.beginPath();for(let x=Math.floor(worldLeft/step)*step;x<worldRight;x+=step){ctx.moveTo(x,worldTop);ctx.lineTo(x,worldBottom)}for(let y=Math.floor(worldTop/step)*step;y<worldBottom;y+=step){ctx.moveTo(worldLeft,y);ctx.lineTo(worldRight,y)}ctx.stroke()};grid(25,'#ffffff08');grid(100,'#87a9d01c')}
 function drawView(c,ctx,which){if(which==='studio'&&ui.view!=='studio')return;if(which==='game'&&ui.view!=='game')return;const {w,h,d}=resizeCanvas(c),v=which==='studio'?ui.studioView:ui.gameView;ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#0b121d';ctx.fillRect(0,0,w,h);ctx.setTransform(d*v.z,0,0,d*v.z,d*v.x,d*v.y);const area={minX:-v.x/v.z,minY:-v.y/v.z,maxX:(w-v.x)/v.z,maxY:(h-v.y)/v.z};drawBackground(ctx,area);drawGrid(ctx,w,h,v);if(which==='studio')drawPageGuides(ctx,area);drawBoard(ctx,{selected:which==='studio'?ui.selected:null,selectedElement:which==='studio'?ui.selectedElement:null,game:which==='game'});
- if(which==='studio'&&ui.drag?.type==='marquee'){const a=ui.drag.from,b=ui.drag.to;ctx.save();ctx.setLineDash([5/v.z,5/v.z]);ctx.fillStyle='#71b4fc32';ctx.strokeStyle='#a7cffe';ctx.lineWidth=1.5/v.z;ctx.fillRect(a.x,a.y,b.x-a.x,b.y-a.y);ctx.strokeRect(a.x,a.y,b.x-a.x,b.y-a.y);ctx.restore()}
- if(which==='studio'&&ui.drag?.type==='paint'&&ui.drag.last){ctx.save();ctx.strokeStyle='#9cdaff';ctx.lineWidth=2/v.z;ctx.setLineDash([7/v.z,7/v.z]);ctx.beginPath();ctx.arc(ui.drag.last.x,ui.drag.last.y,BASE_SIZE/2+8,0,Math.PI*2);ctx.stroke();ctx.restore()}
- const z=Math.round(v.z*100)+'%';if(which==='studio')$('zoomLabel').textContent=z;else $('gameZoom').textContent=z}
+if(which==='studio'&&ui.drag?.type==='marquee'){const a=ui.drag.from,b=ui.drag.to;ctx.save();ctx.setLineDash([5/v.z,5/v.z]);ctx.fillStyle='#71b4fc32';ctx.strokeStyle='#a7cffe';ctx.lineWidth=1.5/v.z;ctx.fillRect(a.x,a.y,b.x-a.x,b.y-a.y);ctx.strokeRect(a.x,a.y,b.x-a.x,b.y-a.y);ctx.restore()}
+if(which==='studio'&&ui.drag?.type==='paint'&&ui.drag.last){ctx.save();ctx.strokeStyle='#9cdaff';ctx.lineWidth=2/v.z;ctx.setLineDash([7/v.z,7/v.z]);ctx.beginPath();ctx.arc(ui.drag.last.x,ui.drag.last.y,BASE_SIZE/2+8,0,Math.PI*2);ctx.stroke();ctx.restore()}
+const z=Math.round(v.z*100)+'%';if(which==='studio')$('zoomLabel').textContent=z;else $('gameZoom').textContent=z}
 function drawStudio(){drawView(canvasStudio,ctxStudio,'studio');positionInlineTextEdit()}
 function drawGame(){drawView(canvasGame,ctxGame,'game')}
 
 function positionInlineTextEdit(){if(!inlineTextEdit)return;const item=selectionById(inlineTextEdit.id);if(!item){finishInlineTextEdit();return}
- const v=ui.studioView,box=inlineTextEdit.editor,done=inlineTextEdit.done,toolbar=inlineTextEdit.toolbar,isTile=project.tiles.includes(item),w=(item.w??item.size),h=(item.h??item.size);
- const screenX=v.x+item.x*v.z,screenY=v.y+item.y*v.z,scale=v.z;
- box.style.left=screenX+'px';box.style.top=screenY+'px';box.style.width=Math.max(22,w*scale)+'px';box.style.height=Math.max(22,h*scale)+'px';
- box.style.transform=`translate(-50%, -50%) rotate(${item.angle||0}deg)`;
- const content=isTile?item.title:item.text,inner=textInnerBox(w,h,item.textPadding??5);
- const font=textLayout(ctxStudio,content,inner.width,inner.height,{...item,autoTextFit:isTile?item.autoTextFit!==false:item.autoTextFit!==false}).fontSize;
- box.style.fontSize=Math.max(.5,font*scale)+'px';box.style.fontFamily=`"${item.fontFamily||'Arial'}", Arial`;box.style.fontWeight=String(item.fontWeight||700);box.style.fontStyle=item.italic?'italic':'normal';box.style.textAlign=item.textAlign||item.align||'center';box.style.lineHeight=String(item.lineHeight||1.2);box.style.padding=Math.max(0,textInnerBox(w,h,item.textPadding??5).pad*scale)+'px';box.style.color=item.textColor||'#fff';
- if(toolbar){toolbar.style.left=Math.max(4,Math.min(canvasStudio.clientWidth-470,screenX-220))+'px';toolbar.style.top=Math.max(8,screenY-h*scale/2-52)+'px'}
- done.style.left=Math.max(4,Math.min(canvasStudio.clientWidth-96,screenX+Math.max(0,w*scale/2)-82))+'px';done.style.top=Math.max(4,Math.min(canvasStudio.clientHeight-46,screenY+Math.max(0,h*scale/2)+9))+'px';
+const v=ui.studioView,box=inlineTextEdit.editor,done=inlineTextEdit.done,toolbar=inlineTextEdit.toolbar,isTile=project.tiles.includes(item),w=(item.w??item.size),h=(item.h??item.size);
+const screenX=v.x+item.x*v.z,screenY=v.y+item.y*v.z,scale=v.z;
+box.style.left=screenX+'px';box.style.top=screenY+'px';box.style.width=Math.max(22,w*scale)+'px';box.style.height=Math.max(22,h*scale)+'px';
+box.style.transform=`translate(-50%, -50%) rotate(${item.angle||0}deg)`;
+const content=isTile?item.title:item.text,inner=textInnerBox(w,h,item.textPadding??5);
+const font=textLayout(ctxStudio,content,inner.width,inner.height,{...item,autoTextFit:isTile?item.autoTextFit!==false:item.autoTextFit!==false}).fontSize;
+box.style.fontSize=Math.max(.5,font*scale)+'px';box.style.fontFamily=`"${item.fontFamily||'Arial'}", Arial`;box.style.fontWeight=String(item.fontWeight||700);box.style.fontStyle=item.italic?'italic':'normal';box.style.textAlign=item.textAlign||item.align||'center';box.style.lineHeight=String(item.lineHeight||1.2);box.style.padding=Math.max(0,textInnerBox(w,h,item.textPadding??5).pad*scale)+'px';box.style.color=item.textColor||'#fff';
+if(toolbar){toolbar.style.left=Math.max(4,Math.min(canvasStudio.clientWidth-470,screenX-220))+'px';toolbar.style.top=Math.max(8,screenY-h*scale/2-52)+'px'}
+done.style.left=Math.max(4,Math.min(canvasStudio.clientWidth-96,screenX+Math.max(0,w*scale/2)-82))+'px';done.style.top=Math.max(4,Math.min(canvasStudio.clientHeight-46,screenY+Math.max(0,h*scale/2)+9))+'px';
 }
 function finishInlineTextEdit(){if(!inlineTextEdit)return;const {editor,done,toolbar}=inlineTextEdit;inlineTextEdit=null;editor.remove();done.remove();toolbar?.remove();renderInspector();persist();drawStudio()}
 function startInlineTextEdit(item){if(!item||(!project.tiles.includes(item)&&!['text','button','number'].includes(item.type)))return;
- if(inlineTextEdit)finishInlineTextEdit();pushUndo();selectItem(item);
- $('inspector').classList.remove('mobile-open');
- const editor=document.createElement('textarea'),done=document.createElement('button'),toolbar=document.createElement('div');editor.className='inline-text-editor';editor.value=project.tiles.includes(item)?item.title:item.text;editor.spellcheck=true;editor.setAttribute('aria-label','Editar texto no tabuleiro');
- done.className='inline-edit-done';done.textContent='Concluir';done.type='button';
- toolbar.className='inline-edit-toolbar';toolbar.setAttribute('aria-label','Formatação do texto');const tile=project.tiles.includes(item);
- if(!tile){toolbar.innerHTML=`<select data-text-style="fontFamily" aria-label="Fonte">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${item.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select><input type="number" data-text-style="fontSize" aria-label="Tamanho da fonte" value="${item.fontSize}" min="6" max="350"><button data-text-toggle="bold" title="Negrito" class="${item.fontWeight>=700?'active':''}"><b>B</b></button><button data-text-toggle="italic" title="Itálico" class="${item.italic?'active':''}"><i>I</i></button><button data-text-toggle="align" title="Alinhar à esquerda, centro ou direita">${{left:'≡',center:'☷',right:'≡'}[item.align]||'☷'}</button><input type="color" data-text-style="textColor" aria-label="Cor do texto" value="${item.textColor}">`;}
- else{toolbar.innerHTML=`<select data-text-style="fontFamily" aria-label="Fonte">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${item.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select><input type="number" data-text-style="fontSize" aria-label="Tamanho da fonte" value="${item.fontSize}" min="6" max="240"><button data-text-toggle="bold" title="Negrito" class="${item.fontWeight>=700?'active':''}"><b>B</b></button><button data-text-toggle="italic" title="Itálico" class="${item.italic?'active':''}"><i>I</i></button><button data-text-toggle="align" title="Alinhamento">☷</button><input type="color" data-text-style="textColor" aria-label="Cor do texto" value="${item.textColor}">`;}
- toolbar.addEventListener('input',ev=>{const prop=ev.target.dataset.textStyle;if(!prop)return;item[prop]=prop==='fontSize'?Math.max(6,Math.min(project.tiles.includes(item)?240:350,Number(ev.target.value)||14)):ev.target.value;fitTextBox(item);positionInlineTextEdit();persist()});
- toolbar.addEventListener('click',ev=>{const t=ev.target.closest('[data-text-toggle]');if(!t)return;const op=t.dataset.textToggle;if(op==='bold')item.fontWeight=item.fontWeight>=700?400:700;else if(op==='italic')item.italic=!item.italic;else if(op==='align'){if(project.tiles.includes(item))item.textAlign=({left:'center',center:'right',right:'left'})[item.textAlign]||'left';else item.align=({left:'center',center:'right',right:'left'})[item.align]||'left';}t.classList.toggle('active',op==='bold'?item.fontWeight>=700:op==='italic'?item.italic:true);fitTextBox(item);positionInlineTextEdit();persist();editor.focus()});
- $('studioWorkspace').append(editor,done,toolbar);inlineTextEdit={id:item.id,editor,done,toolbar};positionInlineTextEdit();
- editor.addEventListener('input',()=>{const it=selectionById(item.id);if(!it)return;it[project.tiles.includes(it)?'title':'text']=editor.value;const input=$('inspectorBody').querySelector(project.tiles.includes(it)?'[data-prop="title"]':'[data-prop="text"]');if(input)input.value=editor.value;fitTextBox(it);persist();drawStudio()});
- editor.addEventListener('keydown',ev=>{if(ev.key==='Escape'){ev.stopPropagation();finishInlineTextEdit()}if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();ev.stopPropagation();finishInlineTextEdit()}});
- done.addEventListener('click',finishInlineTextEdit);// A edição continua ativa enquanto a barra de formatação é utilizada.
- editor.focus();editor.setSelectionRange(editor.value.length,editor.value.length);
+if(inlineTextEdit)finishInlineTextEdit();pushUndo();selectItem(item);
+$('inspector').classList.remove('mobile-open');
+const editor=document.createElement('textarea'),done=document.createElement('button'),toolbar=document.createElement('div');editor.className='inline-text-editor';editor.value=project.tiles.includes(item)?item.title:item.text;editor.spellcheck=true;editor.setAttribute('aria-label','Editar texto no tabuleiro');
+done.className='inline-edit-done';done.textContent='Concluir';done.type='button';
+toolbar.className='inline-edit-toolbar';toolbar.setAttribute('aria-label','Formatação do texto');const tile=project.tiles.includes(item);
+if(!tile){toolbar.innerHTML=`<select data-text-style="fontFamily" aria-label="Fonte">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${item.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select><input type="number" data-text-style="fontSize" aria-label="Tamanho da fonte" value="${item.fontSize}" min="6" max="350"><button data-text-toggle="bold" title="Negrito" class="${item.fontWeight>=700?'active':''}"><b>B</b></button><button data-text-toggle="italic" title="Itálico" class="${item.italic?'active':''}"><i>I</i></button><button data-text-toggle="align" title="Alinhar à esquerda, centro ou direita">${{left:'≡',center:'☷',right:'≡'}[item.align]||'☷'}</button><input type="color" data-text-style="textColor" aria-label="Cor do texto" value="${item.textColor}">`;}
+else{toolbar.innerHTML=`<select data-text-style="fontFamily" aria-label="Fonte">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${item.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select><input type="number" data-text-style="fontSize" aria-label="Tamanho da fonte" value="${item.fontSize}" min="6" max="240"><button data-text-toggle="bold" title="Negrito" class="${item.fontWeight>=700?'active':''}"><b>B</b></button><button data-text-toggle="italic" title="Itálico" class="${item.italic?'active':''}"><i>I</i></button><button data-text-toggle="align" title="Alinhamento">☷</button><input type="color" data-text-style="textColor" aria-label="Cor do texto" value="${item.textColor}">`;}
+toolbar.addEventListener('input',ev=>{const prop=ev.target.dataset.textStyle;if(!prop)return;item[prop]=prop==='fontSize'?Math.max(6,Math.min(project.tiles.includes(item)?240:350,Number(ev.target.value)||14)):ev.target.value;fitTextBox(item);positionInlineTextEdit();persist()});
+toolbar.addEventListener('click',ev=>{const t=ev.target.closest('[data-text-toggle]');if(!t)return;const op=t.dataset.textToggle;if(op==='bold')item.fontWeight=item.fontWeight>=700?400:700;else if(op==='italic')item.italic=!item.italic;else if(op==='align'){if(project.tiles.includes(item))item.textAlign=({left:'center',center:'right',right:'left'})[item.textAlign]||'left';else item.align=({left:'center',center:'right',right:'left'})[item.align]||'left';}t.classList.toggle('active',op==='bold'?item.fontWeight>=700:op==='italic'?item.italic:true);fitTextBox(item);positionInlineTextEdit();persist();editor.focus()});
+$('studioWorkspace').append(editor,done,toolbar);inlineTextEdit={id:item.id,editor,done,toolbar};positionInlineTextEdit();
+editor.addEventListener('input',()=>{const it=selectionById(item.id);if(!it)return;it[project.tiles.includes(it)?'title':'text']=editor.value;const input=$('inspectorBody').querySelector(project.tiles.includes(it)?'[data-prop="title"]':'[data-prop="text"]');if(input)input.value=editor.value;fitTextBox(it);persist();drawStudio()});
+editor.addEventListener('keydown',ev=>{if(ev.key==='Escape'){ev.stopPropagation();finishInlineTextEdit()}if(ev.key==='Enter'&&(ev.ctrlKey||ev.metaKey)){ev.preventDefault();ev.stopPropagation();finishInlineTextEdit()}});
+done.addEventListener('click',finishInlineTextEdit);// A edição continua ativa enquanto a barra de formatação é utilizada.
+editor.focus();editor.setSelectionRange(editor.value.length,editor.value.length);
 }
 canvasStudio.addEventListener('pointerdown',()=>{if(inlineTextEdit)finishInlineTextEdit()},{capture:true});
 canvasStudio.addEventListener('dblclick',ev=>{const p=worldPos(ev,canvasStudio,ui.studioView),it=elementAt(p.x,p.y)||tileAt(p.x,p.y);if(it)startInlineTextEdit(it)});
@@ -746,11 +746,11 @@ function deleteSelection(){const ids=new Set(ui.multi);if(!ids.size)return;pushU
 function duplicateSelection(){let selection=getSelectedItems();if(!selection.length)return;pushUndo();for(let t of selection){const v=clone(t);v.id=uid();v.x+=24;v.y+=24;(project.tiles.includes(t)?project.tiles:project.elements).push(v)}changed();toast(selection.length+' elemento(s) duplicado(s).')}
 function selectInRect(a,b,add){const minX=Math.min(a.x,b.x),maxX=Math.max(a.x,b.x),minY=Math.min(a.y,b.y),maxY=Math.max(a.y,b.y);if(!add)ui.multi.clear();for(let t of project.tiles){if(t.x+t.size/2>=minX&&t.x-t.size/2<=maxX&&t.y+t.size/2>=minY&&t.y-t.size/2<=maxY)ui.multi.add(t.id)}for(let e of project.elements){if(e.x+e.w/2>=minX&&e.x-e.w/2<=maxX&&e.y+e.h/2>=minY&&e.y-e.h/2<=maxY)ui.multi.add(e.id)}const id=[...ui.multi][0];ui.selected=project.tiles.some(t=>t.id===id)?id:null;ui.selectedElement=project.elements.some(e=>e.id===id)?id:null;renderInspector()}
 canvasStudio.addEventListener('pointerdown',e=>{if(e.button!==0&&e.button!==1)return;hideContext();canvasStudio.setPointerCapture(e.pointerId);const p=worldPos(e,canvasStudio,ui.studioView);if(ui.tool==='pan'||ui.space||e.button===1){ui.drag={type:'pan',sx:p.sx,sy:p.sy,x:ui.studioView.x,y:ui.studioView.y};canvasStudio.style.cursor='grabbing';return}
- if(ui.tool==='route'){const target=tileAt(p.x,p.y);if(target){if(!ui.routeFrom){ui.routeFrom=target.id;selectItem(target);toast('Agora selecione a casa de destino.')}else if(ui.routeFrom!==target.id){const start=project.tiles.find(t=>t.id===ui.routeFrom);if(start&&!start.routes.some(r=>r.to===target.id)){pushUndo();start.routes.push({id:uid(),to:target.id,color:target.color,label:target.title?.slice(0,45)||'',weight:1});toast('Rota conectada. Selecione outra saída ou clique novamente na origem.');changed()}ui.routeFrom=null;selectItem(start||target)}else{ui.routeFrom=null;toast('Ligação cancelada.')}}ui.drag={type:'none'};drawStudio();return}
- if(ui.tool==='select'){const single=getSelectedItems();if(single.length===1){const item=single[0],handle=handleAt(item,p,ui.studioView.z);if(handle){pushUndo();ui.drag={type:'resize',id:item.id,from:p,base:{x:item.x,y:item.y,w:item.w??item.size,h:item.h??item.size},handle,moved:false};return}}const t=elementAt(p.x,p.y)||tileAt(p.x,p.y);if(t){if(!(ui.multi.has(t.id)&&!e.ctrlKey&&!e.metaKey))selectItem(t,e.ctrlKey||e.metaKey);let selected=getSelectedItems();if(!ui.multi.has(t.id)){ui.drag={type:'none'};return}pushUndo();ui.drag={type:'group',sx:p.x,sy:p.y,base:selected.map(x=>({id:x.id,x:x.x,y:x.y})),moved:false};}else{ui.drag={type:'marquee',from:p,to:p,add:e.ctrlKey||e.metaKey};if(!ui.drag.add){ui.multi.clear();ui.selected=null;ui.selectedElement=null;renderInspector()}}drawStudio();return}
- if(ui.tool==='add'){const hit=tileAt(p.x,p.y);if(!hit){pushUndo();const m=ui.magnet?magnetize({id:null,size:BASE_SIZE},p.x,p.y):{x:p.x,y:p.y};const t=putTile(m.x,m.y);if(t){selectItem(t);changed()}}else selectItem(hit);ui.drag={type:'none'};return}
- if(ui.tool==='draw'){pushUndo();let t=putTile(p.x,p.y,false);if(t)selectItem(t);ui.drag={type:'paint',last:p,anchor:t};changed();return}
- if(elementTypes[ui.tool]){pushUndo();const el=createElement(ui.tool,p.x,p.y);selectItem(el);changed();setTool('select');if(el.type==='image')$('canvasImageFile').click();if(el.type==='text')requestAnimationFrame(()=>startInlineTextEdit(el));ui.drag={type:'none'};return}
+if(ui.tool==='route'){const target=tileAt(p.x,p.y);if(target){if(!ui.routeFrom){ui.routeFrom=target.id;selectItem(target);toast('Agora selecione a casa de destino.')}else if(ui.routeFrom!==target.id){const start=project.tiles.find(t=>t.id===ui.routeFrom);if(start&&!start.routes.some(r=>r.to===target.id)){pushUndo();start.routes.push({id:uid(),to:target.id,color:target.color,label:target.title?.slice(0,45)||'',weight:1});toast('Rota conectada. Selecione outra saída ou clique novamente na origem.');changed()}ui.routeFrom=null;selectItem(start||target)}else{ui.routeFrom=null;toast('Ligação cancelada.')}}ui.drag={type:'none'};drawStudio();return}
+if(ui.tool==='select'){const single=getSelectedItems();if(single.length===1){const item=single[0],handle=handleAt(item,p,ui.studioView.z);if(handle){pushUndo();ui.drag={type:'resize',id:item.id,from:p,base:{x:item.x,y:item.y,w:item.w??item.size,h:item.h??item.size},handle,moved:false};return}}const t=elementAt(p.x,p.y)||tileAt(p.x,p.y);if(t){if(!(ui.multi.has(t.id)&&!e.ctrlKey&&!e.metaKey))selectItem(t,e.ctrlKey||e.metaKey);let selected=getSelectedItems();if(!ui.multi.has(t.id)){ui.drag={type:'none'};return}pushUndo();ui.drag={type:'group',sx:p.x,sy:p.y,base:selected.map(x=>({id:x.id,x:x.x,y:x.y})),moved:false};}else{ui.drag={type:'marquee',from:p,to:p,add:e.ctrlKey||e.metaKey};if(!ui.drag.add){ui.multi.clear();ui.selected=null;ui.selectedElement=null;renderInspector()}}drawStudio();return}
+if(ui.tool==='add'){const hit=tileAt(p.x,p.y);if(!hit){pushUndo();const m=ui.magnet?magnetize({id:null,size:BASE_SIZE},p.x,p.y):{x:p.x,y:p.y};const t=putTile(m.x,m.y);if(t){selectItem(t);changed()}}else selectItem(hit);ui.drag={type:'none'};return}
+if(ui.tool==='draw'){pushUndo();let t=putTile(p.x,p.y,false);if(t)selectItem(t);ui.drag={type:'paint',last:p,anchor:t};changed();return}
+if(elementTypes[ui.tool]){pushUndo();const el=createElement(ui.tool,p.x,p.y);selectItem(el);changed();setTool('select');if(el.type==='image')$('canvasImageFile').click();if(el.type==='text')requestAnimationFrame(()=>startInlineTextEdit(el));ui.drag={type:'none'};return}
 });
 canvasStudio.addEventListener('pointermove',e=>{const p=worldPos(e,canvasStudio,ui.studioView);$('coords').textContent=`X: ${Math.round(p.x)} · Y: ${Math.round(p.y)}`;const d=ui.drag;if(!d)return;if(d.type==='pan'){ui.studioView.x=d.x+(p.sx-d.sx);ui.studioView.y=d.y+(p.sy-d.sy);drawStudio()}else if(d.type==='group'){for(const v of d.base){const it=selectionById(v.id);if(it){const freeX=v.x+(p.x-d.sx),freeY=v.y+(p.y-d.sy),snapPos=(!e.altKey&&ui.magnet&&it.size)?magnetize(it,freeX,freeY):{x:placed(freeX),y:placed(freeY)},x=snapPos.x,y=snapPos.y;if(it.x!==x||it.y!==y){it.x=x;it.y=y;d.moved=true}}}drawStudio()}else if(d.type==='resize'){const item=selectionById(d.id);if(item){const ang=(item.angle||0)*Math.PI/180,dx=p.x-d.from.x,dy=p.y-d.from.y,lx=dx*Math.cos(ang)+dy*Math.sin(ang),ly=-dx*Math.sin(ang)+dy*Math.cos(ang),{sx,sy}=d.handle;let nw=sx?clamp(d.base.w+sx*lx,item.type==='text'?8:item.type?20:32,item.type?3500:800):d.base.w,nh=sy?clamp(d.base.h+sy*ly,item.type==='text'?8:item.type?15:32,item.type?2500:800):d.base.h;if(!item.type){nw=nh=clamp(Math.max(nw,nh),32,800);item.size=Math.round(nw)}else{if(e.shiftKey){const ratio=d.base.w/d.base.h;if(sx&&sy){if(nw/d.base.w>nh/d.base.h)nh=nw/ratio;else nw=nh*ratio}else if(sx)nh=nw/ratio;else nw=nh*ratio}item.w=Math.round(nw);item.h=Math.round(nh);item.autoHeight=false}let movedX=sx?(nw-d.base.w)*sx/2:0,movedY=sy?(nh-d.base.h)*sy/2:0;item.x=Math.round(d.base.x+movedX*Math.cos(ang)-movedY*Math.sin(ang));item.y=Math.round(d.base.y+movedX*Math.sin(ang)+movedY*Math.cos(ang));d.moved=true;drawStudio()}}else if(d.type==='paint'){const t=paintSegment(d.last,p);if(t){ui.multi.clear();ui.multi.add(t.id);ui.selected=t.id;ui.selectedElement=null;changed()}d.last=p;if(t)d.anchor=t;drawStudio()}else if(d.type==='marquee'){d.to=p;drawStudio()}});
 function pointerEnd(){if((ui.drag?.type==='group'||ui.drag?.type==='resize')&&ui.drag.moved){changed();renderInspector()}if(ui.drag?.type==='paint'){renderInspector();changed()}if(ui.drag?.type==='marquee'){selectInRect(ui.drag.from,ui.drag.to,ui.drag.add)}ui.drag=null;canvasStudio.style.cursor=ui.tool==='pan'?'grab':ui.tool==='select'?'default':'crosshair';drawStudio()}
@@ -769,30 +769,30 @@ function removeSelected(){deleteSelection()}
 function shiftSelected(d){const i=project.tiles.findIndex(t=>t.id===ui.selected),j=i+d;if(i<0||j<0||j>=project.tiles.length)return;pushUndo();[project.tiles[i],project.tiles[j]]=[project.tiles[j],project.tiles[i]];changed();renderInspector()}
 function varOptions(selected){return project.variables.map(v=>`<option value="${esc(v.id)}" ${v.id===selected?'selected':''}>${esc(v.name)} (${v.scope==='global'?'global':'jogador'})</option>`).join('')}
 function actionEditor(a,i){const types=Object.entries(actionNames).map(([k,v])=>`<option value="${k}" ${k===a.type?'selected':''}>${v}</option>`).join('');const conds=[['always','Sempre'],['pointsMin','Pontos ≥ valor'],['pointsMax','Pontos ≤ valor'],['chance','Probabilidade (%)'],['diceMin','Resultado dos dados ≥ valor'],['varMin','Variável ≥ valor'],['varMax','Variável ≤ valor']].map(([k,v])=>`<option value="${k}" ${k===a.cond?'selected':''}>${v}</option>`).join('');let txt=['message','modal'].includes(a.type),val=['again','win'].includes(a.type)?'':`<div class="field"><label>${txt?'Texto do evento':a.type==='sound'?'Som predefinido':a.type==='effect'?'Efeito predefinido':a.type==='roll'?'Quantidade de dados extra':a.type==='variable'?'Número a adicionar (negativo subtrai)':'Valor da ação'}</label>${a.type==='effect'?`<select data-action="${i}" data-field="value">${['pulse','flash','confetti'].map(v=>`<option value="${v}" ${a.value===v?'selected':''}>${{pulse:'Destaque',flash:'Flash',confetti:'Confete'}[v]}</option>`).join('')}</select>`:a.type==='sound'?`<select data-action="${i}" data-field="value">${['success','alert','click','bonus'].map(v=>`<option value="${v}" ${a.value===v?'selected':''}>${{success:'Sucesso',alert:'Alerta',click:'Clique',bonus:'Bônus'}[v]}</option>`).join('')}</select>`:txt?`<textarea data-action="${i}" data-field="value" maxlength="700">${esc(a.value)}</textarea>`:`<input type="number" data-action="${i}" data-field="value" value="${esc(a.value)}">`}</div>`;
- if(a.type==='variable')val+=`<div class="field"><label>Variável a modificar</label><select data-action="${i}" data-field="variable">${varOptions(a.variable)}</select></div>`;
- if(a.type==='modal'){const choices=a.choices||[];val+=`<div class="sectiontitle">Botões do modal</div>`+choices.map((c,j)=>`<div class="action-card"><div class="field"><label>Nome do botão ${j+1}</label><input data-choice="${i}" data-choice-index="${j}" data-choice-field="label" value="${esc(c.label)}" maxlength="65"></div><div class="field"><label>Ação ao escolher</label><select data-choice="${i}" data-choice-index="${j}" data-choice-field="type">${Object.entries(actionNames).filter(([k])=>['move','points','variable','message','jump','skip','roll','effect'].includes(k)).map(([k,v])=>`<option value="${k}" ${c.type===k?'selected':''}>${v}</option>`).join('')}</select></div><div class="field"><label>Valor ou mensagem</label><input data-choice="${i}" data-choice-index="${j}" data-choice-field="value" value="${esc(c.value)}"></div>${c.type==='variable'?`<div class="field"><label>Variável</label><select data-choice="${i}" data-choice-index="${j}" data-choice-field="variable">${varOptions(c.variable)}</select></div>`:''}<button class="button danger small" data-remove-choice="${i}" data-choice-index="${j}">Remover botão</button></div>`).join('')+`<button class="button small full" data-add-choice="${i}">+ Adicionar botão</button>`;}
- return `<div class="action-card"><div class="action-head"><span>Evento ${i+1}</span><button class="button small danger" data-remove-action="${i}">Remover</button></div><div class="field"><label>Ação</label><select data-action="${i}" data-field="type">${types}</select></div>${val}<div class="field"><label>Condição</label><select data-action="${i}" data-field="cond">${conds}</select></div>${['varMin','varMax'].includes(a.cond)?`<div class="field"><label>Variável da condição</label><select data-action="${i}" data-field="condVariable">${varOptions(a.condVariable)}</select></div>`:''}${a.cond!=='always'?`<div class="field"><label>Valor da condição</label><input type="number" data-action="${i}" data-field="condValue" value="${esc(a.condValue)}"></div>`:''}<div class="pills"><button data-up-action="${i}" class="button small" ${i===0?'disabled':''}>↑</button><button data-down-action="${i}" class="button small">↓</button></div></div>`}
+if(a.type==='variable')val+=`<div class="field"><label>Variável a modificar</label><select data-action="${i}" data-field="variable">${varOptions(a.variable)}</select></div>`;
+if(a.type==='modal'){const choices=a.choices||[];val+=`<div class="sectiontitle">Botões do modal</div>`+choices.map((c,j)=>`<div class="action-card"><div class="field"><label>Nome do botão ${j+1}</label><input data-choice="${i}" data-choice-index="${j}" data-choice-field="label" value="${esc(c.label)}" maxlength="65"></div><div class="field"><label>Ação ao escolher</label><select data-choice="${i}" data-choice-index="${j}" data-choice-field="type">${Object.entries(actionNames).filter(([k])=>['move','points','variable','message','jump','skip','roll','effect'].includes(k)).map(([k,v])=>`<option value="${k}" ${c.type===k?'selected':''}>${v}</option>`).join('')}</select></div><div class="field"><label>Valor ou mensagem</label><input data-choice="${i}" data-choice-index="${j}" data-choice-field="value" value="${esc(c.value)}"></div>${c.type==='variable'?`<div class="field"><label>Variável</label><select data-choice="${i}" data-choice-index="${j}" data-choice-field="variable">${varOptions(c.variable)}</select></div>`:''}<button class="button danger small" data-remove-choice="${i}" data-choice-index="${j}">Remover botão</button></div>`).join('')+`<button class="button small full" data-add-choice="${i}">+ Adicionar botão</button>`;}
+return `<div class="action-card"><div class="action-head"><span>Evento ${i+1}</span><button class="button small danger" data-remove-action="${i}">Remover</button></div><div class="field"><label>Ação</label><select data-action="${i}" data-field="type">${types}</select></div>${val}<div class="field"><label>Condição</label><select data-action="${i}" data-field="cond">${conds}</select></div>${['varMin','varMax'].includes(a.cond)?`<div class="field"><label>Variável da condição</label><select data-action="${i}" data-field="condVariable">${varOptions(a.condVariable)}</select></div>`:''}${a.cond!=='always'?`<div class="field"><label>Valor da condição</label><input type="number" data-action="${i}" data-field="condValue" value="${esc(a.condValue)}"></div>`:''}<div class="pills"><button data-up-action="${i}" class="button small" ${i===0?'disabled':''}>↑</button><button data-down-action="${i}" class="button small">↓</button></div></div>`}
 function eventsInspector(actions){const item=selectedTile()||selectedElement(),count=item?.graph?.nodes?.length ?? actions.length;const isTile=!!selectedTile();
- const available=isTile&&project.programs.filter(x=>x.graph?.start&&x.graph?.nodes?.length);
- const picker=available?.length?`<div class="field" style="margin-top:12px"><label>Executar evento reutilizável ao cair</label><select id="attachEventProgram">${available.map(pg=>`<option value="${esc(pg.id)}">${esc(pg.name)}</option>`).join('')}</select><button type="button" class="button full" data-command="attachprogram">Vincular evento à casa</button></div>`:'';
- return `<hr class="separator"><div class="titleline"><div class="sectiontitle" style="margin:0">Lógica e eventos</div><span class="chip">${count} blocos</span></div><button class="button primary full" data-command="openflow">Abrir editor de blocos</button>${picker}`}
+const available=isTile&&project.programs.filter(x=>x.graph?.start&&x.graph?.nodes?.length);
+const picker=available?.length?`<div class="field" style="margin-top:12px"><label>Executar evento reutilizável ao cair</label><select id="attachEventProgram">${available.map(pg=>`<option value="${esc(pg.id)}">${esc(pg.name)}</option>`).join('')}</select><button type="button" class="button full" data-command="attachprogram">Vincular evento à casa</button></div>`:'';
+return `<hr class="separator"><div class="titleline"><div class="sectiontitle" style="margin:0">Lógica e eventos</div><span class="chip">${count} blocos</span></div><button class="button primary full" data-command="openflow">Abrir editor de blocos</button>${picker}`}
 
 
 function renderInspector(){const body=$('inspectorBody'),items=getSelectedItems(),t=selectedTile(),e=selectedElement();if(items.length>1){body.innerHTML=`<div class="sectiontitle">${items.length} elementos selecionados</div><p class="hint">Altere a cor em lote, duplique ou exclua a seleção.</p><div class="field"><label>Aplicar cor a todos</label><input type="color" id="batchColor" value="#407bb4"></div><div class="stack"><button class="button full" data-command="duplicate">Duplicar seleção</button><button class="button full danger" data-command="delete">Excluir selecionados</button></div>`;return}
- if(!t&&!e){body.innerHTML='<div class="empty-state"><svg class="icon" style="width:34px;height:34px"><use href="#i-cursor"/></svg><h3>Nenhum item selecionado</h3><p>Selecione um elemento para editar suas propriedades.</p></div>';return}
- if(t){const i=project.tiles.indexOf(t),shapeOpts=Object.entries(shapeNames).map(([k,v])=>`<option value="${k}" ${k===t.shape?'selected':''}>${v}</option>`).join('');body.innerHTML=`<div class="titleline"><div><div class="itemindex">Casa ${i+1}</div></div><button class="button danger small" data-command="delete">Excluir</button></div><div class="fieldrow"><div class="field"><label>Posição X</label><input data-prop="x" type="number" value="${t.x}"></div><div class="field"><label>Posição Y</label><input data-prop="y" type="number" value="${t.y}"></div></div><div class="inline" style="margin:8px 0"><button class="button small full" data-command="back">Anterior</button><button class="button small full" data-command="forward">Próxima</button></div>
- <div class="field"><label>Texto da casa</label><textarea data-prop="title" maxlength="2000" rows="5">${esc(t.title)}</textarea></div><button class="button full" data-command="edittext">Editar texto diretamente na casa</button><div class="fieldrow" style="margin-top:10px"><div class="field"><label>Fonte do texto</label><select data-prop="fontFamily">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${t.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div><div class="field"><label>Peso</label><select data-prop="fontWeight">${[400,500,600,700,800,900].map(w=>`<option value="${w}" ${t.fontWeight===w?'selected':''}>${w}</option>`).join('')}</select></div></div><div class="fieldrow"><div class="field"><label>Alinhamento</label><select data-prop="textAlign">${[['left','Esquerda'],['center','Centro'],['right','Direita']].map(([v,n])=>`<option value="${v}" ${t.textAlign===v?'selected':''}>${n}</option>`).join('')}</select></div><div class="field"><label>Entrelinhas</label><input data-prop="lineHeight" type="number" min="0.8" max="2.8" step="0.05" value="${t.lineHeight}"></div></div><div class="fieldrow"><div class="field"><label>Margem interna</label><input data-prop="textPadding" type="number" min="0" max="60" value="${t.textPadding}"></div><div class="field"><label>Itálico</label><input type="checkbox" data-prop="italic" ${t.italic?'checked':''}></div></div><div class="field"><label class="switchline">Reduzir fonte para caber na casa <input type="checkbox" data-prop="autoTextFit" ${t.autoTextFit?'checked':''}></label></div><div class="fieldrow"><div class="field"><label>Preenchimento</label><input type="color" data-prop="color" value="${t.color}"></div><div class="field"><label>Borda</label><input type="color" data-prop="border" value="${t.border}"></div></div><div class="fieldrow"><div class="field"><label>Cor do texto</label><input type="color" data-prop="textColor" value="${t.textColor}"></div><div class="field"><label>Formato</label><select data-prop="shape">${shapeOpts}</select></div></div><div class="fieldrow"><div class="field"><label>Tamanho</label><input type="number" data-prop="size" min="32" max="320" value="${t.size}"></div><div class="field"><label>Texto (px)</label><input type="number" data-prop="fontSize" min="6" max="240" value="${t.fontSize}"><input class="text-size-slider" type="range" data-prop="fontSize" min="6" max="150" value="${Math.min(150,t.fontSize)}"></div></div><div class="fieldrow"><div class="field"><label>Espessura da borda</label><input type="number" data-prop="borderWidth" min="0" max="18" value="${t.borderWidth}"></div><div class="field"><label>Opacidade (0-1)</label><input type="number" data-prop="opacity" min="0.15" max="1" step="0.05" value="${t.opacity}"></div></div><div class="field"><label>Raio dos cantos arredondados</label><input data-prop="radius" type="number" min="0" max="120" value="${t.radius}"></div><div class="field"><label class="switchline">Mostrar número automático <input data-prop="showNumber" type="checkbox" ${t.showNumber?'checked':''}></label></div>
- <hr class="separator"><div class="sectiontitle">Imagem e enquadramento</div>${t.image?`<img class="asset-preview" src="${t.image}" alt="Imagem aplicada">`:''}<div class="inline"><button class="button full" data-command="image">${t.image?'Trocar imagem':'Importar imagem'}</button>${t.image?'<button class="button danger small" data-command="removeimage">Remover</button>':''}</div><div class="field" style="margin-top:10px"><label>Ajuste da imagem</label><select data-prop="imageFit"><option value="cover" ${t.imageFit==='cover'?'selected':''}>Preencher e recortar</option><option value="contain" ${t.imageFit==='contain'?'selected':''}>Mostrar inteira</option></select></div><div class="fieldrow"><div class="field"><label>Posição horizontal (%)</label><input data-prop="imageX" type="number" min="-100" max="100" value="${t.imageX}"></div><div class="field"><label>Posição vertical (%)</label><input data-prop="imageY" type="number" min="-100" max="100" value="${t.imageY}"></div></div><div class="field"><label>Zoom da imagem (${t.imageZoom}×)</label><input data-prop="imageZoom" type="range" min="0.5" max="5" step="0.05" value="${t.imageZoom}"></div>
- <hr class="separator"><div class="sectiontitle">Ligação com a casa anterior</div><div class="field"><label>Tipo de ligação</label><select data-prop="connection"><option value="default" ${t.connection==='default'?'selected':''}>Estilo do projeto</option><option value="straight" ${t.connection==='straight'?'selected':''}>Reta</option><option value="rounded" ${t.connection==='rounded'?'selected':''}>Arredondada</option><option value="square" ${t.connection==='square'?'selected':''}>Quadrada</option><option value="hidden" ${t.connection==='hidden'?'selected':''}>Invisível</option><option value="touch" ${t.connection==='touch'?'selected':''}>Sem linha (casas grudadas)</option></select></div><div class="fieldrow"><div class="field"><label>Largura do caminho</label><input data-prop="connectionWidth" type="number" min="0" max="95" value="${t.connectionWidth}"></div><div class="field"><label>Cor específica</label><input type="color" data-prop="connectionColor" value="${t.connectionColor||project.pathColor}"></div></div><button class="button small full" data-command="attach" ${i===0?'disabled':''}>Encostar esta casa na anterior</button>
+if(!t&&!e){body.innerHTML='<div class="empty-state"><svg class="icon" style="width:34px;height:34px"><use href="#i-cursor"/></svg><h3>Nenhum item selecionado</h3><p>Selecione um elemento para editar suas propriedades.</p></div>';return}
+if(t){const i=project.tiles.indexOf(t),shapeOpts=Object.entries(shapeNames).map(([k,v])=>`<option value="${k}" ${k===t.shape?'selected':''}>${v}</option>`).join('');body.innerHTML=`<div class="titleline"><div><div class="itemindex">Casa ${i+1}</div></div><button class="button danger small" data-command="delete">Excluir</button></div><div class="fieldrow"><div class="field"><label>Posição X</label><input data-prop="x" type="number" value="${t.x}"></div><div class="field"><label>Posição Y</label><input data-prop="y" type="number" value="${t.y}"></div></div><div class="inline" style="margin:8px 0"><button class="button small full" data-command="back">Anterior</button><button class="button small full" data-command="forward">Próxima</button></div>
+<div class="field"><label>Texto da casa</label><textarea data-prop="title" maxlength="2000" rows="5">${esc(t.title)}</textarea></div><button class="button full" data-command="edittext">Editar texto diretamente na casa</button><div class="fieldrow" style="margin-top:10px"><div class="field"><label>Fonte do texto</label><select data-prop="fontFamily">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${t.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div><div class="field"><label>Peso</label><select data-prop="fontWeight">${[400,500,600,700,800,900].map(w=>`<option value="${w}" ${t.fontWeight===w?'selected':''}>${w}</option>`).join('')}</select></div></div><div class="fieldrow"><div class="field"><label>Alinhamento</label><select data-prop="textAlign">${[['left','Esquerda'],['center','Centro'],['right','Direita']].map(([v,n])=>`<option value="${v}" ${t.textAlign===v?'selected':''}>${n}</option>`).join('')}</select></div><div class="field"><label>Entrelinhas</label><input data-prop="lineHeight" type="number" min="0.8" max="2.8" step="0.05" value="${t.lineHeight}"></div></div><div class="fieldrow"><div class="field"><label>Margem interna</label><input data-prop="textPadding" type="number" min="0" max="60" value="${t.textPadding}"></div><div class="field"><label>Itálico</label><input type="checkbox" data-prop="italic" ${t.italic?'checked':''}></div></div><div class="field"><label class="switchline">Reduzir fonte para caber na casa <input type="checkbox" data-prop="autoTextFit" ${t.autoTextFit?'checked':''}></label></div><div class="fieldrow"><div class="field"><label>Preenchimento</label><input type="color" data-prop="color" value="${t.color}"></div><div class="field"><label>Borda</label><input type="color" data-prop="border" value="${t.border}"></div></div><div class="fieldrow"><div class="field"><label>Cor do texto</label><input type="color" data-prop="textColor" value="${t.textColor}"></div><div class="field"><label>Formato</label><select data-prop="shape">${shapeOpts}</select></div></div><div class="fieldrow"><div class="field"><label>Tamanho</label><input type="number" data-prop="size" min="32" max="320" value="${t.size}"></div><div class="field"><label>Texto (px)</label><input type="number" data-prop="fontSize" min="6" max="240" value="${t.fontSize}"><input class="text-size-slider" type="range" data-prop="fontSize" min="6" max="150" value="${Math.min(150,t.fontSize)}"></div></div><div class="fieldrow"><div class="field"><label>Espessura da borda</label><input type="number" data-prop="borderWidth" min="0" max="18" value="${t.borderWidth}"></div><div class="field"><label>Opacidade (0-1)</label><input type="number" data-prop="opacity" min="0.15" max="1" step="0.05" value="${t.opacity}"></div></div><div class="field"><label>Raio dos cantos arredondados</label><input data-prop="radius" type="number" min="0" max="120" value="${t.radius}"></div><div class="field"><label class="switchline">Mostrar número automático <input data-prop="showNumber" type="checkbox" ${t.showNumber?'checked':''}></label></div>
+<hr class="separator"><div class="sectiontitle">Imagem e enquadramento</div>${t.image?`<img class="asset-preview" src="${t.image}" alt="Imagem aplicada">`:''}<div class="inline"><button class="button full" data-command="image">${t.image?'Trocar imagem':'Importar imagem'}</button>${t.image?'<button class="button danger small" data-command="removeimage">Remover</button>':''}</div><div class="field" style="margin-top:10px"><label>Ajuste da imagem</label><select data-prop="imageFit"><option value="cover" ${t.imageFit==='cover'?'selected':''}>Preencher e recortar</option><option value="contain" ${t.imageFit==='contain'?'selected':''}>Mostrar inteira</option></select></div><div class="fieldrow"><div class="field"><label>Posição horizontal (%)</label><input data-prop="imageX" type="number" min="-100" max="100" value="${t.imageX}"></div><div class="field"><label>Posição vertical (%)</label><input data-prop="imageY" type="number" min="-100" max="100" value="${t.imageY}"></div></div><div class="field"><label>Zoom da imagem (${t.imageZoom}×)</label><input data-prop="imageZoom" type="range" min="0.5" max="5" step="0.05" value="${t.imageZoom}"></div>
+<hr class="separator"><div class="sectiontitle">Ligação com a casa anterior</div><div class="field"><label>Tipo de ligação</label><select data-prop="connection"><option value="default" ${t.connection==='default'?'selected':''}>Estilo do projeto</option><option value="straight" ${t.connection==='straight'?'selected':''}>Reta</option><option value="rounded" ${t.connection==='rounded'?'selected':''}>Arredondada</option><option value="square" ${t.connection==='square'?'selected':''}>Quadrada</option><option value="hidden" ${t.connection==='hidden'?'selected':''}>Invisível</option><option value="touch" ${t.connection==='touch'?'selected':''}>Sem linha (casas grudadas)</option></select></div><div class="fieldrow"><div class="field"><label>Largura do caminho</label><input data-prop="connectionWidth" type="number" min="0" max="95" value="${t.connectionWidth}"></div><div class="field"><label>Cor específica</label><input type="color" data-prop="connectionColor" value="${t.connectionColor||project.pathColor}"></div></div><button class="button small full" data-command="attach" ${i===0?'disabled':''}>Encostar esta casa na anterior</button>
 `;return}
- if(e){const opts=Object.entries(elementTypes).filter(([k])=>!['button','number'].includes(k)).map(([k,v])=>`<option value="${k}" ${e.type===k?'selected':''}>${v}</option>`).join('');body.innerHTML=`<div class="titleline"><div><div class="itemindex">${elementTypes[e.type]}</div></div><button class="button danger small" data-command="delete">Excluir</button></div><div class="field"><label>Tipo de objeto</label><select data-prop="type">${opts}</select></div><div class="fieldrow"><div class="field"><label>X</label><input data-prop="x" type="number" value="${e.x}"></div><div class="field"><label>Y</label><input data-prop="y" type="number" value="${e.y}"></div></div><div class="fieldrow"><div class="field"><label>Largura</label><input data-prop="w" type="number" min="${e.type==='text'?8:20}" value="${e.w}"></div><div class="field"><label>Altura</label><input data-prop="h" type="number" min="${e.type==='text'?8:15}" value="${e.h}"></div></div><div class="size-presets"><button class="button small" data-size-preset="text">Ajustar ao texto</button><button class="button small" data-size-preset="small">Pequeno</button><button class="button small" data-size-preset="medium">Médio</button><button class="button small" data-size-preset="large">Grande</button></div>${e.type==='rect'?`<div class="field"><label>Forma geométrica</label><select data-prop="geometry">${[['rect','Retângulo'],['circle','Círculo'],['ellipse','Elipse'],['triangle','Triângulo'],['pentagon','Pentágono'],['hex','Hexágono'],['diamond','Losango'],['star','Estrela'],['line','Linha']].map(([v,n])=>`<option value="${v}" ${e.geometry===v?'selected':''}>${n}</option>`).join('')}</select></div><div class="fieldrow"><div class="field"><label>Espessura do traço</label><input type="number" min="0" max="35" data-prop="strokeWidth" value="${e.strokeWidth}"></div><div class="field"><label>Raio dos cantos</label><input type="number" min="0" max="300" data-prop="radius" value="${e.radius}"></div></div>`:''}<div class="fieldrow"><div class="field"><label>Rotação (graus)</label><input data-prop="angle" type="number" value="${e.angle}"></div><div class="field"><label>Opacidade (0-1)</label><input data-prop="opacity" type="number" step="0.1" min="0.1" max="1" value="${e.opacity}"></div></div><div class="field"><label>Conteúdo do texto</label><textarea data-prop="text" rows="4">${esc(e.text)}</textarea></div>${e.type==='text'?`<div class="field"><label class="switchline">Ajustar altura automaticamente <input type="checkbox" data-prop="autoHeight" ${e.autoHeight===true?'checked':''}></label></div><div class="field"><label class="switchline">Reduzir texto para caber na caixa <input type="checkbox" data-prop="autoTextFit" ${e.autoTextFit!==false?'checked':''}></label></div>`:''}${['text','button','number'].includes(e.type)?`<button class="button full" data-command="edittext">Editar diretamente no canvas</button><div class="fieldrow"><div class="field"><label>Fonte</label><select data-prop="fontFamily">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${e.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div><div class="field"><label>Peso</label><select data-prop="fontWeight">${[400,500,600,700,800,900].map(n=>`<option value="${n}" ${e.fontWeight===n?'selected':''}>${n}</option>`).join('')}</select></div></div><div class="fieldrow"><div class="field"><label>Alinhamento</label><select data-prop="align"><option value="left" ${e.align==='left'?'selected':''}>Esquerda</option><option value="center" ${e.align==='center'?'selected':''}>Centro</option><option value="right" ${e.align==='right'?'selected':''}>Direita</option></select></div><div class="field"><label>Posição vertical</label><select data-prop="valign"><option value="top" ${e.valign==='top'?'selected':''}>Topo</option><option value="middle" ${e.valign==='middle'?'selected':''}>Centro</option><option value="bottom" ${e.valign==='bottom'?'selected':''}>Base</option></select></div></div><div class="fieldrow"><div class="field"><label>Entrelinhas</label><input type="number" data-prop="lineHeight" min="0.8" max="2.5" step="0.1" value="${e.lineHeight||1.2}"></div><div class="field"><label>Margem interna</label><input type="number" data-prop="textPadding" min="0" max="55" value="${e.textPadding??6}"></div></div><div class="field"><label class="switchline">Itálico <input type="checkbox" data-prop="italic" ${e.italic?'checked':''}></label></div>`:''}<div class="fieldrow"><div class="field"><label>Cor do objeto</label><input type="color" data-prop="fill" value="${e.fill}"></div><div class="field"><label>Borda</label><input type="color" data-prop="stroke" value="${e.stroke}"></div></div><div class="fieldrow"><div class="field"><label>Cor do texto</label><input type="color" data-prop="textColor" value="${e.textColor}"></div><div class="field"><label>Tamanho máximo da fonte (px)</label><input data-prop="fontSize" type="number" min="6" max="350" value="${e.fontSize}"><input class="text-size-slider" type="range" min="6" max="250" data-prop="fontSize" value="${Math.min(250,e.fontSize)}"></div></div>${e.type==='number'?`<div class="field"><label>Valor vinculado</label><select data-prop="variable">${varOptions(e.variable)}</select></div>`:''}${e.type==='image'?`<div class="field"><button class="button full" data-command="image">Carregar imagem</button></div><div class="field"><label>Enquadramento</label><select data-prop="imageFit"><option value="cover" ${e.imageFit==='cover'?'selected':''}>Preencher</option><option value="contain" ${e.imageFit==='contain'?'selected':''}>Inteira</option></select></div>`:''}<div class="layer-buttons"><button class="button small" data-command="bring">Trazer à frente</button><button class="button small" data-command="duplicate">Duplicar</button></div>`;return}
+if(e){const opts=Object.entries(elementTypes).filter(([k])=>!['button','number'].includes(k)).map(([k,v])=>`<option value="${k}" ${e.type===k?'selected':''}>${v}</option>`).join('');body.innerHTML=`<div class="titleline"><div><div class="itemindex">${elementTypes[e.type]}</div></div><button class="button danger small" data-command="delete">Excluir</button></div><div class="field"><label>Tipo de objeto</label><select data-prop="type">${opts}</select></div><div class="fieldrow"><div class="field"><label>X</label><input data-prop="x" type="number" value="${e.x}"></div><div class="field"><label>Y</label><input data-prop="y" type="number" value="${e.y}"></div></div><div class="fieldrow"><div class="field"><label>Largura</label><input data-prop="w" type="number" min="${e.type==='text'?8:20}" value="${e.w}"></div><div class="field"><label>Altura</label><input data-prop="h" type="number" min="${e.type==='text'?8:15}" value="${e.h}"></div></div><div class="size-presets"><button class="button small" data-size-preset="text">Ajustar ao texto</button><button class="button small" data-size-preset="small">Pequeno</button><button class="button small" data-size-preset="medium">Médio</button><button class="button small" data-size-preset="large">Grande</button></div>${e.type==='rect'?`<div class="field"><label>Forma geométrica</label><select data-prop="geometry">${[['rect','Retângulo'],['circle','Círculo'],['ellipse','Elipse'],['triangle','Triângulo'],['pentagon','Pentágono'],['hex','Hexágono'],['diamond','Losango'],['star','Estrela'],['line','Linha']].map(([v,n])=>`<option value="${v}" ${e.geometry===v?'selected':''}>${n}</option>`).join('')}</select></div><div class="fieldrow"><div class="field"><label>Espessura do traço</label><input type="number" min="0" max="35" data-prop="strokeWidth" value="${e.strokeWidth}"></div><div class="field"><label>Raio dos cantos</label><input type="number" min="0" max="300" data-prop="radius" value="${e.radius}"></div></div>`:''}<div class="fieldrow"><div class="field"><label>Rotação (graus)</label><input data-prop="angle" type="number" value="${e.angle}"></div><div class="field"><label>Opacidade (0-1)</label><input data-prop="opacity" type="number" step="0.1" min="0.1" max="1" value="${e.opacity}"></div></div><div class="field"><label>Conteúdo do texto</label><textarea data-prop="text" rows="4">${esc(e.text)}</textarea></div>${e.type==='text'?`<div class="field"><label class="switchline">Ajustar altura automaticamente <input type="checkbox" data-prop="autoHeight" ${e.autoHeight===true?'checked':''}></label></div><div class="field"><label class="switchline">Reduzir texto para caber na caixa <input type="checkbox" data-prop="autoTextFit" ${e.autoTextFit!==false?'checked':''}></label></div>`:''}${['text','button','number'].includes(e.type)?`<button class="button full" data-command="edittext">Editar diretamente no canvas</button><div class="fieldrow"><div class="field"><label>Fonte</label><select data-prop="fontFamily">${['Arial','Verdana','Georgia','Trebuchet MS','Times New Roman','Courier New'].map(f=>`<option value="${f}" ${e.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div><div class="field"><label>Peso</label><select data-prop="fontWeight">${[400,500,600,700,800,900].map(n=>`<option value="${n}" ${e.fontWeight===n?'selected':''}>${n}</option>`).join('')}</select></div></div><div class="fieldrow"><div class="field"><label>Alinhamento</label><select data-prop="align"><option value="left" ${e.align==='left'?'selected':''}>Esquerda</option><option value="center" ${e.align==='center'?'selected':''}>Centro</option><option value="right" ${e.align==='right'?'selected':''}>Direita</option></select></div><div class="field"><label>Posição vertical</label><select data-prop="valign"><option value="top" ${e.valign==='top'?'selected':''}>Topo</option><option value="middle" ${e.valign==='middle'?'selected':''}>Centro</option><option value="bottom" ${e.valign==='bottom'?'selected':''}>Base</option></select></div></div><div class="fieldrow"><div class="field"><label>Entrelinhas</label><input type="number" data-prop="lineHeight" min="0.8" max="2.5" step="0.1" value="${e.lineHeight||1.2}"></div><div class="field"><label>Margem interna</label><input type="number" data-prop="textPadding" min="0" max="55" value="${e.textPadding??6}"></div></div><div class="field"><label class="switchline">Itálico <input type="checkbox" data-prop="italic" ${e.italic?'checked':''}></label></div>`:''}<div class="fieldrow"><div class="field"><label>Cor do objeto</label><input type="color" data-prop="fill" value="${e.fill}"></div><div class="field"><label>Borda</label><input type="color" data-prop="stroke" value="${e.stroke}"></div></div><div class="fieldrow"><div class="field"><label>Cor do texto</label><input type="color" data-prop="textColor" value="${e.textColor}"></div><div class="field"><label>Tamanho máximo da fonte (px)</label><input data-prop="fontSize" type="number" min="6" max="350" value="${e.fontSize}"><input class="text-size-slider" type="range" min="6" max="250" data-prop="fontSize" value="${Math.min(250,e.fontSize)}"></div></div>${e.type==='number'?`<div class="field"><label>Valor vinculado</label><select data-prop="variable">${varOptions(e.variable)}</select></div>`:''}${e.type==='image'?`<div class="field"><button class="button full" data-command="image">Carregar imagem</button></div><div class="field"><label>Enquadramento</label><select data-prop="imageFit"><option value="cover" ${e.imageFit==='cover'?'selected':''}>Preencher</option><option value="contain" ${e.imageFit==='contain'?'selected':''}>Inteira</option></select></div>`:''}<div class="layer-buttons"><button class="button small" data-command="bring">Trazer à frente</button><button class="button small" data-command="duplicate">Duplicar</button></div>`;return}
 }
 $('inspectorBody').addEventListener('focusin',e=>{if(e.target.matches('[data-prop],[data-action],[data-choice-field],#batchColor'))pushUndo()});
 $('inspectorBody').addEventListener('input',e=>{if(e.target.dataset.routeIndex!==undefined){const t=selectedTile(),r=t?.routes?.[Number(e.target.dataset.routeIndex)];if(r){r[e.target.dataset.routeField]=e.target.dataset.routeField==='weight'?clamp(Number(e.target.value)||1,1,1000):e.target.value;changed()}return}if(e.target.id==='batchColor'){for(let t of getSelectedItems())t.color!==undefined?t.color=e.target.value:t.fill=e.target.value;changed();return}const item=selectedTile()||selectedElement(),el=e.target;if(!item)return;if(el.dataset.prop){const key=el.dataset.prop;item[key]=el.type==='checkbox'?el.checked:['x','y','w','h','size','fontSize','fontWeight','lineHeight','textPadding','angle','opacity','imageX','imageY','imageZoom','borderWidth','connectionWidth','radius','strokeWidth'].includes(key)?Number(el.value):el.value;if(item.type==='text'&&key==='w')item.w=clamp(item.w,8,3500);if(item.type==='text'&&key==='h'){item.h=clamp(item.h,8,2500);item.autoHeight=false;}if(key==='shape'&&item.shape==='rounded'&&item.radius===0)item.radius=16;if(item.type==='text'&&['text','w','fontSize','fontFamily','fontWeight','italic','lineHeight','textPadding','autoHeight'].includes(key))fitTextBox(item);drawStudio();persist()}else if(el.hasAttribute('data-action')){const a=item.actions[Number(el.dataset.action)];if(a){a[el.dataset.field]=el.value;persist();drawStudio()}}else if(el.hasAttribute('data-choice')){const c=item.actions[Number(el.dataset.choice)]?.choices[Number(el.dataset.choiceIndex)];if(c){c[el.dataset.choiceField]=el.value;persist()}}});
 $('inspectorBody').addEventListener('change',e=>{const el=e.target;if(el.hasAttribute('data-route-mode')){const t=selectedTile();if(t){t.routeMode=el.value;changed()}return}if(el.hasAttribute('data-route-index')){renderInspector();changed();return}if(['type','cond'].includes(el.dataset.field)||['shape','connection','type','imageFit','fontFamily','fontWeight','align','valign','italic'].includes(el.dataset.prop)||el.dataset.choiceField==='type')renderInspector();changed()});
 $('inspectorBody').addEventListener('click',e=>{const addRoute=e.target.closest('[data-route-add]'),removeRoute=e.target.closest('[data-route-delete]');if(addRoute||removeRoute){const t=selectedTile();if(!t)return;pushUndo();if(addRoute){const target=project.tiles.find(x=>x.id!==t.id&&!t.routes.some(r=>r.to===x.id));if(target)t.routes.push({id:uid(),to:target.id,color:target.color,label:'',weight:1});else toast('Sem casas disponíveis para conectar.')}else t.routes.splice(Number(removeRoute.dataset.routeDelete),1);renderInspector();changed();return}const preset=e.target.closest('[data-size-preset]');if(preset){const e=selectedElement();if(!e)return;pushUndo();if(preset.dataset.sizePreset==='text'){e.w=clamp(Math.round((e.text?.length||8)*(e.fontSize*.59)+e.textPadding*2),50,3500);if(e.type==='text'){e.autoHeight=true;fitTextBox(e)}}else{const dims={small:[100,55],medium:[240,100],large:[470,240]}[preset.dataset.sizePreset];if(dims){e.w=dims[0];e.h=dims[1];e.autoHeight=false}}renderInspector();changed();return}const el=e.target.closest('[data-command],[data-remove-action],[data-up-action],[data-down-action],[data-add-choice],[data-remove-choice]');if(!el)return;const t=selectedTile()||selectedElement();if(!t)return;
- if(el.hasAttribute('data-remove-action')){pushUndo();t.actions.splice(Number(el.dataset.removeAction),1)}else if(el.hasAttribute('data-add-choice')){pushUndo();t.actions[Number(el.dataset.addChoice)].choices.push({label:'Nova opção',type:'message',value:'Você escolheu esta opção.',variable:''})}else if(el.hasAttribute('data-remove-choice')){pushUndo();t.actions[Number(el.dataset.removeChoice)].choices.splice(Number(el.dataset.choiceIndex),1)}else if(el.hasAttribute('data-up-action')){const i=Number(el.dataset.upAction);if(i>0){pushUndo();[t.actions[i-1],t.actions[i]]=[t.actions[i],t.actions[i-1]]}}else if(el.hasAttribute('data-down-action')){const i=Number(el.dataset.downAction);if(i<t.actions.length-1){pushUndo();[t.actions[i+1],t.actions[i]]=[t.actions[i],t.actions[i+1]]}}else{const c=el.dataset.command;if(c==='delete'){deleteSelection();return}if(c==='back'){shiftSelected(-1);return}if(c==='forward'){shiftSelected(1);return}if(c==='image'){$(t.type==='image'?'canvasImageFile':'imageFile').click();return}if(c==='removeimage'){pushUndo();t.image=null}if(c==='addaction'){pushUndo();t.actions.push(normAction({type:'message',value:'Novo evento',cond:'always'}))}if(c==='edittext'){startInlineTextEdit(t);return}if(c==='openflow'){openFlow(t);return}if(c==='attachprogram'){const id=$('attachEventProgram')?.value,pg=project.programs.find(x=>x.id===id);if(!pg||!selectedTile())return;pushUndo();const gr=ensureGraph(t);const oldStart=gr.start;const node={...normAction({type:'callEvent',eventName:id}),id:uid(),x:45,y:50,mode:'sequential',next:oldStart?[{id:oldStart,weight:1}]:[],trueNext:'',falseNext:''};gr.nodes.unshift(node);gr.start=node.id;changed();toast('Evento '+pg.name+' vinculado à casa '+(project.tiles.indexOf(t)+1)+'.');renderInspector();return}if(c==='duplicate'){duplicateSelection();return}if(c==='bring'){pushUndo();project.elements=project.elements.filter(x=>x.id!==t.id).concat(t);changed()}if(c==='attach'){const i=project.tiles.indexOf(t);if(i>0){pushUndo();let prev=project.tiles[i-1],dx=t.x-prev.x,dy=t.y-prev.y,gap=(t.size+prev.size)/2;t.x=prev.x+(Math.abs(dx)>=Math.abs(dy)?(dx<0?-gap:gap):0);t.y=prev.y+(Math.abs(dy)>Math.abs(dx)?(dy<0?-gap:gap):0);t.connection='touch'}}}
- renderInspector();changed()});
+if(el.hasAttribute('data-remove-action')){pushUndo();t.actions.splice(Number(el.dataset.removeAction),1)}else if(el.hasAttribute('data-add-choice')){pushUndo();t.actions[Number(el.dataset.addChoice)].choices.push({label:'Nova opção',type:'message',value:'Você escolheu esta opção.',variable:''})}else if(el.hasAttribute('data-remove-choice')){pushUndo();t.actions[Number(el.dataset.removeChoice)].choices.splice(Number(el.dataset.choiceIndex),1)}else if(el.hasAttribute('data-up-action')){const i=Number(el.dataset.upAction);if(i>0){pushUndo();[t.actions[i-1],t.actions[i]]=[t.actions[i],t.actions[i-1]]}}else if(el.hasAttribute('data-down-action')){const i=Number(el.dataset.downAction);if(i<t.actions.length-1){pushUndo();[t.actions[i+1],t.actions[i]]=[t.actions[i],t.actions[i+1]]}}else{const c=el.dataset.command;if(c==='delete'){deleteSelection();return}if(c==='back'){shiftSelected(-1);return}if(c==='forward'){shiftSelected(1);return}if(c==='image'){$(t.type==='image'?'canvasImageFile':'imageFile').click();return}if(c==='removeimage'){pushUndo();t.image=null}if(c==='addaction'){pushUndo();t.actions.push(normAction({type:'message',value:'Novo evento',cond:'always'}))}if(c==='edittext'){startInlineTextEdit(t);return}if(c==='openflow'){openFlow(t);return}if(c==='attachprogram'){const id=$('attachEventProgram')?.value,pg=project.programs.find(x=>x.id===id);if(!pg||!selectedTile())return;pushUndo();const gr=ensureGraph(t);const oldStart=gr.start;const node={...normAction({type:'callEvent',eventName:id}),id:uid(),x:45,y:50,mode:'sequential',next:oldStart?[{id:oldStart,weight:1}]:[],trueNext:'',falseNext:''};gr.nodes.unshift(node);gr.start=node.id;changed();toast('Evento '+pg.name+' vinculado à casa '+(project.tiles.indexOf(t)+1)+'.');renderInspector();return}if(c==='duplicate'){duplicateSelection();return}if(c==='bring'){pushUndo();project.elements=project.elements.filter(x=>x.id!==t.id).concat(t);changed()}if(c==='attach'){const i=project.tiles.indexOf(t);if(i>0){pushUndo();let prev=project.tiles[i-1],dx=t.x-prev.x,dy=t.y-prev.y,gap=(t.size+prev.size)/2;t.x=prev.x+(Math.abs(dx)>=Math.abs(dy)?(dx<0?-gap:gap):0);t.y=prev.y+(Math.abs(dy)>Math.abs(dx)?(dy<0?-gap:gap):0);t.connection='touch'}}}
+renderInspector();changed()});
 $('imageFile').addEventListener('change',e=>importImage(e,'tile'));
 $('canvasImageFile').addEventListener('change',e=>importImage(e,'element'));
 async function importImage(event,which){const f=event.target.files[0];event.target.value='';if(!f)return;if(!/^image\/(png|jpeg|webp|gif)$/.test(f.type)||f.size>12*1024*1024){toast('Imagem PNG, JPG, WebP ou GIF de até 12 MB.');return}const item=which==='tile'?selectedTile():selectedElement();if(!item)return;try{const url=await fileDataURL(f),img=await loadImage(url),cv=document.createElement('canvas'),scale=Math.min(1,1100/Math.max(img.width,img.height));cv.width=Math.max(1,Math.round(img.width*scale));cv.height=Math.max(1,Math.round(img.height*scale));cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);pushUndo();item.image=cv.toDataURL('image/jpeg',.85);renderInspector();changed();toast('Imagem incorporada ao projeto.')}catch(err){toast('Não foi possível importar a imagem.')}}
@@ -833,9 +833,9 @@ window.addEventListener('resize',()=>{ui.view==='game'?drawGame():drawStudio()})
 
 function exitGameToHome(){}
 function magnetize(moving,x,y){let result={x:placed(x),y:placed(y)},best=22;for(const t of project.tiles){if(t.id===moving.id)continue;
- const gap=(t.size+(moving.size||BASE_SIZE))/2;
- for(const [xx,yy] of [[t.x+gap,t.y],[t.x-gap,t.y],[t.x,t.y+gap],[t.x,t.y-gap]]){
-  const d=Math.hypot(x-xx,y-yy);if(d<best){best=d;result={x:xx,y:yy}}}
+const gap=(t.size+(moving.size||BASE_SIZE))/2;
+for(const [xx,yy] of [[t.x+gap,t.y],[t.x-gap,t.y],[t.x,t.y+gap],[t.x,t.y-gap]]){
+const d=Math.hypot(x-xx,y-yy);if(d<best){best=d;result={x:xx,y:yy}}}
 }return result}
 
 
@@ -853,25 +853,25 @@ $('pdfOrientation').onchange=e=>{project.print.orientation=e.target.value;projec
 $('pdfIncludeBackground').onchange=e=>{project.print.pdfBackground=e.target.checked;persist();pdfEstimate()};
 $('pdfTileNumbers').onchange=e=>{project.print.pdfTileNumbers=e.target.checked;persist();pdfEstimate()};
 function pdfSettings(){
- const pr=project.print,pg=pageSizeWorld(),{w:worldW,h:worldH,scale,paperW,paperH}=pg;
- const real=project.tiles.length||project.elements.length?currentBounds(2):
-  {minX:pr.originX+1,minY:pr.originY+1,maxX:pr.originX+worldW-1,maxY:pr.originY+worldH-1};
- // As folhas são células de uma grade A4 ancorada na origem configurada.
- // A exportação abrange só as células ocupadas e respeita exatamente as guias.
- const startCol=Math.floor((real.minX-pr.originX)/worldW);
- const startRow=Math.floor((real.minY-pr.originY)/worldH);
- const endCol=Math.max(startCol,Math.ceil((real.maxX-pr.originX)/worldW)-1);
- const endRow=Math.max(startRow,Math.ceil((real.maxY-pr.originY)/worldH)-1);
- const cols=endCol-startCol+1,rows=endRow-startRow+1;
- const b={minX:pr.originX+startCol*worldW,minY:pr.originY+startRow*worldH,maxX:pr.originX+(endCol+1)*worldW,maxY:pr.originY+(endRow+1)*worldH};
- return {paperW,paperH,mmTile:pr.mmTile,scale,b,worldW,worldH,startCol,startRow,cols,rows,pages:cols*rows};
+const pr=project.print,pg=pageSizeWorld(),{w:worldW,h:worldH,scale,paperW,paperH}=pg;
+const real=project.tiles.length||project.elements.length?currentBounds(2):
+{minX:pr.originX+1,minY:pr.originY+1,maxX:pr.originX+worldW-1,maxY:pr.originY+worldH-1};
+// As folhas são células de uma grade A4 ancorada na origem configurada.
+// A exportação abrange só as células ocupadas e respeita exatamente as guias.
+const startCol=Math.floor((real.minX-pr.originX)/worldW);
+const startRow=Math.floor((real.minY-pr.originY)/worldH);
+const endCol=Math.max(startCol,Math.ceil((real.maxX-pr.originX)/worldW)-1);
+const endRow=Math.max(startRow,Math.ceil((real.maxY-pr.originY)/worldH)-1);
+const cols=endCol-startCol+1,rows=endRow-startRow+1;
+const b={minX:pr.originX+startCol*worldW,minY:pr.originY+startRow*worldH,maxX:pr.originX+(endCol+1)*worldW,maxY:pr.originY+(endRow+1)*worldH};
+return {paperW,paperH,mmTile:pr.mmTile,scale,b,worldW,worldH,startCol,startRow,cols,rows,pages:cols*rows};
 }
 function pdfNaturalKeys(s){return Array.from({length:s.rows*s.cols},(_,i)=>`${Math.floor(i/s.cols)}:${i%s.cols}`)}
 function pdfOrderedKeys(s){const all=pdfNaturalKeys(s),keep=(project.print.pageOrder||[]).filter(k=>all.includes(k));return [...new Set(keep)].concat(all.filter(k=>!keep.includes(k)))}
 function pdfPagePreview(s,r,col){const x=s.b.minX+col*s.worldW,y=s.b.minY+r*s.worldH;const w=s.worldW,h=s.worldH,content=[];
- for(const t of project.tiles){if(t.x+t.size/2<x||t.x-t.size/2>x+w||t.y+t.size/2<y||t.y-t.size/2>y+h)continue;let xx=t.x-t.size/2-x,yy=t.y-t.size/2-y;content.push(`<rect x="${xx}" y="${yy}" width="${t.size}" height="${t.size}" rx="${t.shape==='rounded'?t.radius||12:0}" fill="${t.color}" stroke="${t.border}" stroke-width="2"/>`)}
- for(const e of project.elements){if(e.x+e.w/2<x||e.x-e.w/2>x+w||e.y+e.h/2<y||e.y-e.h/2>y+h)continue;content.push(`<rect x="${e.x-e.w/2-x}" y="${e.y-e.h/2-y}" width="${e.w}" height="${e.h}" rx="3" fill="${e.type==='text'?'#abbdda':e.fill}" opacity="0.85"/>`)}
- return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="${w}" height="${h}" fill="#ffffff"/>${content.join('')}</svg>`}
+for(const t of project.tiles){if(t.x+t.size/2<x||t.x-t.size/2>x+w||t.y+t.size/2<y||t.y-t.size/2>y+h)continue;let xx=t.x-t.size/2-x,yy=t.y-t.size/2-y;content.push(`<rect x="${xx}" y="${yy}" width="${t.size}" height="${t.size}" rx="${t.shape==='rounded'?t.radius||12:0}" fill="${t.color}" stroke="${t.border}" stroke-width="2"/>`)}
+for(const e of project.elements){if(e.x+e.w/2<x||e.x-e.w/2>x+w||e.y+e.h/2<y||e.y-e.h/2>y+h)continue;content.push(`<rect x="${e.x-e.w/2-x}" y="${e.y-e.h/2-y}" width="${e.w}" height="${e.h}" rx="3" fill="${e.type==='text'?'#abbdda':e.fill}" opacity="0.85"/>`)}
+return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><rect width="${w}" height="${h}" fill="#ffffff"/>${content.join('')}</svg>`}
 function renderPdfOrder(s){const order=pdfOrderedKeys(s),list=$('pdfPageOrder');list.innerHTML=order.map((key,i)=>{const [r,c]=key.split(':').map(Number);return `<div class="pdf-page-item" draggable="true" data-page="${key}"><div class="pdf-page-thumb">${pdfPagePreview(s,r,c)}</div><div class="pdf-page-info"><strong>PDF ${i+1} · Folha ${r+1}.${c+1}</strong><small>Linha ${r+1}, coluna ${c+1}</small></div><div class="pdf-page-tools"><button type="button" data-move-page="-1" data-page="${key}" aria-label="Mover folha para cima" ${i===0?'disabled':''}>↑</button><button type="button" data-move-page="1" data-page="${key}" aria-label="Mover folha para baixo" ${i===order.length-1?'disabled':''}>↓</button></div></div>`}).join('')}
 function pdfEstimate(){const p=pdfSettings();$('pdfEstimate').textContent=`${p.cols} coluna(s) × ${p.rows} linha(s) · ${p.pages} página(s) A4 · ${p.mmTile} mm por casa padrão. Área completa: ${p.paperW} × ${p.paperH} mm.`;renderPdfOrder(p)}
 $('pdfPageReset').onclick=()=>{project.print.pageOrder=[];pdfEstimate();persist()};
@@ -885,14 +885,14 @@ $('pdfPageOrder').addEventListener('dragend',()=>{pdfDragKey=null;$('pdfPageOrde
 async function readyAllImages(){let urls=[...project.tiles.map(t=>t.image),...project.elements.map(e=>e.image),project.background.image].filter(Boolean);await Promise.all([...new Set(urls)].map(async u=>{if(getImg(u))return;try{const img=await loadImage(u);imageCache.set(u,{img,status:'ready'})}catch(e){}}))}
 async function zipData(data){if(typeof CompressionStream!=='function')throw Error('O navegador não oferece compactação para PDF transparente.');const stream=new Blob([data]).stream().pipeThrough(new CompressionStream('deflate'));return new Uint8Array(await new Response(stream).arrayBuffer())}
 async function pageRaster(settings,row,col){const pp=(Number($('pdfDPI').value)||300)/25.4,w=Math.round(settings.paperW*pp),h=Math.round(settings.paperH*pp),cv=document.createElement('canvas');cv.width=w;cv.height=h;const c=cv.getContext('2d',{alpha:true,willReadFrequently:true});c.clearRect(0,0,w,h);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
- c.save();c.beginPath();c.rect(0,0,w,h);c.clip();const sx=settings.scale*pp;c.scale(sx,sx);c.translate(-(settings.b.minX+col*settings.worldW),-(settings.b.minY+row*settings.worldH));drawBoard(c,{print:true,omitBackground:!project.print.pdfBackground,backgroundBounds:{minX:settings.b.minX+col*settings.worldW,minY:settings.b.minY+row*settings.worldH,maxX:settings.b.minX+(col+1)*settings.worldW,maxY:settings.b.minY+(row+1)*settings.worldH}});c.restore();
- const px=c.getImageData(0,0,w,h).data,rgb=new Uint8Array(w*h*3),alpha=new Uint8Array(w*h);let transparent=false;for(let i=0,j=0,k=0;i<px.length;i+=4){rgb[j++]=px[i];rgb[j++]=px[i+1];rgb[j++]=px[i+2];alpha[k++]=px[i+3];if(px[i+3]!==255)transparent=true}
- const compressed=await Promise.all([zipData(rgb),transparent?zipData(alpha):Promise.resolve(null)]);return {rgb:compressed[0],mask:compressed[1],w,h};}
+c.save();c.beginPath();c.rect(0,0,w,h);c.clip();const sx=settings.scale*pp;c.scale(sx,sx);c.translate(-(settings.b.minX+col*settings.worldW),-(settings.b.minY+row*settings.worldH));drawBoard(c,{print:true,omitBackground:!project.print.pdfBackground,backgroundBounds:{minX:settings.b.minX+col*settings.worldW,minY:settings.b.minY+row*settings.worldH,maxX:settings.b.minX+(col+1)*settings.worldW,maxY:settings.b.minY+(row+1)*settings.worldH}});c.restore();
+const px=c.getImageData(0,0,w,h).data,rgb=new Uint8Array(w*h*3),alpha=new Uint8Array(w*h);let transparent=false;for(let i=0,j=0,k=0;i<px.length;i+=4){rgb[j++]=px[i];rgb[j++]=px[i+1];rgb[j++]=px[i+2];alpha[k++]=px[i+3];if(px[i+3]!==255)transparent=true}
+const compressed=await Promise.all([zipData(rgb),transparent?zipData(alpha):Promise.resolve(null)]);return {rgb:compressed[0],mask:compressed[1],w,h};}
 function concatBytes(list){let n=list.reduce((s,a)=>s+a.length,0),out=new Uint8Array(n),o=0;for(let item of list){out.set(item,o);o+=item.length}return out}
 function pdfCreate(pages,settings){const encoder=new TextEncoder(),objects=[];objects[1]=encoder.encode('<< /Type /Catalog /Pages 2 0 R >>');const kids=[];let id=3;const streamObj=(dict,bytes)=>concatBytes([encoder.encode(`<< ${dict} /Length ${bytes.length} >>\nstream\n`),bytes,encoder.encode('\nendstream')]);
- for(let i=0;i<pages.length;i++){const p=pages[i],imageId=id++,maskId=p.mask?id++:null,contentId=id++,pageId=id++;kids.push(`${pageId} 0 R`);objects[imageId]=streamObj(`/Type /XObject /Subtype /Image /Width ${p.w} /Height ${p.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /FlateDecode${maskId?' /SMask '+maskId+' 0 R':''}`,p.rgb);if(maskId)objects[maskId]=streamObj(`/Type /XObject /Subtype /Image /Width ${p.w} /Height ${p.h} /ColorSpace /DeviceGray /BitsPerComponent 8 /Filter /FlateDecode`,p.mask);
-  const op=encoder.encode(`q\n${(settings.paperW*72/25.4).toFixed(3)} 0 0 ${(settings.paperH*72/25.4).toFixed(3)} 0 0 cm\n/Im${i} Do\nQ\n`);objects[contentId]=streamObj('',op);objects[pageId]=encoder.encode(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(settings.paperW*72/25.4).toFixed(3)} ${(settings.paperH*72/25.4).toFixed(3)}] /Resources << /XObject << /Im${i} ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`)}
- objects[2]=encoder.encode(`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${pages.length} >>`);let chunks=[encoder.encode('%PDF-1.4\n%Tabuleiro Studio\n')],len=chunks[0].length,offsets=[0];for(let i=1;i<objects.length;i++){offsets[i]=len;let h=encoder.encode(`${i} 0 obj\n`),end=encoder.encode('\nendobj\n');chunks.push(h,objects[i],end);len+=h.length+objects[i].length+end.length}let xref=len,str=`xref\n0 ${objects.length}\n0000000000 65535 f \n`;for(let i=1;i<objects.length;i++)str+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';str+=`trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;chunks.push(encoder.encode(str));return new Blob(chunks,{type:'application/pdf'})}
+for(let i=0;i<pages.length;i++){const p=pages[i],imageId=id++,maskId=p.mask?id++:null,contentId=id++,pageId=id++;kids.push(`${pageId} 0 R`);objects[imageId]=streamObj(`/Type /XObject /Subtype /Image /Width ${p.w} /Height ${p.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /FlateDecode${maskId?' /SMask '+maskId+' 0 R':''}`,p.rgb);if(maskId)objects[maskId]=streamObj(`/Type /XObject /Subtype /Image /Width ${p.w} /Height ${p.h} /ColorSpace /DeviceGray /BitsPerComponent 8 /Filter /FlateDecode`,p.mask);
+const op=encoder.encode(`q\n${(settings.paperW*72/25.4).toFixed(3)} 0 0 ${(settings.paperH*72/25.4).toFixed(3)} 0 0 cm\n/Im${i} Do\nQ\n`);objects[contentId]=streamObj('',op);objects[pageId]=encoder.encode(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${(settings.paperW*72/25.4).toFixed(3)} ${(settings.paperH*72/25.4).toFixed(3)}] /Resources << /XObject << /Im${i} ${imageId} 0 R >> >> /Contents ${contentId} 0 R >>`)}
+objects[2]=encoder.encode(`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${pages.length} >>`);let chunks=[encoder.encode('%PDF-1.4\n%Tabuleiro Studio\n')],len=chunks[0].length,offsets=[0];for(let i=1;i<objects.length;i++){offsets[i]=len;let h=encoder.encode(`${i} 0 obj\n`),end=encoder.encode('\nendobj\n');chunks.push(h,objects[i],end);len+=h.length+objects[i].length+end.length}let xref=len,str=`xref\n0 ${objects.length}\n0000000000 65535 f \n`;for(let i=1;i<objects.length;i++)str+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';str+=`trailer\n<< /Size ${objects.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;chunks.push(encoder.encode(str));return new Blob(chunks,{type:'application/pdf'})}
 $('pdfExport').onclick=async()=>{if(ui.pdfBusy)return;const s=pdfSettings(),dpi=Number($('pdfDPI').value)||300;if(dpi===450&&s.pages>20){toast('450 DPI pode exigir muita memória. Para mais de 20 folhas, use 300 DPI.');return}if(s.pages>75){toast('Este tabuleiro exige '+s.pages+' páginas. Reduza o tamanho de impressão (máximo de 75 folhas).');return}ui.pdfBusy=true;const btn=$('pdfExport');btn.disabled=true;btn.textContent='Preparando páginas...';try{await readyAllImages();const pages=[],order=pdfOrderedKeys(s);for(const key of order){const [r,c]=key.split(':').map(Number);btn.textContent=`Gerando ${pages.length+1} de ${s.pages}...`;pages.push(await pageRaster(s,r,c));await sleep(0)}const b=pdfCreate(pages,s);downloadBlob(b,slug()+'_A4.pdf');pdfModal.classList.add('hide');toast('PDF gerado: '+s.pages+' folha(s), na ordem selecionada.')}catch(e){console.error(e);toast('Falha ao criar PDF: '+e.message)}finally{ui.pdfBusy=false;btn.disabled=false;btn.textContent='Gerar PDF'}};
 
 
